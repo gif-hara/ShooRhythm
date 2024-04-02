@@ -44,8 +44,17 @@ namespace ShooRhythm
             await UniTask.WhenAll
             (
                 PlayerSettings.GetPreloadedAssets()
-                    .Cast<IBootable>()
-                    .Select(bootable => bootable.BootAsync())
+                    .Select(x =>
+                    {
+                        return x switch
+                        {
+                            GameObject go => go.TryGetComponent<IBootable>(out var bootable) ? bootable : null,
+                            ScriptableObject so => so as IBootable,
+                            _ => null,
+                        };
+                    })
+                    .Where(b => b != null)
+                    .Select(b => b.BootAsync())
             );
             initializeState = InitializeState.Initialized;
         }
