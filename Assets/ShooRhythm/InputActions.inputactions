@@ -1,0 +1,34 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "InGame",
+            "id": "bf598077-9858-482f-93a6-78d19640cb33",
+            "actions": [
+                {
+                    "name": "Fire",
+                    "type": "Button",
+                    "id": "59752adc-7141-4a1e-864e-54904cff9f0f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8e28e716-f167-4707-b99e-218a063dddd7",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
