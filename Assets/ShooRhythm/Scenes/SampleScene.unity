@@ -471,6 +471,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f631998f8f1d95a4bab8d6e09e3f9118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 8254253551417054141, guid: a03a65c9be6618443bf7a6983a3aa70b,
+    type: 3}
+  scriptableSequences: {fileID: 11400000, guid: b71cdad7a7e30ef44b03e79260c46c3d,
+    type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
