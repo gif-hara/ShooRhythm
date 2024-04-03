@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using HK;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -18,6 +19,7 @@ namespace ShooRhythm
         {
             var instance = Instantiate(this);
             DontDestroyOnLoad(instance.gameObject);
+            TinyServiceLocator.RegisterAsync(instance, destroyCancellationToken).Forget();
             return UniTask.CompletedTask;
         }
 
