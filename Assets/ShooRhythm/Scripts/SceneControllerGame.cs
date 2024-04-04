@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using HK;
 using R3;
 using UnityEngine;
 using UnitySequencerSystem;
@@ -19,7 +20,7 @@ namespace ShooRhythm
 
         async UniTask Start()
         {
-            await BootSystem.IsReady;
+            await TinyServiceLocator.Resolve<BootSystem>().IsReady;
 
             var player = Instantiate(playerPrefab);
             var inputActions = new InputActions();
