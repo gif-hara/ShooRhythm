@@ -2,6 +2,10 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using HK;
 using UnityEngine;
+using System.Collections.Generic;
+using UnitySequencerSystem;
+using System;
+using System.Threading;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -13,6 +17,9 @@ namespace ShooRhythm
     /// </summary>
     public sealed class BootSystem : ScriptableObject
     {
+        [SerializeReference, SubclassSelector]
+        private List<ISequence> sequences = default;
+
         /// <summary>
         /// ブートシステムが初期化完了したか返す
         /// </summary>
@@ -35,37 +42,60 @@ namespace ShooRhythm
 
         private InitializeState initializeState = InitializeState.Initializing;
 
-        void OnEnable()
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        private static void Initialize()
         {
-            TinyServiceLocator.Register(this);
-            InitializeInternalAsync().Forget();
+            var bootSystem = Resources.Load<BootSystem>("BootSystem");
+            TinyServiceLocator.Register(bootSystem);
+            bootSystem.InitializeInternalAsync().Forget();
         }
 
-        private UniTask InitializeInternalAsync()
+        private async UniTask InitializeInternalAsync()
         {
             initializeState = InitializeState.Initializing;
+            await new Sequencer(new Container(), sequences).PlayAsync(Application.exitCancellationToken);
             initializeState = InitializeState.Initialized;
-            return UniTask.CompletedTask;
         }
 
 #if UNITY_EDITOR
         [MenuItem("Edit/BootSystem/Register")]
         private static void Register()
         {
-            if (PlayerSettings.GetPreloadedAssets().Any(x => x is BootSystem))
+            if (AssetDatabase.LoadAssetAtPath<BootSystem>("Assets/Resources/BootSystem.asset") != null)
             {
                 Debug.LogWarning("BootSystem is already registered.");
                 return;
             }
             var bootSystem = CreateInstance<BootSystem>();
-            AssetDatabase.CreateAsset(bootSystem, "Assets/BootSystem.asset");
-            var preloadedAssets = PlayerSettings.GetPreloadedAssets().ToList();
-            preloadedAssets.Add(bootSystem);
-            PlayerSettings.SetPreloadedAssets(preloadedAssets.ToArray());
+            if (!AssetDatabase.IsValidFolder("Assets/Resources"))
+            {
+                AssetDatabase.CreateFolder("Assets", "Resources");
+            }
+            AssetDatabase.CreateAsset(bootSystem, "Assets/Resources/BootSystem.asset");
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
         }
 #endif
+    }
+
+    [Serializable]
+    public class InitializeBootSystem : ISequence
+    {
+        [SerializeField]
+        private List<GameObject> bootObjects = default;
+
+        public async UniTask PlayAsync(Container container, CancellationToken cancellationToken)
+        {
+            foreach (var bootObject in bootObjects)
+            {
+                var instance = UnityEngine.Object.Instantiate(bootObject);
+                UnityEngine.Object.DontDestroyOnLoad(instance);
+                if (instance.TryGetComponent<IBootable>(out var bootable))
+                {
+                    await bootable.BootAsync();
+                }
+            }
+        }
     }
 
     public interface IBootable
