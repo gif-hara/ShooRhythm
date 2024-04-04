@@ -13,57 +13,72 @@ MonoBehaviour:
   m_Name: ScriptableSequences
   m_EditorClassIdentifier: 
   sequences:
-  - rid: 8290056048911843344
+  - rid: 8290056093692592129
   references:
     version: 2
     RefIds:
-    - rid: 8290056048911843344
+    - rid: 8290056093692592129
+      type: {class: Forget, ns: UnitySequencerSystem.StandardSequences, asm: UnitySequencerSystem}
+      data:
+        sequencesResolver:
+          rid: 8290056093692592130
+    - rid: 8290056093692592130
+      type: {class: SequencesResolver/List, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value:
+        - rid: 8290056093692592131
+        - rid: 8290056093692592139
+    - rid: 8290056093692592131
       type: {class: BindToLocalScale, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
         targetResolver:
-          rid: 8290056048911843345
+          rid: 8290056093692592132
         parameters:
           fromResolver:
-            rid: 8290056048911843346
+            rid: 8290056093692592133
           toResolver:
-            rid: 8290056048911843347
+            rid: 8290056093692592134
           durationResolver:
-            rid: 8290056048911843348
+            rid: 8290056093692592135
           delayResolver:
-            rid: 8290056048911843350
+            rid: 8290056093692592136
           loopCountResolver:
-            rid: 8290056048911843349
+            rid: 8290056093692592137
           loopType: 0
           motionSchedulerResolver:
-            rid: 8290056048911843351
+            rid: 8290056093692592138
           ease: 8
-    - rid: 8290056048911843345
+    - rid: 8290056093692592132
       type: {class: TransformResolver/Name, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         name: Actor
-    - rid: 8290056048911843346
+    - rid: 8290056093692592133
       type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
         asm: UnitySequencerSystem}
       data:
         value: {x: 1.5, y: 0.5, z: 1.5}
-    - rid: 8290056048911843347
+    - rid: 8290056093692592134
       type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
         asm: UnitySequencerSystem}
       data:
         value: {x: 1, y: 1, z: 1}
-    - rid: 8290056048911843348
+    - rid: 8290056093692592135
       type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 0.5
-    - rid: 8290056048911843349
-      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 1
-    - rid: 8290056048911843350
+    - rid: 8290056093692592136
       type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 0
-    - rid: 8290056048911843351
+    - rid: 8290056093692592137
+      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 1
+    - rid: 8290056093692592138
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
+    - rid: 8290056093692592139
+      type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        audioClip: {fileID: 8300000, guid: 7ed9e603ce11f0443baeb6eebb55f636, type: 3}
