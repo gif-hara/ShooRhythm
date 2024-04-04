@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717aa12f4ad45a34c88c820fc8861707, type: 3}
   m_Name: BootSystem
   m_EditorClassIdentifier: 
+  sequences:
+  - rid: 8290056093692592140
+  references:
+    version: 2
+    RefIds:
+    - rid: 8290056093692592140
+      type: {class: InitializeBootSystem, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        bootObjects:
+        - {fileID: 4005503793223307115, guid: 38139f1b78ae2954a9b2204edbe69106, type: 3}
