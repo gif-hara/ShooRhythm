@@ -33,7 +33,6 @@ namespace ShooRhythm
                     container.Register("Actor", player.transform);
                     var sequencer = new Sequencer(container, scriptableSequences.Sequences);
                     sequencer.PlayAsync(destroyCancellationToken).Forget();
-                    Debug.Log("Fire");
                 })
                 .RegisterTo(destroyCancellationToken);
         }
