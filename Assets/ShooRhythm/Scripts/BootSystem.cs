@@ -1,19 +1,22 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
-using UnityEditor;
+using HK;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ShooRhythm
 {
     /// <summary>
     /// ブートシステム
     /// </summary>
-    public sealed class BootSystem
+    public sealed class BootSystem : ScriptableObject
     {
         /// <summary>
         /// ブートシステムが初期化完了したか返す
         /// </summary>
-        public static UniTask IsReady
+        public UniTask IsReady
         {
             get
             {
@@ -30,34 +33,39 @@ namespace ShooRhythm
             Initialized,
         }
 
-        private static InitializeState initializeState = InitializeState.Initializing;
+        private InitializeState initializeState = InitializeState.Initializing;
 
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void Initialize()
+        void OnEnable()
         {
+            TinyServiceLocator.Register(this);
             InitializeInternalAsync().Forget();
         }
 
-        private static async UniTask InitializeInternalAsync()
+        private UniTask InitializeInternalAsync()
         {
             initializeState = InitializeState.Initializing;
-            await UniTask.WhenAll
-            (
-                PlayerSettings.GetPreloadedAssets()
-                    .Select(x =>
-                    {
-                        return x switch
-                        {
-                            GameObject go => go.TryGetComponent<IBootable>(out var bootable) ? bootable : null,
-                            ScriptableObject so => so as IBootable,
-                            _ => null,
-                        };
-                    })
-                    .Where(b => b != null)
-                    .Select(b => b.BootAsync())
-            );
             initializeState = InitializeState.Initialized;
+            return UniTask.CompletedTask;
         }
+
+#if UNITY_EDITOR
+        [MenuItem("Edit/BootSystem/Register")]
+        private static void Register()
+        {
+            if (PlayerSettings.GetPreloadedAssets().Any(x => x is BootSystem))
+            {
+                Debug.LogWarning("BootSystem is already registered.");
+                return;
+            }
+            var bootSystem = CreateInstance<BootSystem>();
+            AssetDatabase.CreateAsset(bootSystem, "Assets/BootSystem.asset");
+            var preloadedAssets = PlayerSettings.GetPreloadedAssets().ToList();
+            preloadedAssets.Add(bootSystem);
+            PlayerSettings.SetPreloadedAssets(preloadedAssets.ToArray());
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+#endif
     }
 
     public interface IBootable
