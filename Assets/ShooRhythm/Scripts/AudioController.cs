@@ -17,9 +17,7 @@ namespace ShooRhythm
 
         public UniTask BootAsync()
         {
-            var instance = Instantiate(this);
-            DontDestroyOnLoad(instance.gameObject);
-            TinyServiceLocator.RegisterAsync(instance, destroyCancellationToken).Forget();
+            TinyServiceLocator.RegisterAsync(this, destroyCancellationToken).Forget();
             return UniTask.CompletedTask;
         }
 
