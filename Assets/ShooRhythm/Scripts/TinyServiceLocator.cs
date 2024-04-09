@@ -77,6 +77,18 @@ namespace HK
             return (T)namedServices[typeof(T)][name].service;
         }
 
+        public static async UniTask<T> ResolveAsync<T>()
+        {
+            await UniTask.WaitUntil(() => Contains<T>());
+            return Resolve<T>();
+        }
+
+        public static async UniTask<T> ResolveAsync<T>(string name)
+        {
+            await UniTask.WaitUntil(() => Contains<T>(name));
+            return Resolve<T>(name);
+        }
+
         public static T TryResolve<T>()
         {
             return services.ContainsKey(typeof(T)) ? (T)services[typeof(T)].service : default;
