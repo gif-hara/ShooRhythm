@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using R3;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnitySequencerSystem;
 
 namespace ShooRhythm
@@ -12,27 +13,60 @@ namespace ShooRhythm
     public sealed class SceneControllerGame : MonoBehaviour
     {
         [SerializeField]
-        private Actor playerPrefab;
+        private Camera controllerdCamera;
 
         [SerializeField]
-        private ScriptableSequences scriptableSequences;
+        private float mouseSensitivity = 0.1f;
+
+        [SerializeField]
+        private float scrollSensitivity = 0.1f;
+
+        [SerializeField]
+        private float cameraSizeMin = 1.0f;
+
+        [SerializeField]
+        private float cameraSizeMax = 10.0f;
+
+        private Vector2 lastMousePosition;
 
 
         async UniTask Start()
         {
             await TinyServiceLocator.Resolve<BootSystem>().IsReady;
 
-            var player = Instantiate(playerPrefab);
-            var inputActions = new InputActions();
-            inputActions.Enable();
-            inputActions.InGame.Fire.OnPerformedAsObservable()
+            Observable.EveryUpdate()
                 .Subscribe(_ =>
                 {
-                    var container = new Container();
-                    container.Register("Actor", player);
-                    container.Register("Actor", player.transform);
-                    var sequencer = new Sequencer(container, scriptableSequences.Sequences);
-                    sequencer.PlayAsync(destroyCancellationToken).Forget();
+                    var mouse = Mouse.current;
+                    if (mouse.rightButton.wasPressedThisFrame)
+                    {
+                        lastMousePosition = mouse.position.ReadValue();
+                    }
+                    if (mouse.rightButton.isPressed)
+                    {
+                        var currentMousePosition = mouse.position.ReadValue();
+                        var mouseDelta = currentMousePosition - lastMousePosition;
+                        var cameraSize = controllerdCamera.orthographicSize;
+                        var cameraAspect = controllerdCamera.aspect;
+                        var cameraHeight = cameraSize * 2;
+                        var cameraWidth = cameraHeight * cameraAspect;
+                        var move = new Vector3(
+                            mouseDelta.x / Screen.width * cameraWidth,
+                            mouseDelta.y / Screen.height * cameraHeight,
+                            0.0f
+                        ) * mouseSensitivity;
+                        controllerdCamera.transform.position -= move;
+                        lastMousePosition = currentMousePosition;
+                    }
+                    var scroll = mouse.scroll.ReadValue();
+                    if (scroll.y != 0)
+                    {
+                        controllerdCamera.orthographicSize = Mathf.Clamp(
+                            controllerdCamera.orthographicSize - scroll.y * scrollSensitivity,
+                            cameraSizeMin,
+                            cameraSizeMax
+                        );
+                    }
                 })
                 .RegisterTo(destroyCancellationToken);
         }
