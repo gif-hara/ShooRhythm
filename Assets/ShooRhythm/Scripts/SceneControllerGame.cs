@@ -33,6 +33,8 @@ namespace ShooRhythm
         async UniTask Start()
         {
             await TinyServiceLocator.Resolve<BootSystem>().IsReady;
+            TinyServiceLocator.RegisterAsync(new GameData()).Forget();
+            TinyServiceLocator.RegisterAsync(new ActorManager()).Forget();
 
             Observable.EveryUpdate()
                 .Subscribe(_ =>
@@ -66,6 +68,13 @@ namespace ShooRhythm
                             cameraSizeMin,
                             cameraSizeMax
                         );
+                    }
+                    if (mouse.leftButton.wasPressedThisFrame)
+                    {
+                        var mousePosition = mouse.position.ReadValue();
+                        var position = controllerdCamera.ScreenToWorldPoint(mousePosition);
+                        var key = new Vector2Int((int)position.x, (int)position.y);
+                        TinyServiceLocator.Resolve<ActorManager>().TryGetActor(key)?.OnClick();
                     }
                 })
                 .RegisterTo(destroyCancellationToken);
