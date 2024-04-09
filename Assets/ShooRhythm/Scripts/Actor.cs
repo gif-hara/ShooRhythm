@@ -11,7 +11,10 @@ namespace ShooRhythm
     public sealed class Actor : MonoBehaviour
     {
         [SerializeField]
-        private ScriptableSequences onClickSequences;
+        private ScriptableSequences onClickAnimationSequences;
+
+        [SerializeField]
+        private ScriptableSequences onClickRewardSequences;
 
         [SerializeField]
         private Transform animationTarget;
@@ -25,7 +28,10 @@ namespace ShooRhythm
         {
             var container = new Container();
             container.Register("AnimationTarget", animationTarget);
-            var sequencer = new Sequencer(container, onClickSequences.Sequences);
+            var sequencer = new Sequencer(container, onClickAnimationSequences.Sequences);
+            sequencer.PlayAsync(destroyCancellationToken).Forget();
+            container = new Container();
+            sequencer = new Sequencer(container, onClickRewardSequences.Sequences);
             sequencer.PlayAsync(destroyCancellationToken).Forget();
         }
 
