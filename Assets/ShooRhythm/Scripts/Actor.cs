@@ -14,9 +14,6 @@ namespace ShooRhythm
         private ScriptableSequences onClickAnimationSequences;
 
         [SerializeField]
-        private ScriptableSequences onClickRewardSequences;
-
-        [SerializeField]
         private Transform animationTarget;
 
         void Awake()
@@ -29,9 +26,6 @@ namespace ShooRhythm
             var container = new Container();
             container.Register("AnimationTarget", animationTarget);
             var sequencer = new Sequencer(container, onClickAnimationSequences.Sequences);
-            sequencer.PlayAsync(destroyCancellationToken).Forget();
-            container = new Container();
-            sequencer = new Sequencer(container, onClickRewardSequences.Sequences);
             sequencer.PlayAsync(destroyCancellationToken).Forget();
         }
 
