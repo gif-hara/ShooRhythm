@@ -26,6 +26,7 @@ MonoBehaviour:
       type: {class: SequencesResolver/List, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value:
+        - rid: 8290056206355529728
         - rid: 8290056093692592131
         - rid: 8290056093692592139
     - rid: 8290056093692592131
@@ -51,7 +52,7 @@ MonoBehaviour:
     - rid: 8290056093692592132
       type: {class: TransformResolver/Name, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
-        name: Actor
+        name: AnimationTarget
     - rid: 8290056093692592133
       type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
         asm: UnitySequencerSystem}
@@ -82,3 +83,51 @@ MonoBehaviour:
       type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
       data:
         audioClip: {fileID: 8300000, guid: 7ed9e603ce11f0443baeb6eebb55f636, type: 3}
+    - rid: 8290056206355529728
+      type: {class: BindToLocalPositionY, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
+      data:
+        targetResolver:
+          rid: 8290056206355529729
+        parameters:
+          fromResolver:
+            rid: 8290056206355529730
+          toResolver:
+            rid: 8290056206355529731
+          durationResolver:
+            rid: 8290056206355529732
+          delayResolver:
+            rid: 8290056206355529733
+          loopCountResolver:
+            rid: 8290056206355529734
+          loopType: 0
+          motionSchedulerResolver:
+            rid: 8290056206355529735
+          ease: 8
+    - rid: 8290056206355529729
+      type: {class: TransformResolver/Name, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        name: AnimationTarget
+    - rid: 8290056206355529730
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: -0.3
+    - rid: 8290056206355529731
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0
+    - rid: 8290056206355529732
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0.5
+    - rid: 8290056206355529733
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0
+    - rid: 8290056206355529734
+      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 1
+    - rid: 8290056206355529735
+      type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
+        asm: UnitySequencerSystem}
+      data: 
