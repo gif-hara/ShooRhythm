@@ -76,5 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66ce57a680a82e44f830b099075b6986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onClickSequences: {fileID: 11400000, guid: b71cdad7a7e30ef44b03e79260c46c3d, type: 2}
+  onClickAnimationSequences: {fileID: 11400000, guid: b71cdad7a7e30ef44b03e79260c46c3d,
+    type: 2}
+  onClickRewardSequences: {fileID: 11400000, guid: e7f8ccf4389a1654f9a9d106e8eb47f6,
+    type: 2}
   animationTarget: {fileID: 1118156625766281988}
