@@ -57,7 +57,7 @@ MonoBehaviour:
       type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
         asm: UnitySequencerSystem}
       data:
-        value: {x: 1.5, y: 0.5, z: 1.5}
+        value: {x: 1, y: 0.5, z: 1}
     - rid: 8290056093692592134
       type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
         asm: UnitySequencerSystem}
