@@ -21,7 +21,7 @@ namespace ShooRhythm
         protected Func<TValue, TKey> keySelector;
 
         [SerializeField]
-        private List<Element> list = new List<Element>();
+        private List<Element> list = new();
 
         public Group(Func<TValue, TKey> keySelector)
         {
