@@ -14,13 +14,13 @@ namespace ShooRhythm
 
         private Dictionary<TKey, TValue> dictionary;
 
-        protected Func<TValue, TKey> idSelector;
+        protected Func<TValue, TKey> keySelector;
 
         public IReadOnlyList<TValue> List => list;
 
-        public DictionaryList(Func<TValue, TKey> idSelector)
+        public DictionaryList(Func<TValue, TKey> keySelector)
         {
-            this.idSelector = idSelector;
+            this.keySelector = keySelector;
         }
 
         public void Set(IEnumerable<TValue> list)
@@ -34,7 +34,7 @@ namespace ShooRhythm
             list.Add(value);
             if (dictionary != null)
             {
-                dictionary.Add(idSelector(value), value);
+                dictionary.Add(keySelector(value), value);
             }
         }
 
@@ -50,7 +50,7 @@ namespace ShooRhythm
 
         public void Remove(TValue value)
         {
-            var key = idSelector(value);
+            var key = keySelector(value);
             list.Remove(value);
             if (dictionary != null)
             {
@@ -94,7 +94,7 @@ namespace ShooRhythm
                 dictionary = new Dictionary<TKey, TValue>();
                 foreach (var item in list)
                 {
-                    dictionary.Add(idSelector(item), item);
+                    dictionary.Add(keySelector(item), item);
                 }
             }
         }

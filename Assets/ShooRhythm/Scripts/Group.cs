@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace ShooRhythm
 {
@@ -18,10 +19,10 @@ namespace ShooRhythm
             public List<TValue> Value;
         }
 
-        protected Func<TValue, TKey> keySelector;
-
         [SerializeField]
         private List<Element> list = new();
+
+        protected Func<TValue, TKey> keySelector;
 
         public Group(Func<TValue, TKey> keySelector)
         {
