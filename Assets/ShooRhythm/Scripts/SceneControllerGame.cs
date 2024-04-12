@@ -73,6 +73,7 @@ namespace ShooRhythm
                     {
                         var mousePosition = mouse.position.ReadValue();
                         var position = controllerdCamera.ScreenToWorldPoint(mousePosition);
+                        Debug.Log(position);
                         var key = new Vector2Int((int)position.x, (int)position.y);
                         TinyServiceLocator.Resolve<ActorManager>().TryGetActor(key)?.OnClick();
                     }
