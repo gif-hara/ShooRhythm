@@ -32,7 +32,7 @@ MonoBehaviour:
       Name: "\u9285\u5EF6\u3079\u68D2"
     - Id: 10203
       Name: "\u3053\u3093\u68D2"
-    - Id: 10203
+    - Id: 10204
       Name: "\u677E\u660E"
   collectionSpecs:
     list:
@@ -52,7 +52,7 @@ MonoBehaviour:
       AcquireItemId: 10201
       CoolTimeSeconds: 2
   collections:
-    serializedRecords:
+    records:
     - <Name>k__BackingField: 10101
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
