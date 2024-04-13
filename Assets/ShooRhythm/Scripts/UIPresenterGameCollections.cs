@@ -13,7 +13,7 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class UIPresenterGameCollection
+    public sealed class UIPresenterGameCollections
     {
         public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
         {
