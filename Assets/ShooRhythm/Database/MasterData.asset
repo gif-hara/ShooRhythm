@@ -122,3 +122,6 @@ MonoBehaviour:
     - Id: 1
       Name: Available.Tab.Items
       Amount: 1
+    - Id: 2
+      Name: Available.Tab.Collections
+      Amount: 1
