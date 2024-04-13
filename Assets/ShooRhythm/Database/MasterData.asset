@@ -34,7 +34,7 @@ MonoBehaviour:
       Name: "\u3053\u3093\u68D2"
     - Id: 10203
       Name: "\u677E\u660E"
-  rewardSpecs:
+  collectionSpecs:
     list:
     - Id: 10101
       AcquireItemId: 10101
@@ -51,7 +51,7 @@ MonoBehaviour:
     - Id: 10201
       AcquireItemId: 10201
       CoolTimeSeconds: 2
-  rewardConditions:
+  collectionConditions:
     list:
     - Key: 10201
       Value:
@@ -74,7 +74,66 @@ MonoBehaviour:
       - Id: 10203
         ConditionName: Item.10101
         ConditionAmount: 2
-  rewards:
+  collectionRewards:
+    list:
+    - Key: 10101
+      Value:
+      - Id: 10101
+        ConditionName: Item.10101
+        ConditionAmount: 1
+    - Key: 10102
+      Value:
+      - Id: 10102
+        ConditionName: Item.10102
+        ConditionAmount: 1
+    - Key: 10103
+      Value:
+      - Id: 10103
+        ConditionName: Item.10103
+        ConditionAmount: 1
+    - Key: 10104
+      Value:
+      - Id: 10104
+        ConditionName: Item.10104
+        ConditionAmount: 1
+    - Key: 10105
+      Value:
+      - Id: 10105
+        ConditionName: Item.10105
+        ConditionAmount: 1
+    - Key: 10106
+      Value:
+      - Id: 10106
+        ConditionName: Item.10106
+        ConditionAmount: 1
+    - Key: 10201
+      Value:
+      - Id: 10201
+        ConditionName: Item.10201
+        ConditionAmount: 1
+      - Id: 10201
+        ConditionName: Item.10103
+        ConditionAmount: -3
+    - Key: 10202
+      Value:
+      - Id: 10202
+        ConditionName: Item.10202
+        ConditionAmount: 1
+      - Id: 10202
+        ConditionName: Item.10101
+        ConditionAmount: -1
+      - Id: 10202
+        ConditionName: Item.10104
+        ConditionAmount: -3
+    - Key: 10203
+      Value:
+      - Id: 10203
+        ConditionName: Item.10203
+        ConditionAmount: 1
+      - Id: 10203
+        ConditionName: Item.10101
+        ConditionAmount: -2
+  collections:
     serializedRecords:
     - <Name>k__BackingField: 10101
       <Required>k__BackingField: []
@@ -115,3 +174,5 @@ MonoBehaviour:
       <Rewards>k__BackingField:
       - <Name>k__BackingField: Item.10201
         <Value>k__BackingField: 1
+      - <Name>k__BackingField: Item.10103
+        <Value>k__BackingField: -3
