@@ -30,7 +30,8 @@ namespace ShooRhythm
             await TinyServiceLocator.Resolve<BootSystem>().IsReady;
             var gameData = new GameData();
             TinyServiceLocator.RegisterAsync(gameData).Forget();
-            TinyServiceLocator.RegisterAsync(new GameController(destroyCancellationToken)).Forget();
+            var gameController = new GameController(destroyCancellationToken);
+            TinyServiceLocator.RegisterAsync(gameController).Forget();
             var gameMessage = new GameMessage();
             TinyServiceLocator.RegisterAsync(gameMessage).Forget();
 
