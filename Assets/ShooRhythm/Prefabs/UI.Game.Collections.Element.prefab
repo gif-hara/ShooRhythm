@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3067066901808307931}
   - component: {fileID: 4207601534769669742}
   m_Layer: 5
-  m_Name: UI.Game.Collection.Element
+  m_Name: UI.Game.Collections.Element
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
