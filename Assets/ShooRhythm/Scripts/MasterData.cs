@@ -27,6 +27,7 @@ namespace ShooRhythm
 
         [SerializeField]
         private Contents rewards;
+        public Contents Rewards => rewards;
 
 #if UNITY_EDITOR
         [ContextMenu("Update")]
