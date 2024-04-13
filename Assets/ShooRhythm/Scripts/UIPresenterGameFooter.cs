@@ -8,7 +8,7 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class UIPresenterGameIndex
+    public sealed class UIPresenterGameFooter
     {
         public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
         {

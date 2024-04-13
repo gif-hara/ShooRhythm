@@ -21,7 +21,7 @@ namespace ShooRhythm
             TinyServiceLocator.RegisterAsync(new GameData()).Forget();
             TinyServiceLocator.RegisterAsync(new GameController()).Forget();
 
-            var uiPresenterGameIndex = new UIPresenterGameIndex();
+            var uiPresenterGameIndex = new UIPresenterGameFooter();
             uiPresenterGameIndex.BeginAsync(gameIndexDocumentPrefab, destroyCancellationToken).Forget();
 
             var uiPresenterGameCollection = new UIPresenterGameCollection();
