@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace TinyStateMachine
+namespace HK
 {
     /// <summary>
     /// Represents a decorator for a TinyStateMachine.
