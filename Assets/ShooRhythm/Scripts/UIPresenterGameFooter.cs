@@ -18,8 +18,8 @@ namespace ShooRhythm
             var document = Object.Instantiate(documentPrefab);
             var listElementParent = document.Q<Transform>("ListElementParent");
             var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
-            CreateListElement("道具", "Available.Tab.Items");
-            CreateListElement("採集", "Available.Tab.Collections");
+            CreateListElement("道具", Define.TabType.Items, "Available.Tab.Items");
+            CreateListElement("採集", Define.TabType.Collections, "Available.Tab.Collections");
 
             await UniTask.WaitUntilCanceled(cancellationToken);
 
@@ -28,14 +28,14 @@ namespace ShooRhythm
                 Object.Destroy(document.gameObject);
             }
 
-            void CreateListElement(string text, string isActiveStatsName)
+            void CreateListElement(string text, Define.TabType tabType, string isActiveStatsName)
             {
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
                 element.Q<TMP_Text>("Text").text = text;
                 element.Q<Button>("Button").OnClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        Debug.Log(text);
+                        TinyServiceLocator.Resolve<GameMessage>().RequestChangeTab.OnNext(tabType);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 var gameData = TinyServiceLocator.Resolve<GameData>();
