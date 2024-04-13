@@ -11,17 +11,17 @@ namespace ShooRhythm
     {
         public Stats Stats { get; } = new Stats();
 
-        private readonly Dictionary<int, int> items = new();
+        public Dictionary<int, int> Items { get; } = new Dictionary<int, int>();
 
         public void SetItem(int id, int count)
         {
-            items[id] = count;
+            Items[id] = count;
             TinyServiceLocator.Resolve<GameMessage>().UpdatedItem.OnNext((id, count));
         }
 
         public int GetItem(int id)
         {
-            return items.TryGetValue(id, out var count) ? count : 0;
+            return Items.TryGetValue(id, out var count) ? count : 0;
         }
     }
 }
