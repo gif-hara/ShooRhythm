@@ -13,12 +13,18 @@ MonoBehaviour:
   m_Name: BootSystem
   m_EditorClassIdentifier: 
   sequences:
-  - rid: 8290056093692592140
+  - rid: 8290056289225539584
+  - rid: 8290056289225539585
   references:
     version: 2
     RefIds:
-    - rid: 8290056093692592140
-      type: {class: InitializeBootSystem, ns: ShooRhythm, asm: Assembly-CSharp}
+    - rid: 8290056289225539584
+      type: {class: InitializeBootGameObject, ns: ShooRhythm, asm: Assembly-CSharp}
       data:
         bootObjects:
         - {fileID: 4005503793223307115, guid: 38139f1b78ae2954a9b2204edbe69106, type: 3}
+    - rid: 8290056289225539585
+      type: {class: InitializeBootScriptableObject, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        bootObjects:
+        - {fileID: 11400000, guid: 99333340664b4eb499a439b6ceabc19a, type: 2}
