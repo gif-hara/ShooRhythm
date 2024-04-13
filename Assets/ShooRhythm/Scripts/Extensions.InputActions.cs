@@ -6,7 +6,7 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public static class Extensions
+    public static partial class Extensions
     {
         public static Observable<InputAction.CallbackContext> OnPerformedAsObservable(this InputAction inputAction)
         {
