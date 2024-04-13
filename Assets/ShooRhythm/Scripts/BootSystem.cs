@@ -79,7 +79,7 @@ namespace ShooRhythm
     }
 
     [Serializable]
-    public class InitializeBootSystem : ISequence
+    public class InitializeBootGameObject : ISequence
     {
         [SerializeField]
         private List<GameObject> bootObjects = default;
@@ -93,6 +93,32 @@ namespace ShooRhythm
                 if (instance.TryGetComponent<IBootable>(out var bootable))
                 {
                     await bootable.BootAsync();
+                }
+                else
+                {
+                    Debug.LogWarning($"{instance.name} is not IBootable.");
+                }
+            }
+        }
+    }
+
+    [Serializable]
+    public class InitializeBootScriptableObject : ISequence
+    {
+        [SerializeField]
+        private List<ScriptableObject> bootObjects = default;
+
+        public async UniTask PlayAsync(Container container, CancellationToken cancellationToken)
+        {
+            foreach (var bootObject in bootObjects)
+            {
+                if (bootObject is IBootable bootable)
+                {
+                    await bootable.BootAsync();
+                }
+                else
+                {
+                    Debug.LogWarning($"{bootObject.name} is not IBootable.");
                 }
             }
         }
