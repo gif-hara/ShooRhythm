@@ -112,6 +112,9 @@ MonoBehaviour:
         ConditionName: Item.10201
         ConditionAmount: 1
       - Id: 10201
+        ConditionName: Item.10101
+        ConditionAmount: -1
+      - Id: 10201
         ConditionName: Item.10103
         ConditionAmount: -3
     - Key: 10202
@@ -174,5 +177,7 @@ MonoBehaviour:
       <Rewards>k__BackingField:
       - <Name>k__BackingField: Item.10201
         <Value>k__BackingField: 1
+      - <Name>k__BackingField: Item.10101
+        <Value>k__BackingField: -1
       - <Name>k__BackingField: Item.10103
         <Value>k__BackingField: -3
