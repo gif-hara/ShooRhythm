@@ -14,10 +14,7 @@ namespace ShooRhythm
         public GameController(CancellationToken cancellationToken)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            Observable.FromEvent<Stats.Record>(
-                x => gameData.Stats.OnChanged += x,
-                x => gameData.Stats.OnChanged -= x
-            )
+            gameData.Stats.OnChanged.AsObservable()
                 .Subscribe(x =>
                 {
                     var startString = "Item.";
