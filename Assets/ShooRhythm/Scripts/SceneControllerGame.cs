@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using UnityEngine;
@@ -16,7 +17,12 @@ namespace ShooRhythm
         private HKUIDocument gameFooterDocumentPrefab;
 
         [SerializeField]
-        private HKUIDocument gameCollectionDocumentPrefab;
+        private HKUIDocument gameItemsDocumentPrefab;
+
+        [SerializeField]
+        private HKUIDocument gameCollectionsDocumentPrefab;
+
+        private readonly TinyStateMachine stateMachine = new();
 
         async UniTask Start()
         {
@@ -36,8 +42,21 @@ namespace ShooRhythm
             var uiPresenterGameFooter = new UIPresenterGameFooter();
             uiPresenterGameFooter.BeginAsync(gameFooterDocumentPrefab, destroyCancellationToken).Forget();
 
+            stateMachine.Change(StateItems);
+        }
+
+        private UniTask StateItems(CancellationToken scope)
+        {
+            var uiPresenterGameItems = new UIPresenterGameItems();
+            uiPresenterGameItems.BeginAsync(gameItemsDocumentPrefab, destroyCancellationToken).Forget();
+            return UniTask.CompletedTask;
+        }
+
+        private UniTask StateCollections(CancellationToken scope)
+        {
             var uiPresenterGameCollection = new UIPresenterGameCollection();
-            uiPresenterGameCollection.BeginAsync(gameCollectionDocumentPrefab, destroyCancellationToken).Forget();
+            uiPresenterGameCollection.BeginAsync(gameCollectionsDocumentPrefab, destroyCancellationToken).Forget();
+            return UniTask.CompletedTask;
         }
     }
 }
