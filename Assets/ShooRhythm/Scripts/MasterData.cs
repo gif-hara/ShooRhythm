@@ -26,6 +26,9 @@ namespace ShooRhythm
         private Contents collections;
         public Contents Collections => collections;
 
+        [SerializeField]
+        private Contents tabContents;
+
 #if UNITY_EDITOR
         [ContextMenu("Update")]
         private async void UpdateMasterData()
