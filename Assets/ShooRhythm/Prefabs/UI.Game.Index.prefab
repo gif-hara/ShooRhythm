@@ -925,7 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
   - document: {fileID: 3402477452134437378}
-    overrideName: ListParent
+    overrideName: ListElementParent
 --- !u!224 &2648174666714030058 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5762878071024019997, guid: c2ff1a9eb622bc846953bb3485368839,

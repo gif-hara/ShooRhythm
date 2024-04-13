@@ -667,7 +667,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
   - document: {fileID: 3402477452134437378}
-    overrideName: ListParent
+    overrideName: ListElementParent
+  - document: {fileID: 756346924569530787, guid: 2104e5aa4615ba64f8dcda72d8bd8bb3,
+      type: 3}
+    overrideName: ListElementPrefab
 --- !u!224 &2648174666714030058 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5762878071024019997, guid: c2ff1a9eb622bc846953bb3485368839,
