@@ -117,3 +117,8 @@ MonoBehaviour:
       <Ignore>k__BackingField: []
       <Conditions>k__BackingField: []
       <Rewards>k__BackingField: []
+  gameStartStats:
+    list:
+    - Id: 1
+      Name: Available.Tab.Items
+      Amount: 1

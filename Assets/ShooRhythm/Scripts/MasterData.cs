@@ -29,6 +29,10 @@ namespace ShooRhythm
         [SerializeField]
         private Contents tabContents;
 
+        [SerializeField]
+        private GameStartStatsData.DictionaryList gameStartStats;
+        public GameStartStatsData.DictionaryList GameStartStats => gameStartStats;
+
 #if UNITY_EDITOR
         [ContextMenu("Update")]
         private async void UpdateMasterData()
@@ -38,7 +42,8 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("Item"),
                 GoogleSpreadSheetDownloader.DownloadAsync("CollectionSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("CollectionCondition"),
-                GoogleSpreadSheetDownloader.DownloadAsync("CollectionReward")
+                GoogleSpreadSheetDownloader.DownloadAsync("CollectionReward"),
+                GoogleSpreadSheetDownloader.DownloadAsync("GameStartStats")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
@@ -46,6 +51,7 @@ namespace ShooRhythm
             collectionConditions.Set(JsonHelper.FromJson<CollectionCondition>(database.Item3));
             var collectionRewards = new CollectionReward.Group();
             collectionRewards.Set(JsonHelper.FromJson<CollectionReward>(database.Item4));
+            gameStartStats.Set(JsonHelper.FromJson<GameStartStatsData>(database.Item5));
             var rewardRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
             {
@@ -143,6 +149,22 @@ namespace ShooRhythm
             public sealed class Group : Group<int, CollectionReward>
             {
                 public Group() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class GameStartStatsData
+        {
+            public int Id;
+
+            public string Name;
+
+            public int Amount;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, GameStartStatsData>
+            {
+                public DictionaryList() : base(x => x.Id) { }
             }
         }
     }
