@@ -11,5 +11,12 @@ namespace ShooRhythm
             Collection = 1,
             Production = 2,
         }
+
+        public enum TabType
+        {
+            None = 0,
+            Items = 1,
+            Collections = 2,
+        }
     }
 }
