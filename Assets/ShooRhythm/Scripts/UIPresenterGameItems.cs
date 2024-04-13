@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ShooRhythm
 {
@@ -16,6 +17,8 @@ namespace ShooRhythm
         {
             var document = Object.Instantiate(documentPrefab);
             var elementParent = document.Q<Transform>("ListElementParent");
+            var parentLayout = document.Q<GridLayoutGroup>("ListElementParent");
+            parentLayout.SetConstraintCount();
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             var elements = new List<(int id, GameObject gameObject)>();
             var gameData = TinyServiceLocator.Resolve<GameData>();
