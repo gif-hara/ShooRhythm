@@ -564,7 +564,9 @@ MonoBehaviour:
     type: 3}
   gameFooterDocumentPrefab: {fileID: 2154618791193963821, guid: da34287096ad1384599e69eed35f4d2b,
     type: 3}
-  gameCollectionDocumentPrefab: {fileID: 8952608029526600457, guid: a5a513c0a43c44c4b87d8c780a7b3b55,
+  gameItemsDocumentPrefab: {fileID: 8952608029526600457, guid: 9aa3dc84b6f166746a6790a45210f7f7,
+    type: 3}
+  gameCollectionsDocumentPrefab: {fileID: 8952608029526600457, guid: a5a513c0a43c44c4b87d8c780a7b3b55,
     type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
