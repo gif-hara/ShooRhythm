@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
@@ -20,7 +21,9 @@ namespace ShooRhythm
             var elementParent = document.Q<Transform>("ListElementParent");
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             var elements = new List<(int id, GameObject gameObject)>();
-            foreach (var i in TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List)
+            var specs = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List
+                .Where(x => x.CollectionType == Define.CollectionType.Collection);
+            foreach (var i in specs)
             {
                 var element = Object.Instantiate(elementPrefab, elementParent);
                 element.Q<TMP_Text>("Text").text = i.GetItem().Name;
