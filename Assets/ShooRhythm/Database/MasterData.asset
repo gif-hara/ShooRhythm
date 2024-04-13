@@ -39,18 +39,23 @@ MonoBehaviour:
     - Id: 10101
       AcquireItemId: 10101
       CoolTimeSeconds: 1
+      CollectionType: 1
     - Id: 10102
       AcquireItemId: 10102
       CoolTimeSeconds: 1
+      CollectionType: 1
     - Id: 10103
       AcquireItemId: 10103
       CoolTimeSeconds: 1
+      CollectionType: 1
     - Id: 10104
       AcquireItemId: 10104
       CoolTimeSeconds: 1
+      CollectionType: 1
     - Id: 10201
       AcquireItemId: 10201
       CoolTimeSeconds: 2
+      CollectionType: 2
   collections:
     records:
     - <Name>k__BackingField: 10101

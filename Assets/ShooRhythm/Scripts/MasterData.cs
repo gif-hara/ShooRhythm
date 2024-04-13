@@ -102,6 +102,8 @@ namespace ShooRhythm
 
             public int CoolTimeSeconds;
 
+            public Define.CollectionType CollectionType;
+
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, CollectionSpec>
             {
