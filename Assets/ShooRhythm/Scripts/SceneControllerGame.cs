@@ -12,9 +12,6 @@ namespace ShooRhythm
     public sealed class SceneControllerGame : MonoBehaviour
     {
         [SerializeField]
-        private HKUIDocument gameHeaderDocumentPrefab;
-
-        [SerializeField]
         private HKUIDocument gameFooterDocumentPrefab;
 
         [SerializeField]
@@ -54,9 +51,6 @@ namespace ShooRhythm
             {
                 gameData.Stats.Set(i.Name, i.Amount);
             }
-
-            var uiPresenterGameHeader = new UIPresenterGameHeader();
-            uiPresenterGameHeader.BeginAsync(gameHeaderDocumentPrefab, destroyCancellationToken).Forget();
 
             var uiPresenterGameFooter = new UIPresenterGameFooter();
             uiPresenterGameFooter.BeginAsync(gameFooterDocumentPrefab, destroyCancellationToken).Forget();
