@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using R3;
 using UnityEngine;
 
 namespace SCD
@@ -14,7 +16,14 @@ namespace SCD
         /// <summary>
         /// 変更があった際に呼び出されるイベント
         /// </summary>
-        public Action<Record> OnChanged;
+        public event Action<Record> OnChanged;
+
+        public Observable<Record> OnChangedAsObservable(CancellationToken cancellationToken = default) =>
+            Observable.FromEvent<Record>(
+                x => OnChanged += x,
+                x => OnChanged -= x,
+                cancellationToken
+            );
 
         /// <summary>
         /// 統計データを設定する
