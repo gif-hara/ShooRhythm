@@ -7,6 +7,6 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameData
     {
-        private readonly Stats stats;
+        public Stats Stats { get; } = new Stats();
     }
 }
