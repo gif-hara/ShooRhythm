@@ -18,8 +18,11 @@ namespace ShooRhythm
         public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
-            var elementParent = document.Q<Transform>("ListElementParent");
+            var listElementParentName = "ListElementParent";
+            var elementParent = document.Q<RectTransform>(listElementParentName);
+            var parentLayout = document.Q<GridLayoutGroup>(listElementParentName);
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
+            parentLayout.SetConstraintCount();
             var elements = new List<(int id, GameObject gameObject)>();
             var specs = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List
                 .Where(x => x.CollectionType == Define.CollectionType.Collection);
