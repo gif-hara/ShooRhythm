@@ -1,6 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
+using R3;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -30,7 +31,24 @@ namespace ShooRhythm
             var gameData = new GameData();
             TinyServiceLocator.RegisterAsync(gameData).Forget();
             TinyServiceLocator.RegisterAsync(new GameController(destroyCancellationToken)).Forget();
-            TinyServiceLocator.RegisterAsync(new GameMessage()).Forget();
+            var gameMessage = new GameMessage();
+            TinyServiceLocator.RegisterAsync(gameMessage).Forget();
+
+            gameMessage.RequestChangeTab
+                .Subscribe(x =>
+                {
+                    switch (x)
+                    {
+                        case Define.TabType.Items:
+                            stateMachine.Change(StateItems);
+                            break;
+                        case Define.TabType.Collections:
+                            stateMachine.Change(StateCollections);
+                            break;
+                    }
+                })
+                .RegisterTo(destroyCancellationToken);
+
             foreach (var i in TinyServiceLocator.Resolve<MasterData>().GameStartStats.List)
             {
                 gameData.Stats.Set(i.Name, i.Amount);
@@ -48,14 +66,14 @@ namespace ShooRhythm
         private UniTask StateItems(CancellationToken scope)
         {
             var uiPresenterGameItems = new UIPresenterGameItems();
-            uiPresenterGameItems.BeginAsync(gameItemsDocumentPrefab, destroyCancellationToken).Forget();
+            uiPresenterGameItems.BeginAsync(gameItemsDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
 
         private UniTask StateCollections(CancellationToken scope)
         {
             var uiPresenterGameCollection = new UIPresenterGameCollection();
-            uiPresenterGameCollection.BeginAsync(gameCollectionsDocumentPrefab, destroyCancellationToken).Forget();
+            uiPresenterGameCollection.BeginAsync(gameCollectionsDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
     }
