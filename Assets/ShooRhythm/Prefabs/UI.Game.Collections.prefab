@@ -95,8 +95,8 @@ MonoBehaviour:
   m_StartAxis: 1
   m_CellSize: {x: 240, y: 80}
   m_Spacing: {x: 20, y: 20}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Constraint: 2
+  m_ConstraintCount: 5
 --- !u!114 &6490519748605009156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,7 +491,7 @@ PrefabInstance:
     - target: {fileID: 11689483585671295, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
       propertyPath: m_Name
-      value: UI.Game.Collection
+      value: UI.Game.Collections
       objectReference: {fileID: 0}
     - target: {fileID: 384408483301391178, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
