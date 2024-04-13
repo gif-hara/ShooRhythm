@@ -12,6 +12,9 @@ namespace ShooRhythm
         [SerializeField]
         private HKUIDocument gameIndexDocumentPrefab;
 
+        [SerializeField]
+        private HKUIDocument gameCollectionDocumentPrefab;
+
         async UniTask Start()
         {
             await TinyServiceLocator.Resolve<BootSystem>().IsReady;
@@ -19,6 +22,9 @@ namespace ShooRhythm
 
             var uiPresenterGameIndex = new UIPresenterGameIndex();
             uiPresenterGameIndex.BeginAsync(gameIndexDocumentPrefab, destroyCancellationToken).Forget();
+
+            var uiPresenterGameCollection = new UIPresenterGameCollection();
+            uiPresenterGameCollection.BeginAsync(gameCollectionDocumentPrefab, destroyCancellationToken).Forget();
         }
     }
 }
