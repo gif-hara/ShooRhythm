@@ -40,7 +40,7 @@ namespace ShooRhythm
                     .RegisterTo(element.destroyCancellationToken);
                 var gameData = TinyServiceLocator.Resolve<GameData>();
                 element.gameObject.SetActiveIfNeed(gameData.Stats.Contains(isActiveStatsName));
-                gameData.Stats.OnChanged.AsObservable()
+                gameData.Stats.OnChangedAsObservable()
                     .Where(x => x.Name == isActiveStatsName)
                     .Subscribe(x =>
                     {
