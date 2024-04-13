@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace SCD
@@ -11,46 +12,23 @@ namespace SCD
     public class Contents
     {
         [SerializeField]
-        private List<Record> serializedRecords;
-
-        private Dictionary<string, Record> records = null;
-
-        /// <summary>
-        /// コンテンツの一覧
-        /// </summary>
-        public IReadOnlyDictionary<string, Record> Records => records;
+        private Record[] records = new Record[0];
 
         public Contents(IEnumerable<Record> records)
         {
-            serializedRecords = new List<Record>(records);
-            InitializeIfNeed();
+            this.records = records.ToArray();
         }
 
         /// <summary>
         /// 利用可能なコンテンツを取得する
         /// </summary>
-        public IReadOnlyList<Record> GetAvailable(Stats stats)
+        public IEnumerable<Record> GetAvailables(Stats stats)
         {
-            InitializeIfNeed();
-            var list = new List<Record>();
-            foreach (var record in records.Values)
+            foreach (var i in records)
             {
-                if (record.IsAvailable(stats) && !record.BeIgnored(stats))
+                if (i.IsAvailable(stats) && !i.BeIgnored(stats))
                 {
-                    list.Add(record);
-                }
-            }
-            return list;
-        }
-
-        private void InitializeIfNeed()
-        {
-            if (records == null)
-            {
-                records = new Dictionary<string, Record>();
-                foreach (var record in serializedRecords)
-                {
-                    records.Add(record.Name, record);
+                    yield return i;
                 }
             }
         }
