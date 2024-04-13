@@ -14,7 +14,7 @@ namespace SCD
         /// <summary>
         /// 変更があった際に呼び出されるイベント
         /// </summary>
-        public event Action<Record> OnChanged;
+        public Action<Record> OnChanged;
 
         /// <summary>
         /// 統計データを設定する
