@@ -18,6 +18,10 @@ namespace ShooRhythm
         public Item.DictionaryList Items => items;
 
         [SerializeField]
+        private CollectionSpec.DictionaryList collectionSpecs;
+        public CollectionSpec.DictionaryList CollectionSpecs => collectionSpecs;
+
+        [SerializeField]
         private Contents collections;
         public Contents Collections => collections;
 
@@ -33,7 +37,6 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("CollectionReward")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
-            var collectionSpecs = new CollectionSpec.DictionaryList();
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
             var collectionConditions = new CollectionCondition.Group();
             collectionConditions.Set(JsonHelper.FromJson<CollectionCondition>(database.Item3));
