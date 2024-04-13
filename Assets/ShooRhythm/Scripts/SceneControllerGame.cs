@@ -10,7 +10,10 @@ namespace ShooRhythm
     public sealed class SceneControllerGame : MonoBehaviour
     {
         [SerializeField]
-        private HKUIDocument gameIndexDocumentPrefab;
+        private HKUIDocument gameHeaderDocumentPrefab;
+
+        [SerializeField]
+        private HKUIDocument gameFooterDocumentPrefab;
 
         [SerializeField]
         private HKUIDocument gameCollectionDocumentPrefab;
@@ -21,8 +24,11 @@ namespace ShooRhythm
             TinyServiceLocator.RegisterAsync(new GameData()).Forget();
             TinyServiceLocator.RegisterAsync(new GameController()).Forget();
 
-            var uiPresenterGameIndex = new UIPresenterGameFooter();
-            uiPresenterGameIndex.BeginAsync(gameIndexDocumentPrefab, destroyCancellationToken).Forget();
+            var uiPresenterGameHeader = new UIPresenterGameHeader();
+            uiPresenterGameHeader.BeginAsync(gameHeaderDocumentPrefab, destroyCancellationToken).Forget();
+
+            var uiPresenterGameFooter = new UIPresenterGameFooter();
+            uiPresenterGameFooter.BeginAsync(gameFooterDocumentPrefab, destroyCancellationToken).Forget();
 
             var uiPresenterGameCollection = new UIPresenterGameCollection();
             uiPresenterGameCollection.BeginAsync(gameCollectionDocumentPrefab, destroyCancellationToken).Forget();
