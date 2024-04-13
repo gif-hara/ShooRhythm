@@ -72,8 +72,8 @@ namespace ShooRhythm
 
         private UniTask StateCollections(CancellationToken scope)
         {
-            var uiPresenterGameCollection = new UIPresenterGameCollections();
-            uiPresenterGameCollection.BeginAsync(gameCollectionsDocumentPrefab, scope).Forget();
+            var uiPresenterGameCollections = new UIPresenterGameCollections();
+            uiPresenterGameCollections.BeginAsync(gameCollectionsDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
     }
