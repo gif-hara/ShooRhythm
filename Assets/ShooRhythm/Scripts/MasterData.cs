@@ -33,6 +33,12 @@ namespace ShooRhythm
         private GameStartStatsData.DictionaryList gameStartStats;
         public GameStartStatsData.DictionaryList GameStartStats => gameStartStats;
 
+        public UniTask BootAsync()
+        {
+            TinyServiceLocator.Register(this);
+            return UniTask.CompletedTask;
+        }
+
 #if UNITY_EDITOR
         [ContextMenu("Update")]
         private async void UpdateMasterData()
@@ -79,12 +85,6 @@ namespace ShooRhythm
             UnityEditor.EditorUtility.SetDirty(this);
             UnityEditor.AssetDatabase.SaveAssets();
             Debug.Log("End MasterData Update");
-        }
-
-        public UniTask BootAsync()
-        {
-            TinyServiceLocator.Register(this);
-            return UniTask.CompletedTask;
         }
 #endif
 
