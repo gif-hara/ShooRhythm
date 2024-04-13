@@ -19,6 +19,7 @@ namespace ShooRhythm
         {
             await TinyServiceLocator.Resolve<BootSystem>().IsReady;
             TinyServiceLocator.RegisterAsync(new GameData()).Forget();
+            TinyServiceLocator.RegisterAsync(new GameController()).Forget();
 
             var uiPresenterGameIndex = new UIPresenterGameIndex();
             uiPresenterGameIndex.BeginAsync(gameIndexDocumentPrefab, destroyCancellationToken).Forget();
