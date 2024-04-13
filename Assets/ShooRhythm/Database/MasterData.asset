@@ -22,30 +22,96 @@ MonoBehaviour:
       Name: "\u9244\u9271\u77F3"
     - Id: 10104
       Name: "\u9285\u9271\u77F3"
+    - Id: 10105
+      Name: "\u5E03"
+    - Id: 10106
+      Name: "\u30B8\u30A7\u30EB"
     - Id: 10201
       Name: "\u9244\u5EF6\u3079\u68D2"
     - Id: 10202
       Name: "\u9285\u5EF6\u3079\u68D2"
-  rewards:
+    - Id: 10203
+      Name: "\u3053\u3093\u68D2"
+    - Id: 10203
+      Name: "\u677E\u660E"
+  rewardSpecs:
     list:
-    - Id: 1
+    - Id: 10101
       AcquireItemId: 10101
-      ConditionId: 0
+      CoolTimeSeconds: 1
+    - Id: 10102
+      AcquireItemId: 10102
+      CoolTimeSeconds: 1
+    - Id: 10103
+      AcquireItemId: 10103
+      CoolTimeSeconds: 1
+    - Id: 10104
+      AcquireItemId: 10104
+      CoolTimeSeconds: 1
+    - Id: 10201
+      AcquireItemId: 10201
+      CoolTimeSeconds: 2
   rewardConditions:
     list:
     - Key: 10201
       Value:
       - Id: 10201
-        RequiredItemId: 10101
-        RequiredItemAmount: 1
+        ConditionName: Item.10101
+        ConditionAmount: 1
       - Id: 10201
-        RequiredItemId: 10103
-        RequiredItemAmount: 3
+        ConditionName: Item.10103
+        ConditionAmount: 3
     - Key: 10202
       Value:
       - Id: 10202
-        RequiredItemId: 10101
-        RequiredItemAmount: 1
+        ConditionName: Item.10101
+        ConditionAmount: 1
       - Id: 10202
-        RequiredItemId: 10104
-        RequiredItemAmount: 3
+        ConditionName: Item.10104
+        ConditionAmount: 3
+    - Key: 10203
+      Value:
+      - Id: 10203
+        ConditionName: Item.10101
+        ConditionAmount: 2
+  rewards:
+    serializedRecords:
+    - <Name>k__BackingField: 10101
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10101
+        <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10102
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10102
+        <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10103
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10103
+        <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10104
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10104
+        <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10201
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField:
+      - <Name>k__BackingField: Item.10101
+        <Value>k__BackingField: 1
+      - <Name>k__BackingField: Item.10103
+        <Value>k__BackingField: 3
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10201
+        <Value>k__BackingField: 1

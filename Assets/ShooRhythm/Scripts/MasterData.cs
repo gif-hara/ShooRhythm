@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using SCD;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -17,12 +18,15 @@ namespace ShooRhythm
         public Item.DictionaryList Items => items;
 
         [SerializeField]
-        private Reward.DictionaryList rewards;
-        public Reward.DictionaryList Rewards => rewards;
+        private RewardSpec.DictionaryList rewardSpecs;
+        public RewardSpec.DictionaryList RewardSpecs => rewardSpecs;
 
         [SerializeField]
         private RewardCondition.Group rewardConditions;
         public RewardCondition.Group RewardConditions => rewardConditions;
+
+        [SerializeField]
+        private Contents rewards;
 
 #if UNITY_EDITOR
         [ContextMenu("Update")]
@@ -31,12 +35,32 @@ namespace ShooRhythm
             Debug.Log("Begin MasterData Update");
             var database = await UniTask.WhenAll(
                 GoogleSpreadSheetDownloader.DownloadAsync("Item"),
-                GoogleSpreadSheetDownloader.DownloadAsync("Reward"),
+                GoogleSpreadSheetDownloader.DownloadAsync("RewardSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("RewardCondition")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
-            rewards.Set(JsonHelper.FromJson<Reward>(database.Item2));
+            rewardSpecs.Set(JsonHelper.FromJson<RewardSpec>(database.Item2));
             rewardConditions.Set(JsonHelper.FromJson<RewardCondition>(database.Item3));
+            var rewardRecords = new List<Contents.Record>();
+            foreach (var rewardSpec in rewardSpecs.List)
+            {
+                var conditions = new List<Stats.Record>();
+                if (rewardConditions.TryGetValue(rewardSpec.Id, out var c))
+                {
+                    conditions.AddRange(c.Select(x => new Stats.Record(x.ConditionName, x.ConditionAmount)));
+                }
+                var rewardRecord = new Contents.Record(
+                    rewardSpec.Id.ToString(),
+                    new List<Stats.Record>(),
+                    new List<Stats.Record>(),
+                    conditions,
+                    new List<Stats.Record>
+                    {
+                        new($"Item.{rewardSpec.AcquireItemId}", 1)
+                    });
+                rewardRecords.Add(rewardRecord);
+            }
+            rewards = new Contents(rewardRecords);
 
             UnityEditor.EditorUtility.SetDirty(this);
             UnityEditor.AssetDatabase.SaveAssets();
@@ -59,16 +83,16 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class Reward
+        public class RewardSpec
         {
             public int Id;
 
             public int AcquireItemId;
 
-            public int ConditionId;
+            public int CoolTimeSeconds;
 
             [Serializable]
-            public sealed class DictionaryList : DictionaryList<int, Reward>
+            public sealed class DictionaryList : DictionaryList<int, RewardSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }
@@ -79,9 +103,9 @@ namespace ShooRhythm
         {
             public int Id;
 
-            public int RequiredItemId;
+            public string ConditionName;
 
-            public int RequiredItemAmount;
+            public int ConditionAmount;
 
             [Serializable]
             public sealed class Group : Group<int, RewardCondition>
