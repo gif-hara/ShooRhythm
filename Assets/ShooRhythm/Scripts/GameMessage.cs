@@ -7,8 +7,8 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameMessage
     {
-        public readonly Subject<Unit> RequestShowItemList = new();
-
         public readonly Subject<(int id, int count)> UpdatedItem = new();
+
+        public readonly Subject<Define.TabType> RequestChangeTab = new();
     }
 }
