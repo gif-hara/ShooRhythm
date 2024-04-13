@@ -30,7 +30,8 @@ namespace ShooRhythm
                 element.Q<Button>("Button").OnClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        Debug.Log($"Clicked: {i.Id}");
+                        TinyServiceLocator.Resolve<GameController>()
+                            .AddStats($"Item.{i.AcquireItemId}", 1);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 elements.Add((i.Id, element.gameObject));
