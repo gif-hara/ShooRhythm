@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using HK;
 using SCD;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace ShooRhythm
     /// 
     /// </summary>
     [CreateAssetMenu(fileName = "MasterData", menuName = "ShooRhythm/MasterData")]
-    public sealed class MasterData : ScriptableObject
+    public sealed class MasterData : ScriptableObject, IBootable
     {
         [SerializeField]
         private Item.DictionaryList items;
@@ -69,6 +70,12 @@ namespace ShooRhythm
             UnityEditor.EditorUtility.SetDirty(this);
             UnityEditor.AssetDatabase.SaveAssets();
             Debug.Log("End MasterData Update");
+        }
+
+        public UniTask BootAsync()
+        {
+            TinyServiceLocator.Register(this);
+            return UniTask.CompletedTask;
         }
 #endif
 
