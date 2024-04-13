@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
-using R3;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ShooRhythm
 {
@@ -26,7 +23,8 @@ namespace ShooRhythm
             {
                 var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(i.Key);
                 var element = Object.Instantiate(elementPrefab, elementParent);
-                element.Q<TMP_Text>("Text").text = masterDataItem.Name;
+                element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
+                element.Q<TMP_Text>("Text.Number").text = i.Value.ToString();
                 elements.Add((i.Key, element.gameObject));
             }
 
