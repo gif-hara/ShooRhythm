@@ -21,9 +21,14 @@ namespace ShooRhythm
         async UniTask Start()
         {
             await TinyServiceLocator.Resolve<BootSystem>().IsReady;
-            TinyServiceLocator.RegisterAsync(new GameData()).Forget();
+            var gameData = new GameData();
+            TinyServiceLocator.RegisterAsync(gameData).Forget();
             TinyServiceLocator.RegisterAsync(new GameController(destroyCancellationToken)).Forget();
             TinyServiceLocator.RegisterAsync(new GameMessage()).Forget();
+            foreach (var i in TinyServiceLocator.Resolve<MasterData>().GameStartStats.List)
+            {
+                gameData.Stats.Set(i.Name, i.Amount);
+            }
 
             var uiPresenterGameHeader = new UIPresenterGameHeader();
             uiPresenterGameHeader.BeginAsync(gameHeaderDocumentPrefab, destroyCancellationToken).Forget();
