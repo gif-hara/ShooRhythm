@@ -63,7 +63,6 @@ namespace ShooRhythm
 
             void ObserveListElementProductButton(HKUIDocument element, int machineId)
             {
-                Debug.Log("ObserveListElementProductButton");
                 element.Q<Button>("Product.Button").OnClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
