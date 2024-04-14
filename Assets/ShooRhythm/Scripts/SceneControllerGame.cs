@@ -20,6 +20,9 @@ namespace ShooRhythm
         [SerializeField]
         private HKUIDocument gameCollectionsDocumentPrefab;
 
+        [SerializeField]
+        private HKUIDocument gameProductionsDocumentPrefab;
+
         private readonly TinyStateMachine stateMachine = new();
 
         async UniTask Start()
@@ -42,6 +45,9 @@ namespace ShooRhythm
                             break;
                         case Define.TabType.Collections:
                             stateMachine.Change(StateCollections);
+                            break;
+                        case Define.TabType.Productions:
+                            stateMachine.Change(StateProductions);
                             break;
                     }
                 })
@@ -69,6 +75,13 @@ namespace ShooRhythm
         {
             var uiPresenterGameCollections = new UIPresenterGameCollections();
             uiPresenterGameCollections.BeginAsync(gameCollectionsDocumentPrefab, scope).Forget();
+            return UniTask.CompletedTask;
+        }
+
+        private UniTask StateProductions(CancellationToken scope)
+        {
+            var uiPresenterGameProductions = new UIPresenterGameProductions();
+            uiPresenterGameProductions.BeginAsync(gameProductionsDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
     }
