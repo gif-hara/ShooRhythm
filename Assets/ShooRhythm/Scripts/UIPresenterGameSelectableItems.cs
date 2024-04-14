@@ -15,6 +15,9 @@ namespace ShooRhythm
     /// </summary>
     public sealed class UIPresenterGameSelectItems
     {
+        private readonly Subject<int> onSelectedItem = new();
+        public Observable<int> OnSelectedItem => onSelectedItem;
+
         public UniTask BeginAsync(HKUIDocument document, CancellationToken cancellationToken)
         {
             var listElementParentName = "ListElementParent";
@@ -34,7 +37,7 @@ namespace ShooRhythm
                 element.Q<Button>("Button").OnClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        Debug.Log($"Item.{i.Key}");
+                        onSelectedItem.OnNext(i.Key);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 elements.Add((i.Key, element.gameObject));
