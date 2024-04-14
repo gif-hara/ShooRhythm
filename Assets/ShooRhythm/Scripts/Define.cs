@@ -17,6 +17,7 @@ namespace ShooRhythm
             None = 0,
             Items = 1,
             Collections = 2,
+            Productions = 3,
         }
     }
 }
