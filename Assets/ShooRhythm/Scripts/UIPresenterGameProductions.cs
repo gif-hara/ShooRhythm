@@ -73,6 +73,11 @@ namespace ShooRhythm
                             return;
                         }
                         var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Get(itemId.ToString());
+                        if (collection == null)
+                        {
+                            Debug.LogWarning($"Collection is null. CollectionId:{itemId}");
+                            return;
+                        }
                         if (!collection.IsCompleted(gameData.Stats))
                         {
                             return;
