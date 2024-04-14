@@ -33,6 +33,11 @@ namespace SCD
             }
         }
 
+        public Record Get(string name)
+        {
+            return records.First(x => x.Name == name);
+        }
+
         [Serializable]
         public class Record
         {
