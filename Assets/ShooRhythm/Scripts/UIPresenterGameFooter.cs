@@ -20,6 +20,7 @@ namespace ShooRhythm
             var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             CreateListElement("道具", Define.TabType.Items, "Available.Tab.Items");
             CreateListElement("採集", Define.TabType.Collections, "Available.Tab.Collections");
+            CreateListElement("製作", Define.TabType.Productions, "Available.Tab.Productions");
 
             await UniTask.WaitUntilCanceled(cancellationToken);
 
