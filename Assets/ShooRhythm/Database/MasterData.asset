@@ -129,5 +129,5 @@ MonoBehaviour:
       Name: Available.Tab.Productions
       Amount: 1
     - Id: 4
-      Name: Productions.MakerNumber
+      Name: Productions.MachineNumber
       Amount: 1
