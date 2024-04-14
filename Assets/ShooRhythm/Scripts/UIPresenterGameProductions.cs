@@ -19,7 +19,7 @@ namespace ShooRhythm
             var listElementParent = document.Q<Transform>("ListElementParent");
             var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            var alreadyShowSelectableItems = false;
+            var alreadyShowSelectItems = false;
             for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
             {
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
@@ -37,14 +37,14 @@ namespace ShooRhythm
 
             void ShowSelectableItems()
             {
-                if (alreadyShowSelectableItems)
+                if (alreadyShowSelectItems)
                 {
                     return;
                 }
-                alreadyShowSelectableItems = true;
-                var selectableItemsDocument = document.Q<HKUIDocument>("SelectableItems");
-                var uiPresenterSelectableItems = new UIPresenterGameSelectableItems();
-                uiPresenterSelectableItems.BeginAsync(selectableItemsDocument, cancellationToken).Forget();
+                alreadyShowSelectItems = true;
+                var selectItemsDocument = document.Q<HKUIDocument>("SelectItems");
+                var uiPresenterSelectItems = new UIPresenterGameSelectItems();
+                uiPresenterSelectItems.BeginAsync(selectItemsDocument, cancellationToken).Forget();
             }
 
             void ObserveListElementSlotButton(HKUIDocument element, int slotId)
