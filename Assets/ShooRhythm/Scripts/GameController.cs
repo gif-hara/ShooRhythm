@@ -1,6 +1,9 @@
 using System.Threading;
+using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using SCD;
+using UnityEngine;
 
 namespace ShooRhythm
 {
@@ -25,14 +28,28 @@ namespace ShooRhythm
                 .RegisterTo(cancellationToken);
         }
 
-        public void AddStats(string name, int value)
+        public UniTask<bool> AddStats(string name, int value)
         {
-            TinyServiceLocator.Resolve<GameData>().Stats.Add(name, value);
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            gameData.Stats.Add(name, value);
+            Debug.Log(gameData.Stats);
+            return UniTask.FromResult(true);
         }
 
-        public void SetStats(string name, int value)
+        public UniTask<bool> SetStatsAsync(string name, int value)
         {
-            TinyServiceLocator.Resolve<GameData>().Stats.Set(name, value);
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            gameData.Stats.Set(name, value);
+            Debug.Log(gameData.Stats);
+            return UniTask.FromResult(true);
+        }
+
+        public UniTask<bool> CollectingAsync(Contents.Record collection)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            collection.ApplyRewards(gameData.Stats);
+            Debug.Log(gameData.Stats);
+            return UniTask.FromResult(true);
         }
     }
 }

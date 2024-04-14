@@ -49,12 +49,12 @@ namespace ShooRhythm
                 var uiPresenterSelectItems = new UIPresenterGameSelectItems();
                 uiPresenterSelectItems.BeginAsync(selectItemsDocument, cancellationToken).Forget();
                 uiPresenterSelectItems.OnSelectedItem
-                    .Subscribe(itemId =>
+                    .SubscribeAwait(async (itemId, ct) =>
                     {
                         var slotId = selectSlotId % 3;
                         var machineId = selectSlotId / 3;
                         selectSlotElement.Q<TMP_Text>($"Slot.{slotId}.Text.Name").text = TinyServiceLocator.Resolve<MasterData>().Items.Get(itemId).Name;
-                        gameController.SetStats($"Productions.Machine.{machineId}.Slot.{slotId}.ItemId", itemId);
+                        await gameController.SetStatsAsync($"Productions.Machine.{machineId}.Slot.{slotId}.ItemId", itemId);
                     })
                     .RegisterTo(cancellationToken);
             }
