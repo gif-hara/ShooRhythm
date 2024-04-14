@@ -80,6 +80,7 @@ namespace ShooRhythm
                         }
                         if (!collection.IsCompleted(gameData.Stats))
                         {
+                            Debug.Log("TODO Not Completed Collection");
                             return;
                         }
                         await gameController.CollectingAsync(collection);
