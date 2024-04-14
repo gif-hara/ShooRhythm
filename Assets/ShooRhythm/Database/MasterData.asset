@@ -128,3 +128,6 @@ MonoBehaviour:
     - Id: 3
       Name: Available.Tab.Productions
       Amount: 1
+    - Id: 4
+      Name: Productions.MakerNumber
+      Amount: 1
