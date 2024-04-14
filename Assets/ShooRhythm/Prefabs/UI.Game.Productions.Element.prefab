@@ -229,13 +229,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elements:
   - document: {fileID: 2141326149046591709}
-    overrideName: Button.Product
+    overrideName: Product.Button
+  - document: {fileID: 308806383973978061}
+    overrideName: Product.Text.Name
   - document: {fileID: 8121653358563318507}
-    overrideName: 
+    overrideName: Slot.0.Button
   - document: {fileID: 3559049917548347883}
-    overrideName: 
+    overrideName: Slot.1.Button
   - document: {fileID: 6167300453787967550}
-    overrideName: 
+    overrideName: Slot.2.Button
+  - document: {fileID: 5753449529532263523}
+    overrideName: Slot.0.Text.Name
+  - document: {fileID: 8117214437607493582}
+    overrideName: Slot.1.Text.Name
+  - document: {fileID: 5522285696644274289}
+    overrideName: Slot.2.Text.Name
 --- !u!1 &2141326149046591709
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,9 +17,11 @@ namespace ShooRhythm
         {
             var document = Object.Instantiate(documentPrefab);
             var selectSlotId = -1;
+            HKUIDocument selectSlotElement;
             var listElementParent = document.Q<Transform>("ListElementParent");
             var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             var gameData = TinyServiceLocator.Resolve<GameData>();
+            var gameController = TinyServiceLocator.Resolve<GameController>();
             var alreadyShowSelectItems = false;
             for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
             {
@@ -45,14 +48,24 @@ namespace ShooRhythm
                 var selectItemsDocument = document.Q<HKUIDocument>("SelectItems");
                 var uiPresenterSelectItems = new UIPresenterGameSelectItems();
                 uiPresenterSelectItems.BeginAsync(selectItemsDocument, cancellationToken).Forget();
+                uiPresenterSelectItems.OnSelectedItem
+                    .Subscribe(itemId =>
+                    {
+                        var slotId = selectSlotId % 3;
+                        var machineId = selectSlotId / 3;
+                        selectSlotElement.Q<TMP_Text>($"Slot.{slotId}.Text.Name").text = TinyServiceLocator.Resolve<MasterData>().Items.Get(itemId).Name;
+                        gameController.SetStats($"Productions.Machine.{machineId}.Slot.{slotId}.ItemId", itemId);
+                    })
+                    .RegisterTo(cancellationToken);
             }
 
             void ObserveListElementSlotButton(HKUIDocument element, int slotId)
             {
-                element.Q<Button>($"Button.Slot.{slotId % 3}").OnClickAsObservable()
+                element.Q<Button>($"Slot.{slotId % 3}.Button").OnClickAsObservable()
                     .Subscribe(_ =>
                     {
                         selectSlotId = slotId;
+                        selectSlotElement = element;
                         ShowSelectableItems();
                     })
                     .RegisterTo(element.destroyCancellationToken);
