@@ -26,6 +26,7 @@ namespace ShooRhythm
                 })
                 .RegisterTo(cancellationToken);
         }
+
         public void AddStats(string name, int value)
         {
             TinyServiceLocator.Resolve<GameData>().Stats.Add(name, value);
