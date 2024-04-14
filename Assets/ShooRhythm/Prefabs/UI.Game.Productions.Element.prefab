@@ -228,10 +228,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elements:
-  - document: {fileID: 756346924569530787}
-    overrideName: Button
-  - document: {fileID: 0}
-    overrideName: Text
+  - document: {fileID: 2141326149046591709}
+    overrideName: Button.Product
+  - document: {fileID: 8121653358563318507}
+    overrideName: 
+  - document: {fileID: 3559049917548347883}
+    overrideName: 
+  - document: {fileID: 6167300453787967550}
+    overrideName: 
 --- !u!1 &2141326149046591709
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +249,7 @@ GameObject:
   - component: {fileID: 4465845588819755675}
   - component: {fileID: 2200879319078991659}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button.Product
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,7 +370,7 @@ GameObject:
   - component: {fileID: 6145653625583683459}
   - component: {fileID: 4587682216754834201}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Button.Slot.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -757,7 +761,7 @@ GameObject:
   - component: {fileID: 3687828440763733060}
   - component: {fileID: 2761364066935042426}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Button.Slot.2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1013,7 +1017,7 @@ GameObject:
   - component: {fileID: 522750706646520308}
   - component: {fileID: 2662930070231888840}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Button.Slot.0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

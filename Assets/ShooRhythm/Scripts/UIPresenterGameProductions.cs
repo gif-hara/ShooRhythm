@@ -1,7 +1,9 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
+using R3;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ShooRhythm
 {
@@ -13,15 +15,47 @@ namespace ShooRhythm
         public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
-            var selectableItemsDocument = document.Q<HKUIDocument>("SelectableItems");
-            var uiPresenterDraggableItems = new UIPresenterGameSelectableItems();
-            uiPresenterDraggableItems.BeginAsync(selectableItemsDocument, cancellationToken).Forget();
+            var selectSlotId = -1;
+            var listElementParent = document.Q<Transform>("ListElementParent");
+            var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var alreadyShowSelectableItems = false;
+            for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
+            {
+                var element = Object.Instantiate(listElementPrefab, listElementParent);
+                ObserveListElementSlotButton(element, i);
+                ObserveListElementSlotButton(element, i + 1);
+                ObserveListElementSlotButton(element, i + 2);
+            }
 
             await UniTask.WaitUntilCanceled(cancellationToken);
 
             if (document != null)
             {
                 Object.Destroy(document.gameObject);
+            }
+
+            void ShowSelectableItems()
+            {
+                if (alreadyShowSelectableItems)
+                {
+                    return;
+                }
+                alreadyShowSelectableItems = true;
+                var selectableItemsDocument = document.Q<HKUIDocument>("SelectableItems");
+                var uiPresenterSelectableItems = new UIPresenterGameSelectableItems();
+                uiPresenterSelectableItems.BeginAsync(selectableItemsDocument, cancellationToken).Forget();
+            }
+
+            void ObserveListElementSlotButton(HKUIDocument element, int slotId)
+            {
+                element.Q<Button>($"Button.Slot.{slotId % 3}").OnClickAsObservable()
+                    .Subscribe(_ =>
+                    {
+                        selectSlotId = slotId;
+                        ShowSelectableItems();
+                    })
+                    .RegisterTo(element.destroyCancellationToken);
             }
         }
     }
