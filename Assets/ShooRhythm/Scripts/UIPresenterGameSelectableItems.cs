@@ -13,7 +13,7 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class UIPresenterDraggableItems
+    public sealed class UIPresenterGameSelectableItems
     {
         public UniTask BeginAsync(HKUIDocument document, CancellationToken cancellationToken)
         {

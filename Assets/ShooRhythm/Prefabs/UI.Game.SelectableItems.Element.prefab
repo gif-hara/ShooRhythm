@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 4207601534769669742}
   - component: {fileID: 5617266545563122969}
   m_Layer: 5
-  m_Name: UI.DraggableItems.Element
+  m_Name: UI.Game.SelectableItems.Element
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
