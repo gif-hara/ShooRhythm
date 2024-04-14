@@ -75,6 +75,11 @@ namespace SCD
             return records.ContainsKey(name);
         }
 
+        public override string ToString()
+        {
+            return string.Join("\n", records.Values);
+        }
+
         [Serializable]
         public class Record
         {
@@ -94,6 +99,11 @@ namespace SCD
             {
                 Name = name;
                 Value = value;
+            }
+
+            public override string ToString()
+            {
+                return $"{Name}: {Value}";
             }
         }
     }
