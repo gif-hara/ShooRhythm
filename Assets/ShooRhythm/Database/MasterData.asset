@@ -125,3 +125,6 @@ MonoBehaviour:
     - Id: 2
       Name: Available.Tab.Collections
       Amount: 1
+    - Id: 3
+      Name: Available.Tab.Productions
+      Amount: 1
