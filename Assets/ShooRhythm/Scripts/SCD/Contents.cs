@@ -13,6 +13,7 @@ namespace SCD
     {
         [SerializeField]
         private Record[] records = new Record[0];
+        public Record[] Records => records;
 
         public Contents(IEnumerable<Record> records)
         {

@@ -25,10 +25,12 @@ namespace ShooRhythm
             var alreadyShowSelectItems = false;
             for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
             {
+                var offsetSlotId = i * 3;
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
-                ObserveListElementSlotButton(element, i);
-                ObserveListElementSlotButton(element, i + 1);
-                ObserveListElementSlotButton(element, i + 2);
+                ObserveListElementProductButton(element, i);
+                ObserveListElementSlotButton(element, offsetSlotId);
+                ObserveListElementSlotButton(element, offsetSlotId + 1);
+                ObserveListElementSlotButton(element, offsetSlotId + 2);
             }
 
             await UniTask.WaitUntilCanceled(cancellationToken);
@@ -57,6 +59,29 @@ namespace ShooRhythm
                         await gameController.SetStatsAsync($"Productions.Machine.{machineId}.Slot.{slotId}.ItemId", itemId);
                     })
                     .RegisterTo(cancellationToken);
+            }
+
+            void ObserveListElementProductButton(HKUIDocument element, int machineId)
+            {
+                Debug.Log("ObserveListElementProductButton");
+                element.Q<Button>("Product.Button").OnClickAsObservable()
+                    .SubscribeAwait(async (_, ct) =>
+                    {
+                        Debug.Log("Product.Button");
+                        await UniTask.CompletedTask;
+                    })
+                    .RegisterTo(element.destroyCancellationToken);
+                TinyServiceLocator.Resolve<GameData>().Stats.OnChangedAsObservable(cancellationToken)
+                    .Subscribe(x =>
+                    {
+                        var startString = $"Productions.Machine.{machineId}.Product";
+                        if (x.Name.StartsWith(startString, System.StringComparison.Ordinal))
+                        {
+                            var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(x.Value);
+                            element.Q<TMP_Text>("Product.Text.Name").text = masterDataItem.Name;
+                        }
+                    })
+                    .RegisterTo(element.destroyCancellationToken);
             }
 
             void ObserveListElementSlotButton(HKUIDocument element, int slotId)
