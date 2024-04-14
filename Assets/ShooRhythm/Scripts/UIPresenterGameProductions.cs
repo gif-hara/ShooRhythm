@@ -13,9 +13,9 @@ namespace ShooRhythm
         public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
-            var draggableItemsDocument = document.Q<HKUIDocument>("DraggableItems");
+            var selectableItemsDocument = document.Q<HKUIDocument>("SelectableItems");
             var uiPresenterDraggableItems = new UIPresenterGameSelectableItems();
-            uiPresenterDraggableItems.BeginAsync(draggableItemsDocument, cancellationToken).Forget();
+            uiPresenterDraggableItems.BeginAsync(selectableItemsDocument, cancellationToken).Forget();
 
             await UniTask.WaitUntilCanceled(cancellationToken);
 
