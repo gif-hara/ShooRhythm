@@ -1,8 +1,6 @@
 using System.Threading;
 using HK;
 using R3;
-using SCD;
-using UnityEngine;
 
 namespace ShooRhythm
 {
