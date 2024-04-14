@@ -67,8 +67,17 @@ namespace ShooRhythm
                 element.Q<Button>("Product.Button").OnClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
-                        Debug.Log("Product.Button");
-                        await UniTask.CompletedTask;
+                        var itemId = gameData.Stats.Get($"Productions.Machine.{machineId}.Product");
+                        if (itemId == 0)
+                        {
+                            return;
+                        }
+                        var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Get(itemId.ToString());
+                        if (!collection.IsCompleted(gameData.Stats))
+                        {
+                            return;
+                        }
+                        await gameController.CollectingAsync(collection);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 TinyServiceLocator.Resolve<GameData>().Stats.OnChangedAsObservable(cancellationToken)
