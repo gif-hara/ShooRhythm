@@ -91,8 +91,17 @@ namespace ShooRhythm
                         var startString = $"Productions.Machine.{machineId}.Product";
                         if (x.Name.StartsWith(startString, System.StringComparison.Ordinal))
                         {
-                            var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(x.Value);
-                            element.Q<TMP_Text>("Product.Text.Name").text = masterDataItem.Name;
+                            var text = element.Q<TMP_Text>("Product.Text.Name");
+                            var itemId = x.Value;
+                            if (itemId == 0)
+                            {
+                                text.text = "Empty";
+                            }
+                            else
+                            {
+                                var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(itemId);
+                                text.text = masterDataItem.Name;
+                            }
                         }
                     })
                     .RegisterTo(element.destroyCancellationToken);

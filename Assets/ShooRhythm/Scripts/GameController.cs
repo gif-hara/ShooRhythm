@@ -86,13 +86,14 @@ namespace ShooRhythm
                         }
                         return !x.Conditions.Select(y => y.Name).Except(conditionNames).Any();
                     });
+                var statsName = $"Productions.Machine.{machineId}.Product";
                 if (colletion == null)
                 {
-                    return UniTask.CompletedTask;
+                    return SetStatsAsync(statsName, 0);
                 }
                 var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(int.Parse(colletion.Name));
                 Assert.IsNotNull(collectionSpec, $"CollectionSpec is null. CollectionId:{colletion.Name}");
-                return SetStatsAsync($"Productions.Machine.{machineId}.Product", collectionSpec.AcquireItemId);
+                return SetStatsAsync(statsName, collectionSpec.AcquireItemId);
             }
         }
 
