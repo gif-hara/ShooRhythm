@@ -18,6 +18,7 @@ namespace ShooRhythm
             Items = 1,
             Collections = 2,
             Productions = 3,
+            Quests = 4,
         }
     }
 }
