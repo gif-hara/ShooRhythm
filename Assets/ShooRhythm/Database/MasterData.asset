@@ -168,6 +168,9 @@ MonoBehaviour:
     - Id: 5
       Name: Productions.MachineNumber
       Amount: 1
+    - Id: 6
+      Name: Available.Quest.10101
+      Amount: 1
   questContents:
     records:
     - <Name>k__BackingField: 10101
