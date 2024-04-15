@@ -30,8 +30,8 @@ namespace ShooRhythm
         private Contents tabContents;
 
         [SerializeField]
-        private GameStartStatsData.DictionaryList gameStartStats;
-        public GameStartStatsData.DictionaryList GameStartStats => gameStartStats;
+        private StatsData.DictionaryList gameStartStats;
+        public StatsData.DictionaryList GameStartStats => gameStartStats;
 
         public UniTask BootAsync()
         {
@@ -53,23 +53,23 @@ namespace ShooRhythm
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
-            var collectionConditions = new CollectionCondition.Group();
-            collectionConditions.Set(JsonHelper.FromJson<CollectionCondition>(database.Item3));
-            var collectionRewards = new CollectionReward.Group();
-            collectionRewards.Set(JsonHelper.FromJson<CollectionReward>(database.Item4));
-            gameStartStats.Set(JsonHelper.FromJson<GameStartStatsData>(database.Item5));
+            var collectionConditions = new StatsData.Group();
+            collectionConditions.Set(JsonHelper.FromJson<StatsData>(database.Item3));
+            var collectionRewards = new StatsData.Group();
+            collectionRewards.Set(JsonHelper.FromJson<StatsData>(database.Item4));
+            gameStartStats.Set(JsonHelper.FromJson<StatsData>(database.Item5));
             var rewardRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
             {
                 var conditions = new List<Stats.Record>();
                 if (collectionConditions.TryGetValue(rewardSpec.Id, out var c))
                 {
-                    conditions.AddRange(c.Select(x => new Stats.Record(x.ConditionName, x.ConditionAmount)));
+                    conditions.AddRange(c.Select(x => new Stats.Record(x.Name, x.Amount)));
                 }
                 var rewards = new List<Stats.Record>();
                 if (collectionRewards.TryGetValue(rewardSpec.Id, out var r))
                 {
-                    rewards.AddRange(r.Select(x => new Stats.Record(x.ConditionName, x.ConditionAmount)));
+                    rewards.AddRange(r.Select(x => new Stats.Record(x.Name, x.Amount)));
                 }
                 var rewardRecord = new Contents.Record(
                     rewardSpec.Id.ToString(),
@@ -121,38 +121,6 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class CollectionCondition
-        {
-            public int Id;
-
-            public string ConditionName;
-
-            public int ConditionAmount;
-
-            [Serializable]
-            public sealed class Group : Group<int, CollectionCondition>
-            {
-                public Group() : base(x => x.Id) { }
-            }
-        }
-
-        [Serializable]
-        public class CollectionReward
-        {
-            public int Id;
-
-            public string ConditionName;
-
-            public int ConditionAmount;
-
-            [Serializable]
-            public sealed class Group : Group<int, CollectionReward>
-            {
-                public Group() : base(x => x.Id) { }
-            }
-        }
-
-        [Serializable]
         public class GameStartStatsData
         {
             public int Id;
@@ -163,6 +131,34 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, GameStartStatsData>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class StatsData
+        {
+            public int Id;
+
+            public string Name;
+
+            public int Amount;
+
+            public StatsData(string name, int amount)
+            {
+                Name = name;
+                Amount = amount;
+            }
+
+            [Serializable]
+            public class Group : Group<int, StatsData>
+            {
+                public Group() : base(x => x.Id) { }
+            }
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, StatsData>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }

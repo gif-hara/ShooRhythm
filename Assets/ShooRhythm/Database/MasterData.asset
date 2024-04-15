@@ -113,10 +113,10 @@ MonoBehaviour:
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
       <Conditions>k__BackingField:
-      - <Name>k__BackingField: Item.10104
-        <Value>k__BackingField: 3
       - <Name>k__BackingField: Item.10101
         <Value>k__BackingField: 1
+      - <Name>k__BackingField: Item.10104
+        <Value>k__BackingField: 3
       <Rewards>k__BackingField:
       - <Name>k__BackingField: Item.10202
         <Value>k__BackingField: 1
