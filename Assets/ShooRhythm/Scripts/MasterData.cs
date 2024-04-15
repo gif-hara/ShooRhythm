@@ -35,6 +35,7 @@ namespace ShooRhythm
 
         [SerializeField]
         private Contents questContents;
+        public Contents QuestContents => questContents;
 
         public UniTask BootAsync()
         {
