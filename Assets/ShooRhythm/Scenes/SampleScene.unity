@@ -568,6 +568,8 @@ MonoBehaviour:
     type: 3}
   gameProductionsDocumentPrefab: {fileID: 8952608029526600457, guid: 45697e976bdc2a34a8ea457442abd66e,
     type: 3}
+  gameQuestsDocumentPrefab: {fileID: 8952608029526600457, guid: 443208fefb5ae2c4fb6fa4c9c9ed6c3c,
+    type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
