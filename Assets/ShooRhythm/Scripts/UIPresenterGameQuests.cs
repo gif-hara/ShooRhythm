@@ -53,6 +53,10 @@ namespace ShooRhythm
                                 await gameController.CollectingAsync(quest);
                                 CreateElements();
                             }
+                            else
+                            {
+                                Debug.Log("Not completed");
+                            }
                         })
                         .RegisterTo(element.destroyCancellationToken);
                     foreach (var condition in quest.Conditions)
