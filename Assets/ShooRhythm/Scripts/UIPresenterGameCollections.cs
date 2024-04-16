@@ -31,7 +31,7 @@ namespace ShooRhythm
                 var element = Object.Instantiate(elementPrefab, elementParent);
                 var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Get(i.AcquireItemId.ToString());
                 element.Q<TMP_Text>("Text").text = i.GetItem().Name;
-                element.Q<Button>("Button").OnClickAsObservable()
+                element.Q<OnPointerClickHandler>("Button").OnClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         await TinyServiceLocator.Resolve<GameController>()
