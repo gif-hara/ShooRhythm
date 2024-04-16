@@ -117,5 +117,10 @@ namespace ShooRhythm
             Debug.Log(gameData.Stats);
             return UniTask.FromResult(true);
         }
+        
+        public UniTask<bool> SetUserEquipmentItemIdAsync(int userId, int x)
+        {
+            return SetStatsAsync($"UserData.{userId}.Equipment.ItemId", x);
+        }
     }
 }

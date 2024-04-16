@@ -26,10 +26,6 @@ namespace ShooRhythm
             return Items.TryGetValue(id, out var count) ? count : 0;
         }
 
-        public int UserEquipmentItemId
-        {
-            get => Stats.Get($"UserData.{UserId}.Equipment.ItemId");
-            set => Stats.Set($"UserData.{UserId}.Equipment.ItemId", value);
-        }
+        public int UserEquipmentItemId => Stats.Get($"UserData.{UserId}.Equipment.ItemId");
     }
 }
