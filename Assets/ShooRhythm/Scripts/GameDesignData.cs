@@ -15,6 +15,10 @@ namespace ShooRhythm
         public FishingDesignData RiverFishingDesignData => riverFishingDesignData;
         
         [SerializeField]
+        private FishingDesignData seaFishingDesignData;
+        public FishingDesignData SeaFishingDesignData => seaFishingDesignData;
+        
+        [SerializeField]
         private List<FooterData> footers;
         public List<FooterData> Footers => footers;
         

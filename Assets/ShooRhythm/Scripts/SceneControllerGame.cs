@@ -34,6 +34,9 @@ namespace ShooRhythm
         
         [SerializeField]
         private HKUIDocument gameRiverFishingDocumentPrefab;
+        
+        [SerializeField]
+        private HKUIDocument gameSeaFishingDocumentPrefab;
 
         private readonly TinyStateMachine stateMachine = new();
 
@@ -70,6 +73,9 @@ namespace ShooRhythm
                             break;
                         case Define.TabType.RiverFishing:
                             stateMachine.Change(StateRiverFishing);
+                            break;
+                        case Define.TabType.SeaFishing:
+                            stateMachine.Change(StateSeaFishing);
                             break;
                     }
                 })
@@ -123,11 +129,23 @@ namespace ShooRhythm
         
         private UniTask StateRiverFishing(CancellationToken scope)
         {
-            var uiPresenterGameRiverFishing = new UIPresenterGameFishing();
-            uiPresenterGameRiverFishing.BeginAsync(
-                gameRiverFishingDocumentPrefab,
-                TinyServiceLocator.Resolve<GameDesignData>().RiverFishingDesignData,
-                scope
+            var uiPresenterGameFishing = new UIPresenterGameFishing();
+            uiPresenterGameFishing.BeginAsync(
+                    gameRiverFishingDocumentPrefab,
+                    TinyServiceLocator.Resolve<GameDesignData>().RiverFishingDesignData,
+                    scope
+                )
+                .Forget();
+            return UniTask.CompletedTask;
+        }
+        
+        private UniTask StateSeaFishing(CancellationToken scope)
+        {
+            var uiPresenterGameFishing = new UIPresenterGameFishing();
+            uiPresenterGameFishing.BeginAsync(
+                    gameSeaFishingDocumentPrefab,
+                    TinyServiceLocator.Resolve<GameDesignData>().SeaFishingDesignData,
+                    scope
                 )
                 .Forget();
             return UniTask.CompletedTask;

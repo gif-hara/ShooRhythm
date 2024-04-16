@@ -23,6 +23,7 @@ namespace ShooRhythm
             Quests = 4,
             Equipment = 5,
             RiverFishing = 6,
+            SeaFishing = 7,
         }
         
         public const int MachineSlotCount = 3;

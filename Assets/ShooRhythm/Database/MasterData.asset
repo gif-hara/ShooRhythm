@@ -28,6 +28,8 @@ MonoBehaviour:
       Name: "\u30B8\u30A7\u30EB"
     - Id: 10107
       Name: "\u30CB\u30B8\u30DE\u30B9"
+    - Id: 10108
+      Name: "\u30DE\u30B0\u30ED"
     - Id: 10201
       Name: "\u9244\u5EF6\u3079\u68D2"
     - Id: 10202
@@ -64,6 +66,10 @@ MonoBehaviour:
       CollectionType: 3
     - Id: 10107
       AcquireItemId: 10107
+      CoolTimeSeconds: 1
+      CollectionType: 4
+    - Id: 10108
+      AcquireItemId: 10108
       CoolTimeSeconds: 1
       CollectionType: 4
     - Id: 10201
@@ -123,6 +129,11 @@ MonoBehaviour:
       - <Name>k__BackingField: Item.10106
         <Value>k__BackingField: 1
     - <Name>k__BackingField: 10107
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField: []
+    - <Name>k__BackingField: 10108
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
       <Conditions>k__BackingField: []
