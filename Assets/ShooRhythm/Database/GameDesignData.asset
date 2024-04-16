@@ -17,6 +17,11 @@ MonoBehaviour:
     waitSecondsMax: 10
     postponementSeconds: 1
     acquireCollectionSpecName: 10107
+  seaFishingDesignData:
+    waitSecondsMin: 0.5
+    waitSecondsMax: 15
+    postponementSeconds: 0.5
+    acquireCollectionSpecName: 10108
   footers:
   - footerName: "\u9053\u5177"
     tabType: 1
