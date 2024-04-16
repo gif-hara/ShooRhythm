@@ -17,3 +17,19 @@ MonoBehaviour:
     waitSecondsMax: 10
     postponementSeconds: 1
     acquireCollectionSpecName: 10107
+  footers:
+  - footerName: "\u9053\u5177"
+    tabType: 1
+    activeStatsName: Available.Tab.Items
+  - footerName: "\u63A1\u96C6"
+    tabType: 2
+    activeStatsName: Available.Tab.Collections
+  - footerName: "\u88FD\u4F5C"
+    tabType: 3
+    activeStatsName: Available.Tab.Productions
+  - footerName: "\u7D0D\u54C1"
+    tabType: 4
+    activeStatsName: Available.Tab.Quests
+  - footerName: "\u88C5\u5099"
+    tabType: 5
+    activeStatsName: Available.Tab.Equipment
