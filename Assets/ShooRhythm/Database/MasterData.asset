@@ -26,6 +26,8 @@ MonoBehaviour:
       Name: "\u5E03"
     - Id: 10106
       Name: "\u30B8\u30A7\u30EB"
+    - Id: 10107
+      Name: "\u30CB\u30B8\u30DE\u30B9"
     - Id: 10201
       Name: "\u9244\u5EF6\u3079\u68D2"
     - Id: 10202
@@ -52,6 +54,18 @@ MonoBehaviour:
       AcquireItemId: 10104
       CoolTimeSeconds: 1
       CollectionType: 1
+    - Id: 10105
+      AcquireItemId: 10105
+      CoolTimeSeconds: 1
+      CollectionType: 3
+    - Id: 10106
+      AcquireItemId: 10106
+      CoolTimeSeconds: 1
+      CollectionType: 3
+    - Id: 10107
+      AcquireItemId: 10107
+      CoolTimeSeconds: 1
+      CollectionType: 4
     - Id: 10201
       AcquireItemId: 10201
       CoolTimeSeconds: 2
@@ -94,6 +108,25 @@ MonoBehaviour:
       <Rewards>k__BackingField:
       - <Name>k__BackingField: Item.10104
         <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10105
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10105
+        <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10106
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10106
+        <Value>k__BackingField: 1
+    - <Name>k__BackingField: 10107
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField: []
+      <Rewards>k__BackingField: []
     - <Name>k__BackingField: 10201
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
@@ -135,22 +168,6 @@ MonoBehaviour:
         <Value>k__BackingField: 1
       - <Name>k__BackingField: Item.10101
         <Value>k__BackingField: -2
-  tabContents:
-    records:
-    - <Name>k__BackingField: Items
-      <Required>k__BackingField:
-      - <Name>k__BackingField: Available.Tab.Items
-        <Value>k__BackingField: 1
-      <Ignore>k__BackingField: []
-      <Conditions>k__BackingField: []
-      <Rewards>k__BackingField: []
-    - <Name>k__BackingField: Collections
-      <Required>k__BackingField:
-      - <Name>k__BackingField: Available.Tab.Collections
-        <Value>k__BackingField: 1
-      <Ignore>k__BackingField: []
-      <Conditions>k__BackingField: []
-      <Rewards>k__BackingField: []
   gameStartStats:
     list:
     - Id: 1
@@ -190,3 +207,8 @@ MonoBehaviour:
         <Value>k__BackingField: -1
       - <Name>k__BackingField: Item.10102
         <Value>k__BackingField: 1
+  weaponSpecs:
+    list:
+    - Id: 10101
+      ItemId: 10203
+      Strength: 10
