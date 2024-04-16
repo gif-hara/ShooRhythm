@@ -12,6 +12,9 @@ namespace ShooRhythm
     public sealed class SceneControllerGame : MonoBehaviour
     {
         [SerializeField]
+        private GameDesignData gameDesignData;
+        
+        [SerializeField]
         private HKUIDocument gameFooterDocumentPrefab;
 
         [SerializeField]
@@ -40,6 +43,7 @@ namespace ShooRhythm
             TinyServiceLocator.RegisterAsync(gameController).Forget();
             var gameMessage = new GameMessage();
             TinyServiceLocator.RegisterAsync(gameMessage).Forget();
+            TinyServiceLocator.RegisterAsync(gameDesignData).Forget();
 
             gameMessage.RequestChangeTab
                 .Subscribe(x =>
