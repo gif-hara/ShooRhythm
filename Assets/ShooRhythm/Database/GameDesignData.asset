@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   riverFishingDesignData:
     waitSecondsMin: 0.5
-    waitSecondsMax: 10
+    waitSecondsMax: 5
     postponementSeconds: 1
     acquireCollectionSpecName: 10107
   seaFishingDesignData:
     waitSecondsMin: 0.5
-    waitSecondsMax: 15
+    waitSecondsMax: 8
     postponementSeconds: 0.5
     acquireCollectionSpecName: 10108
   footers:
@@ -38,3 +38,9 @@ MonoBehaviour:
   - footerName: "\u88C5\u5099"
     tabType: 5
     activeStatsName: Available.Tab.Equipment
+  - footerName: "\u5DDD"
+    tabType: 6
+    activeStatsName: Available.Tab.RiverFishing
+  - footerName: "\u6D77"
+    tabType: 7
+    activeStatsName: Available.Tab.SeaFishing

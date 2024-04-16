@@ -132,12 +132,16 @@ MonoBehaviour:
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
       <Conditions>k__BackingField: []
-      <Rewards>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10107
+        <Value>k__BackingField: 1
     - <Name>k__BackingField: 10108
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
       <Conditions>k__BackingField: []
-      <Rewards>k__BackingField: []
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10108
+        <Value>k__BackingField: 1
     - <Name>k__BackingField: 10201
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
@@ -197,9 +201,15 @@ MonoBehaviour:
       Name: Available.Tab.Equipment
       Amount: 1
     - Id: 6
-      Name: Productions.MachineNumber
+      Name: Available.Tab.RiverFishing
       Amount: 1
     - Id: 7
+      Name: Available.Tab.SeaFishing
+      Amount: 1
+    - Id: 8
+      Name: Productions.MachineNumber
+      Amount: 1
+    - Id: 9
       Name: Available.Quest.10101
       Amount: 1
   questContents:
