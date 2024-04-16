@@ -15,7 +15,7 @@ namespace ShooRhythm
     public sealed class UIPresenterGameSelectItems
     {
         private readonly Subject<int> onSelectedItem = new();
-        public Observable<int> OnSelectedItem => onSelectedItem;
+        public Observable<int> OnSelectedItemAsObservable() => onSelectedItem;
 
         public UniTask BeginAsync(HKUIDocument document)
         {

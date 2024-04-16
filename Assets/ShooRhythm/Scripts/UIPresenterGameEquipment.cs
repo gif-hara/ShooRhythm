@@ -17,7 +17,7 @@ namespace ShooRhythm
             var document = Object.Instantiate(documentPrefab);
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var uiPresenterGameSelectItem = new UIPresenterGameSelectItems();
-            uiPresenterGameSelectItem.OnSelectedItem
+            uiPresenterGameSelectItem.OnSelectedItemAsObservable()
                 .SubscribeAwait(async (x, ct) =>
                 {
                     await TinyServiceLocator.Resolve<GameController>().SetUserEquipmentItemIdAsync(gameData.UserId, x);

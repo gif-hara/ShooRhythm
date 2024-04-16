@@ -51,7 +51,7 @@ namespace ShooRhythm
                 var selectItemsDocument = document.Q<HKUIDocument>("SelectItems");
                 var uiPresenterSelectItems = new UIPresenterGameSelectItems();
                 uiPresenterSelectItems.BeginAsync(selectItemsDocument).Forget();
-                uiPresenterSelectItems.OnSelectedItem
+                uiPresenterSelectItems.OnSelectedItemAsObservable()
                     .SubscribeAwait(async (itemId, ct) =>
                     {
                         var slotId = selectSlotId % Define.MachineSlotCount;
