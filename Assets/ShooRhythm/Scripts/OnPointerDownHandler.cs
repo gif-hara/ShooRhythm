@@ -7,13 +7,13 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class OnPointerClickHandler : MonoBehaviour, IPointerClickHandler
+    public sealed class OnPointerDownHandler : MonoBehaviour, IPointerDownHandler
     {
         private readonly Subject<PointerEventData> onHandled = new();
         
         public Observable<PointerEventData> OnHandledAsObservable() => onHandled;
         
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
             onHandled.OnNext(eventData);
         }
