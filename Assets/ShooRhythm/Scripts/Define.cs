@@ -19,6 +19,7 @@ namespace ShooRhythm
             Collections = 2,
             Productions = 3,
             Quests = 4,
+            Equipment = 5,
         }
         
         public const int MachineSlotCount = 3;

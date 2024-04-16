@@ -25,6 +25,9 @@ namespace ShooRhythm
 
         [SerializeField]
         private HKUIDocument gameQuestsDocumentPrefab;
+        
+        [SerializeField]
+        private HKUIDocument gameEquipmentDocumentPrefab;
 
         private readonly TinyStateMachine stateMachine = new();
 
@@ -54,6 +57,9 @@ namespace ShooRhythm
                             break;
                         case Define.TabType.Quests:
                             stateMachine.Change(StateQuests);
+                            break;
+                        case Define.TabType.Equipment:
+                            stateMachine.Change(StateEquipment);
                             break;
                     }
                 })
@@ -95,6 +101,13 @@ namespace ShooRhythm
         {
             var uiPresenterGameQuests = new UIPresenterGameQuests();
             uiPresenterGameQuests.BeginAsync(gameQuestsDocumentPrefab, scope).Forget();
+            return UniTask.CompletedTask;
+        }
+
+        private UniTask StateEquipment(CancellationToken scope)
+        {
+            var uiPresenterGameEquipment = new UIPresenterGameEquipment();
+            uiPresenterGameEquipment.BeginAsync(gameEquipmentDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
     }
