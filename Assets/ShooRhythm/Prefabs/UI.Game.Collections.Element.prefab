@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3709454500853619679}
   - component: {fileID: 4849996812803992752}
   - component: {fileID: 4207601534769669742}
-  - component: {fileID: 8637402616393201753}
+  - component: {fileID: 2203030827359225169}
   m_Layer: 5
   m_Name: UI.Game.Collections.Element
   m_TagString: Untagged
@@ -95,7 +95,7 @@ MonoBehaviour:
     overrideName: Button
   - document: {fileID: 4476536448525132956}
     overrideName: Text
---- !u!114 &8637402616393201753
+--- !u!114 &2203030827359225169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -104,7 +104,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 756346924569530787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c57ef823b43634d3694636c7c6d28ffd, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f029a96607ef284f9106063137864a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4476536448525132956

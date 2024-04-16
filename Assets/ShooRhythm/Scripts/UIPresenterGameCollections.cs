@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using R3.Triggers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ namespace ShooRhythm
                 var element = Object.Instantiate(elementPrefab, elementParent);
                 var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Get(i.AcquireItemId.ToString());
                 element.Q<TMP_Text>("Text").text = i.GetItem().Name;
-                element.Q<PointerClickHandler>("Button").OnHandledAsObservable()
+                element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         await TinyServiceLocator.Resolve<GameController>()
