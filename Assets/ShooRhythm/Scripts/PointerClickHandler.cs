@@ -7,7 +7,7 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class OnPointerClickHandler : MonoBehaviour, IPointerClickHandler
+    public sealed class PointerClickHandler : MonoBehaviour, IPointerClickHandler
     {
         private readonly Subject<PointerEventData> onHandled = new();
         

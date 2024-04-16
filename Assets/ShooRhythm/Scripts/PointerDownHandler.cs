@@ -7,7 +7,7 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class OnPointerUpHandler : MonoBehaviour, IPointerDownHandler
+    public sealed class PointerDownHandler : MonoBehaviour, IPointerDownHandler
     {
         private readonly Subject<PointerEventData> onHandled = new();
         
