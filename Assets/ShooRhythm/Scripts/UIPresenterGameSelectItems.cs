@@ -17,7 +17,7 @@ namespace ShooRhythm
         private readonly Subject<int> onSelectedItem = new();
         public Observable<int> OnSelectedItem => onSelectedItem;
 
-        public UniTask BeginAsync(HKUIDocument document, CancellationToken cancellationToken)
+        public UniTask BeginAsync(HKUIDocument document)
         {
             var listElementParentName = "ListElementParent";
             var elementParent = document.Q<RectTransform>(listElementParentName);
