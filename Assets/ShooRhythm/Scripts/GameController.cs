@@ -94,7 +94,7 @@ namespace ShooRhythm
             }
         }
 
-        public UniTask<bool> AddStats(string name, int value)
+        public UniTask<bool> AddStatsAsync(string name, int value)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             gameData.Stats.Add(name, value);
