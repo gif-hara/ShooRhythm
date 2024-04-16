@@ -31,6 +31,7 @@ namespace ShooRhythm
 
             UniTask StateIdle(CancellationToken scope)
             {
+                rootHitIcon.SetActive(false);
                 rootCastButton.SetActive(true);
                 rootStrikeButton.SetActive(false);
                 
