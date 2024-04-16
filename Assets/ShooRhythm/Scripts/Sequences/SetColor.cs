@@ -1,8 +1,7 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using HK;
 using UnityEngine;
-using UnityEngine.UI;
 using UnitySequencerSystem;
 
 namespace ShooRhythm
@@ -10,21 +9,19 @@ namespace ShooRhythm
     /// <summary>
     /// 
     /// </summary>
-    public sealed class HKUIDocumentSetColor : ISequence
+    [Serializable]
+    public sealed class SetColor : ISequence
     {
-        [SerializeField]
-        private string documentName;
-
-        [SerializeField]
-        private string graphicName;
+        [SerializeReference, SubclassSelector]
+        private GraphicResolver graphicResolver;
         
         [SerializeField]
         private Color color;
         
         public UniTask PlayAsync(Container container, CancellationToken cancellationToken)
         {
-            var document = container.Resolve<HKUIDocument>(documentName);
-            document.Q<Graphic>(graphicName).color = color;
+            var graphic = graphicResolver.Resolve(container);
+            graphic.color = color;
             return UniTask.CompletedTask;
         }
     }
