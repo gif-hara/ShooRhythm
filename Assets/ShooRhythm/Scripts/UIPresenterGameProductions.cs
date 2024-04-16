@@ -25,12 +25,13 @@ namespace ShooRhythm
             var alreadyShowSelectItems = false;
             for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
             {
-                var offsetSlotId = i * 3;
+                var offsetSlotId = i * Define.MachineSlotCount;
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
                 ObserveListElementProductButton(element, i);
-                ObserveListElementSlotButton(element, offsetSlotId);
-                ObserveListElementSlotButton(element, offsetSlotId + 1);
-                ObserveListElementSlotButton(element, offsetSlotId + 2);
+                for (var j = 0; j < Define.MachineSlotCount; j++)
+                {
+                    ObserveListElementSlotButton(element, offsetSlotId + j);
+                }
             }
 
             await UniTask.WaitUntilCanceled(cancellationToken);
@@ -53,8 +54,8 @@ namespace ShooRhythm
                 uiPresenterSelectItems.OnSelectedItem
                     .SubscribeAwait(async (itemId, ct) =>
                     {
-                        var slotId = selectSlotId % 3;
-                        var machineId = selectSlotId / 3;
+                        var slotId = selectSlotId % Define.MachineSlotCount;
+                        var machineId = selectSlotId / Define.MachineSlotCount;
                         selectSlotElement.Q<TMP_Text>($"Slot.{slotId}.Text.Name").text = TinyServiceLocator.Resolve<MasterData>().Items.Get(itemId).Name;
                         await gameController.SetStatsAsync($"Productions.Machine.{machineId}.Slot.{slotId}.ItemId", itemId);
                     })
@@ -109,7 +110,7 @@ namespace ShooRhythm
 
             void ObserveListElementSlotButton(HKUIDocument element, int slotId)
             {
-                element.Q<Button>($"Slot.{slotId % 3}.Button").OnClickAsObservable()
+                element.Q<Button>($"Slot.{slotId % Define.MachineSlotCount}.Button").OnClickAsObservable()
                     .Subscribe(_ =>
                     {
                         selectSlotId = slotId;
