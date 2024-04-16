@@ -1,6 +1,6 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShooRhythm
 {
@@ -13,6 +13,10 @@ namespace ShooRhythm
         [SerializeField]
         private FishingDesignData riverFishingDesignData;
         public FishingDesignData RiverFishingDesignData => riverFishingDesignData;
+        
+        [SerializeField]
+        private List<FooterData> footers;
+        public List<FooterData> Footers => footers;
         
         [Serializable]
         public class FishingDesignData
@@ -44,6 +48,22 @@ namespace ShooRhythm
             [SerializeField]
             private string acquireCollectionSpecName;
             public string AcquireCollectionSpecName => acquireCollectionSpecName;
+        }
+
+        [Serializable]
+        public class FooterData
+        {
+            [SerializeField]
+            private string footerName;
+            public string FooterName => footerName;
+            
+            [SerializeField]
+            private Define.TabType tabType;
+            public Define.TabType TabType => tabType;
+            
+            [SerializeField]
+            private string activeStatsName;
+            public string ActiveStatsName => activeStatsName;
         }
     }
 }
