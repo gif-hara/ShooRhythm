@@ -41,7 +41,7 @@ namespace ShooRhythm
                 Object.Destroy(document.gameObject);
             }
 
-            void ShowSelectableItems()
+            void ShowSelectItems()
             {
                 if (alreadyShowSelectItems)
                 {
@@ -115,7 +115,7 @@ namespace ShooRhythm
                     {
                         selectSlotId = slotId;
                         selectSlotElement = element;
-                        ShowSelectableItems();
+                        ShowSelectItems();
                     })
                     .RegisterTo(element.destroyCancellationToken);
             }
