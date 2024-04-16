@@ -50,7 +50,7 @@ namespace ShooRhythm
                 alreadyShowSelectItems = true;
                 var selectItemsDocument = document.Q<HKUIDocument>("SelectItems");
                 var uiPresenterSelectItems = new UIPresenterGameSelectItems();
-                uiPresenterSelectItems.BeginAsync(selectItemsDocument).Forget();
+                uiPresenterSelectItems.BeginAsync(selectItemsDocument, x => x).Forget();
                 uiPresenterSelectItems.OnSelectedItemAsObservable()
                     .SubscribeAwait(async (itemId, ct) =>
                     {

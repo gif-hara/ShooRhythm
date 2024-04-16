@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
@@ -17,7 +17,7 @@ namespace ShooRhythm
         private readonly Subject<int> onSelectedItem = new();
         public Observable<int> OnSelectedItemAsObservable() => onSelectedItem;
 
-        public UniTask BeginAsync(HKUIDocument document)
+        public UniTask BeginAsync(HKUIDocument document, Func<Dictionary<int, int>, IEnumerable<KeyValuePair<int, int>>> itemSelector)
         {
             var listElementParentName = "ListElementParent";
             var elementParent = document.Q<RectTransform>(listElementParentName);
@@ -25,9 +25,9 @@ namespace ShooRhythm
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             parentLayout.SetConstraintCount();
             var elements = new List<(int id, GameObject gameObject)>();
-            foreach (var i in TinyServiceLocator.Resolve<GameData>().Items)
+            foreach (var i in itemSelector(TinyServiceLocator.Resolve<GameData>().Items))
             {
-                var element = Object.Instantiate(elementPrefab, elementParent);
+                var element = UnityEngine.Object.Instantiate(elementPrefab, elementParent);
                 var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(i.Key);
                 element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
                 element.Q<TMP_Text>("Text.Number").text = i.Value.ToString();
