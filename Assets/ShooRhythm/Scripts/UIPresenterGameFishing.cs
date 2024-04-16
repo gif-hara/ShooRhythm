@@ -12,11 +12,10 @@ namespace ShooRhythm
     /// </summary>
     public sealed class UIPresenterGameFishing
     {
-        public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
+        public async UniTask BeginAsync(HKUIDocument documentPrefab, GameDesignData.FishingDesignData fishingDesignData, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
             var stateMachine = new TinyStateMachine();
-            var gameDesignData = TinyServiceLocator.Resolve<GameDesignData>();
             var rootCastButton = document.Q("Root.CastButton");
             var rootStrikeButton = document.Q("Root.StrikeButton");
             var rootHitIcon = document.Q("Root.HitIcon");
@@ -47,8 +46,8 @@ namespace ShooRhythm
             UniTask StateCast(CancellationToken scope)
             {
                 var hitSeconds = Random.Range(
-                    gameDesignData.RiverFishingDesignData.WaitSecondsMin,
-                    gameDesignData.RiverFishingDesignData.WaitSecondsMax
+                    fishingDesignData.WaitSecondsMin,
+                    fishingDesignData.WaitSecondsMax
                     );
                 var currentSeconds = 0f;
                 rootCastButton.SetActive(false);
@@ -74,7 +73,7 @@ namespace ShooRhythm
             
             async UniTask StateHit(CancellationToken scope)
             {
-                var postponementSeconds = gameDesignData.RiverFishingDesignData.PostponementSeconds;
+                var postponementSeconds = fishingDesignData.PostponementSeconds;
                 var currentSeconds = 0f;
                 rootHitIcon.SetActive(true);
                 Observable.EveryUpdate(UnityFrameProvider.Update, scope)
@@ -90,7 +89,7 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Strike").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        var collectionRecord = TinyServiceLocator.Resolve<MasterData>().Collections.Get(gameDesignData.RiverFishingDesignData.AcquireCollectionSpecName);
+                        var collectionRecord = TinyServiceLocator.Resolve<MasterData>().Collections.Get(fishingDesignData.AcquireCollectionSpecName);
                         TinyServiceLocator.Resolve<GameController>().CollectingAsync(collectionRecord).Forget();
                         stateMachine.Change(StateIdle);
                     })

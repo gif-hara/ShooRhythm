@@ -10,6 +10,8 @@ namespace ShooRhythm
             None = 0,
             Collection = 1,
             Production = 2,
+            Battle = 3,
+            Fishing = 4,
         }
 
         public enum TabType
@@ -20,6 +22,7 @@ namespace ShooRhythm
             Productions = 3,
             Quests = 4,
             Equipment = 5,
+            RiverFishing = 6,
         }
         
         public const int MachineSlotCount = 3;
