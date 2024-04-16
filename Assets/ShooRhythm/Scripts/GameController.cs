@@ -44,9 +44,10 @@ namespace ShooRhythm
                 for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
                 {
                     var machineId = i;
-                    ObserveProductionMachineSlot(machineId, 0);
-                    ObserveProductionMachineSlot(machineId, 1);
-                    ObserveProductionMachineSlot(machineId, 2);
+                    for(var j=0; j<Define.MachineSlotCount; j++)
+                    {
+                        ObserveProductionMachineSlot(machineId, j);
+                    }
                 }
             }
             void ObserveProductionMachineSlot(int machineId, int slotId)
@@ -63,21 +64,17 @@ namespace ShooRhythm
             }
             UniTask TrySetProductionMachineProductAsync(int machineId)
             {
-                var itemIds = new[]
-                {
-                    gameData.Stats.Get($"Productions.Machine.{machineId}.Slot.0.ItemId"),
-                    gameData.Stats.Get($"Productions.Machine.{machineId}.Slot.1.ItemId"),
-                    gameData.Stats.Get($"Productions.Machine.{machineId}.Slot.2.ItemId"),
-                }
-                .Where(x => x != 0);
-                if (!itemIds.Any())
+                var conditionNames = Enumerable.Range(0, Define.MachineSlotCount)
+                    .Select(x => gameData.Stats.Get($"Productions.Machine.{machineId}.Slot.{x}.ItemId"))
+                    .Where(x => x != 0)
+                    .Select(x => $"Item.{x}")
+                    .ToArray();
+                if (!conditionNames.Any())
                 {
                     return UniTask.CompletedTask;
                 }
 
-                var conditionNames = itemIds.Select(x => $"Item.{x}").ToArray();
-
-                var colletion = TinyServiceLocator.Resolve<MasterData>().Collections.Records
+                var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Records
                     .FirstOrDefault(x =>
                     {
                         if (x.Conditions.Count != conditionNames.Length)
@@ -87,12 +84,12 @@ namespace ShooRhythm
                         return !x.Conditions.Select(y => y.Name).Except(conditionNames).Any();
                     });
                 var statsName = $"Productions.Machine.{machineId}.Product";
-                if (colletion == null)
+                if (collection == null)
                 {
                     return SetStatsAsync(statsName, 0);
                 }
-                var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(int.Parse(colletion.Name));
-                Assert.IsNotNull(collectionSpec, $"CollectionSpec is null. CollectionId:{colletion.Name}");
+                var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(int.Parse(collection.Name));
+                Assert.IsNotNull(collectionSpec, $"CollectionSpec is null. CollectionId:{collection.Name}");
                 return SetStatsAsync(statsName, collectionSpec.AcquireItemId);
             }
         }
