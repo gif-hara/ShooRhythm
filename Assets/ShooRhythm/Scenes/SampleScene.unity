@@ -573,8 +573,10 @@ MonoBehaviour:
     type: 3}
   gameEquipmentDocumentPrefab: {fileID: 8952608029526600457, guid: 632cd920ab46f0a48b12a86b1633c4b7,
     type: 3}
-  gameRiverFishingDocumentPrefab: {fileID: 0}
-  gameSeaFishingDocumentPrefab: {fileID: 0}
+  gameRiverFishingDocumentPrefab: {fileID: 8952608029526600457, guid: 3eb38d3ee080c6d4897ec7b2e6b35710,
+    type: 3}
+  gameSeaFishingDocumentPrefab: {fileID: 8952608029526600457, guid: 94a06e2ea20bde64a94a05fa016cc0b5,
+    type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
