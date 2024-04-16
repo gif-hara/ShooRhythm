@@ -33,6 +33,10 @@ namespace ShooRhythm
         [SerializeField]
         private Contents questContents;
         public Contents QuestContents => questContents;
+        
+        [SerializeField]
+        private WeaponSpec.DictionaryList weaponSpecs;
+        public WeaponSpec.DictionaryList WeaponSpecs => weaponSpecs;
 
         public UniTask BootAsync()
         {
@@ -55,7 +59,8 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestRequired"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestCondition"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestIgnore"),
-                GoogleSpreadSheetDownloader.DownloadAsync("QuestReward")
+                GoogleSpreadSheetDownloader.DownloadAsync("QuestReward"),
+                GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
@@ -74,6 +79,7 @@ namespace ShooRhythm
             questIgnores.Set(JsonHelper.FromJson<StatsData>(database.Item9));
             var questRewards = new StatsData.Group();
             questRewards.Set(JsonHelper.FromJson<StatsData>(database.Item10));
+            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item11));
 
             var collectionRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
@@ -221,6 +227,22 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, StatsData>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class WeaponSpec
+        {
+            public int Id;
+
+            public int ItemId;
+
+            public int Strength;
+            
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, WeaponSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }
