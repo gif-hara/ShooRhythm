@@ -9,9 +9,11 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameData
     {
-        public Stats Stats { get; } = new Stats();
+        public Stats Stats { get; } = new();
 
-        public Dictionary<int, int> Items { get; } = new Dictionary<int, int>();
+        public Dictionary<int, int> Items { get; } = new();
+
+        public int UserId { get; set; } = 0;
 
         public void SetItem(int id, int count)
         {
@@ -22,6 +24,12 @@ namespace ShooRhythm
         public int GetItem(int id)
         {
             return Items.TryGetValue(id, out var count) ? count : 0;
+        }
+
+        public int UserEquipmentItemId
+        {
+            get => Stats.Get($"UserData.{UserId}.Equipment.ItemId");
+            set => Stats.Set($"UserData.{UserId}.Equipment.ItemId", value);
         }
     }
 }
