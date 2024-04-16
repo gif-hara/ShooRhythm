@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using SCD;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShooRhythm
 {
@@ -27,8 +28,8 @@ namespace ShooRhythm
         public Contents Collections => collectionContents;
         
         [SerializeField]
-        private StatsData.DictionaryList gameStartStats;
-        public StatsData.DictionaryList GameStartStats => gameStartStats;
+        private StatsData.DictionaryList grantStatsGameStart;
+        public StatsData.DictionaryList GrantStatsGameStart => grantStatsGameStart;
 
         [SerializeField]
         private Contents questContents;
@@ -54,7 +55,7 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("CollectionSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("CollectionCondition"),
                 GoogleSpreadSheetDownloader.DownloadAsync("CollectionReward"),
-                GoogleSpreadSheetDownloader.DownloadAsync("GameStartStats"),
+                GoogleSpreadSheetDownloader.DownloadAsync("GrantStatsGameStart"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestRequired"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestCondition"),
@@ -68,7 +69,7 @@ namespace ShooRhythm
             collectionConditions.Set(JsonHelper.FromJson<StatsData>(database.Item3));
             var collectionRewards = new StatsData.Group();
             collectionRewards.Set(JsonHelper.FromJson<StatsData>(database.Item4));
-            gameStartStats.Set(JsonHelper.FromJson<StatsData>(database.Item5));
+            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database.Item5));
             var questSpecs = new QuestSpec.DictionaryList();
             questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database.Item6));
             var questRequired = new StatsData.Group();

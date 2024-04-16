@@ -75,7 +75,7 @@ namespace ShooRhythm
                 })
                 .RegisterTo(destroyCancellationToken);
 
-            foreach (var i in TinyServiceLocator.Resolve<MasterData>().GameStartStats.List)
+            foreach (var i in TinyServiceLocator.Resolve<MasterData>().GrantStatsGameStart.List)
             {
                 gameData.Stats.Set(i.Name, i.Amount);
             }
