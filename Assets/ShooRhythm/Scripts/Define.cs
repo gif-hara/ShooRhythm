@@ -20,5 +20,7 @@ namespace ShooRhythm
             Productions = 3,
             Quests = 4,
         }
+        
+        public const int MachineSlotCount = 3;
     }
 }
