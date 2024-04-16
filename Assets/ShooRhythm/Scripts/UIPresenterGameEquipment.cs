@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
@@ -17,6 +18,7 @@ namespace ShooRhythm
             var document = Object.Instantiate(documentPrefab);
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var uiPresenterGameSelectItem = new UIPresenterGameSelectItems();
+            var masterData = TinyServiceLocator.Resolve<MasterData>();
             uiPresenterGameSelectItem.OnSelectedItemAsObservable()
                 .SubscribeAwait(async (x, ct) =>
                 {
@@ -24,8 +26,15 @@ namespace ShooRhythm
                     UpdateEquipmentViews();
                 })
                 .RegisterTo(cancellationToken);
+            uiPresenterGameSelectItem.BeginAsync(
+                document.Q<HKUIDocument>("SelectItems"),
+                x =>
+                {
+                    return x.Where(y => masterData.WeaponSpecs.ContainsKey(y.Key));
+                })
+                .Forget();
             UpdateEquipmentViews();
-           
+
             await UniTask.WaitUntilCanceled(cancellationToken);
 
             if (document != null && document.gameObject != null)
@@ -35,7 +44,6 @@ namespace ShooRhythm
 
             void UpdateEquipmentViews()
             {
-                var masterData = TinyServiceLocator.Resolve<MasterData>();
                 var equipmentItemId = gameData.UserEquipmentItemId;
                 var masterDataItem = equipmentItemId != 0 ? masterData.Items.Get(equipmentItemId) : null;
                 masterData.WeaponSpecs.TryGetValue(equipmentItemId, out var weaponSpec);
