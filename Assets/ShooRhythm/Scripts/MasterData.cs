@@ -25,10 +25,7 @@ namespace ShooRhythm
         [SerializeField]
         private Contents collectionContents;
         public Contents Collections => collectionContents;
-
-        [SerializeField]
-        private Contents tabContents;
-
+        
         [SerializeField]
         private StatsData.DictionaryList gameStartStats;
         public StatsData.DictionaryList GameStartStats => gameStartStats;
