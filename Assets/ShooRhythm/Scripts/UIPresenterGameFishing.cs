@@ -19,6 +19,7 @@ namespace ShooRhythm
             var rootCastButton = document.Q("Root.CastButton");
             var rootStrikeButton = document.Q("Root.StrikeButton");
             var rootHitIcon = document.Q("Root.HitIcon");
+            var collectionRecord = TinyServiceLocator.Resolve<MasterData>().Collections.Get(fishingDesignData.AcquireCollectionSpecName);
             rootHitIcon.SetActive(false);
             stateMachine.Change(StateIdle);
 
@@ -38,7 +39,14 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Cast").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        stateMachine.Change(StateCast);
+                        if (collectionRecord.IsCompleted(TinyServiceLocator.Resolve<GameData>().Stats))
+                        {
+                            stateMachine.Change(StateCast);
+                        }
+                        else
+                        {
+                            TinyServiceLocator.Resolve<GameMessage>().RequestNotification.OnNext(("釣り竿が必要です", null, Define.NotificationType.Negative));
+                        }
                     })
                     .RegisterTo(scope);
                 return UniTask.CompletedTask;
@@ -90,7 +98,6 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Strike").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        var collectionRecord = TinyServiceLocator.Resolve<MasterData>().Collections.Get(fishingDesignData.AcquireCollectionSpecName);
                         TinyServiceLocator.Resolve<GameController>().CollectingAsync(collectionRecord).Forget();
                         stateMachine.Change(StateIdle);
                     })
