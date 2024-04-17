@@ -25,7 +25,13 @@ namespace ShooRhythm
             RiverFishing = 6,
             SeaFishing = 7,
         }
-        
+
+        public enum NotificationType
+        {
+            Positive = 0,
+            Negative = 1,
+        }
+
         public const int MachineSlotCount = 3;
     }
 }
