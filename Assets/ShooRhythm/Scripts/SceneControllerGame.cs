@@ -102,7 +102,7 @@ namespace ShooRhythm
                 {
                     if (Keyboard.current.qKey.wasPressedThisFrame)
                     {
-                        gameMessage.RequestNotification.OnNext(("Test", null));
+                        gameMessage.RequestNotification.OnNext(("Test", null, Define.NotificationType.Positive));
                     }
                 })
                 .RegisterTo(destroyCancellationToken);
