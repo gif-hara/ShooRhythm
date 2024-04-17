@@ -30,6 +30,8 @@ namespace ShooRhythm
                     listElement.Q<Image>("Icon").sprite = x.sprite;
                     listElement.Q("Root.Icon").SetActive(x.sprite != null);
                     listElement.Q<SequencerMonoBehaviour>("Sequencer.InAnimation").PlayAsync().Forget();
+                    listElement.Q("Background.Positive").SetActive(x.notificationType == Define.NotificationType.Positive);
+                    listElement.Q("Background.Negative").SetActive(x.notificationType == Define.NotificationType.Negative);
                 })
                 .RegisterTo(cancellationToken);
 
