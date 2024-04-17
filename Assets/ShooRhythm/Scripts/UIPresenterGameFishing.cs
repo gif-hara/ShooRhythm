@@ -19,8 +19,9 @@ namespace ShooRhythm
             var rootCastButton = document.Q("Root.CastButton");
             var rootStrikeButton = document.Q("Root.StrikeButton");
             var rootHitIcon = document.Q("Root.HitIcon");
+            rootHitIcon.SetActive(false);
             stateMachine.Change(StateIdle);
-           
+
             await UniTask.WaitUntilCanceled(cancellationToken);
 
             if (document != null && document.gameObject != null)
@@ -33,7 +34,7 @@ namespace ShooRhythm
                 rootHitIcon.SetActive(false);
                 rootCastButton.SetActive(true);
                 rootStrikeButton.SetActive(false);
-                
+
                 document.Q<ObservablePointerClickTrigger>("Button.Cast").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
@@ -42,7 +43,7 @@ namespace ShooRhythm
                     .RegisterTo(scope);
                 return UniTask.CompletedTask;
             }
-            
+
             UniTask StateCast(CancellationToken scope)
             {
                 var hitSeconds = Random.Range(
@@ -56,7 +57,7 @@ namespace ShooRhythm
                     .Subscribe(_ =>
                     {
                         currentSeconds += Time.deltaTime;
-                        if(currentSeconds >= hitSeconds)
+                        if (currentSeconds >= hitSeconds)
                         {
                             stateMachine.Change(StateHit);
                         }
@@ -70,7 +71,7 @@ namespace ShooRhythm
                     .RegisterTo(scope);
                 return UniTask.CompletedTask;
             }
-            
+
             async UniTask StateHit(CancellationToken scope)
             {
                 var postponementSeconds = fishingDesignData.PostponementSeconds;
@@ -80,7 +81,7 @@ namespace ShooRhythm
                     .Subscribe(_ =>
                     {
                         currentSeconds += Time.deltaTime;
-                        if(currentSeconds >= postponementSeconds)
+                        if (currentSeconds >= postponementSeconds)
                         {
                             stateMachine.Change(StateIdle);
                         }
