@@ -631,11 +631,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI.Game.Footer
       objectReference: {fileID: 0}
-    - target: {fileID: 8898086221440539716, guid: c2ff1a9eb622bc846953bb3485368839,
-        type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
