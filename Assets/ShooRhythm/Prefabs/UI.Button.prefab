@@ -160,21 +160,59 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: {fileID: 7247908679341760645}
   sequences:
-  - rid: 4357835539116720131
+  - rid: 8290056386574549047
   references:
     version: 2
     RefIds:
-    - rid: 4357835539116720131
-      type: {class: SetColor, ns: ShooRhythm, asm: Assembly-CSharp}
+    - rid: 8290056386574549047
+      type: {class: BindToGraphicColor, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
-        graphicResolver:
-          rid: 8290056386574549003
-        color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
-    - rid: 8290056386574549003
+        targetResolver:
+          rid: 8290056386574549048
+        parameters:
+          fromResolver:
+            rid: 8290056386574549049
+          toResolver:
+            rid: 8290056386574549050
+          durationResolver:
+            rid: 8290056386574549051
+          delayResolver:
+            rid: 8290056386574549052
+          loopCountResolver:
+            rid: 8290056386574549053
+          loopType: 0
+          motionSchedulerResolver:
+            rid: 8290056386574549054
+          ease: 0
+    - rid: 8290056386574549048
       type: {class: GraphicResolver/Reference, ns: UnitySequencerSystem.Resolvers,
         asm: UnitySequencerSystem}
       data:
         target: {fileID: 2989651649729842184}
+    - rid: 8290056386574549049
+      type: {class: ColorResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    - rid: 8290056386574549050
+      type: {class: ColorResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
+    - rid: 8290056386574549051
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0
+    - rid: 8290056386574549052
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0
+    - rid: 8290056386574549053
+      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 1
+    - rid: 8290056386574549054
+      type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
+        asm: UnitySequencerSystem}
+      data: 
 --- !u!114 &6756989835934593117
 MonoBehaviour:
   m_ObjectHideFlags: 0
