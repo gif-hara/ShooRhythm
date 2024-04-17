@@ -38,6 +38,8 @@ MonoBehaviour:
       Name: "\u3053\u3093\u68D2"
     - Id: 10204
       Name: "\u677E\u660E"
+    - Id: 10205
+      Name: "\u91E3\u308A\u7AFF"
   collectionSpecs:
     list:
     - Id: 10101
@@ -82,6 +84,10 @@ MonoBehaviour:
       CollectionType: 2
     - Id: 10203
       AcquireItemId: 10203
+      CoolTimeSeconds: 2
+      CollectionType: 2
+    - Id: 10205
+      AcquireItemId: 10205
       CoolTimeSeconds: 2
       CollectionType: 2
   collectionContents:
@@ -131,14 +137,18 @@ MonoBehaviour:
     - <Name>k__BackingField: 10107
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
-      <Conditions>k__BackingField: []
+      <Conditions>k__BackingField:
+      - <Name>k__BackingField: Item.10205
+        <Value>k__BackingField: 1
       <Rewards>k__BackingField:
       - <Name>k__BackingField: Item.10107
         <Value>k__BackingField: 1
     - <Name>k__BackingField: 10108
       <Required>k__BackingField: []
       <Ignore>k__BackingField: []
-      <Conditions>k__BackingField: []
+      <Conditions>k__BackingField:
+      - <Name>k__BackingField: Item.10205
+        <Value>k__BackingField: 1
       <Rewards>k__BackingField:
       - <Name>k__BackingField: Item.10108
         <Value>k__BackingField: 1
@@ -183,6 +193,21 @@ MonoBehaviour:
         <Value>k__BackingField: 1
       - <Name>k__BackingField: Item.10101
         <Value>k__BackingField: -2
+    - <Name>k__BackingField: 10205
+      <Required>k__BackingField: []
+      <Ignore>k__BackingField: []
+      <Conditions>k__BackingField:
+      - <Name>k__BackingField: Item.10101
+        <Value>k__BackingField: 1
+      - <Name>k__BackingField: Item.10102
+        <Value>k__BackingField: 1
+      <Rewards>k__BackingField:
+      - <Name>k__BackingField: Item.10205
+        <Value>k__BackingField: 1
+      - <Name>k__BackingField: Item.10102
+        <Value>k__BackingField: -1
+      - <Name>k__BackingField: Item.10102
+        <Value>k__BackingField: -1
   grantStatsGameStart:
     list:
     - Id: 1
