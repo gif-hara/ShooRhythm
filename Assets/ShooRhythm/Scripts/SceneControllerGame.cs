@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using R3;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ShooRhythm
 {
@@ -13,7 +14,7 @@ namespace ShooRhythm
     {
         [SerializeField]
         private GameDesignData gameDesignData;
-        
+
         [SerializeField]
         private HKUIDocument gameFooterDocumentPrefab;
 
@@ -28,15 +29,18 @@ namespace ShooRhythm
 
         [SerializeField]
         private HKUIDocument gameQuestsDocumentPrefab;
-        
+
         [SerializeField]
         private HKUIDocument gameEquipmentDocumentPrefab;
-        
+
         [SerializeField]
         private HKUIDocument gameRiverFishingDocumentPrefab;
-        
+
         [SerializeField]
         private HKUIDocument gameSeaFishingDocumentPrefab;
+
+        [SerializeField]
+        private HKUIDocument gameNotificationDocumentPrefab;
 
         private readonly TinyStateMachine stateMachine = new();
 
@@ -88,8 +92,20 @@ namespace ShooRhythm
 
             var uiPresenterGameFooter = new UIPresenterGameFooter();
             uiPresenterGameFooter.BeginAsync(gameFooterDocumentPrefab, destroyCancellationToken).Forget();
+            var uiPresenterGameNotification = new UIPresenterGameNotification();
+            uiPresenterGameNotification.BeginAsync(gameNotificationDocumentPrefab, destroyCancellationToken).Forget();
 
             stateMachine.Change(StateItems);
+
+            Observable.EveryUpdate()
+                .Subscribe(_ =>
+                {
+                    if (Keyboard.current.qKey.wasPressedThisFrame)
+                    {
+                        gameMessage.RequestNotification.OnNext(("Test", null));
+                    }
+                })
+                .RegisterTo(destroyCancellationToken);
         }
 
         private UniTask StateItems(CancellationToken scope)
@@ -126,7 +142,7 @@ namespace ShooRhythm
             uiPresenterGameEquipment.BeginAsync(gameEquipmentDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
-        
+
         private UniTask StateRiverFishing(CancellationToken scope)
         {
             var uiPresenterGameFishing = new UIPresenterGameFishing();
@@ -138,7 +154,7 @@ namespace ShooRhythm
                 .Forget();
             return UniTask.CompletedTask;
         }
-        
+
         private UniTask StateSeaFishing(CancellationToken scope)
         {
             var uiPresenterGameFishing = new UIPresenterGameFishing();
