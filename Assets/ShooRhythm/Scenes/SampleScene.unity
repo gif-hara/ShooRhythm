@@ -577,6 +577,8 @@ MonoBehaviour:
     type: 3}
   gameSeaFishingDocumentPrefab: {fileID: 8952608029526600457, guid: 94a06e2ea20bde64a94a05fa016cc0b5,
     type: 3}
+  gameFarmDocumentPrefab: {fileID: 8952608029526600457, guid: 3d6275d4c6aa53b4c8b7540429720ad5,
+    type: 3}
   gameNotificationDocumentPrefab: {fileID: 4582918645779481610, guid: cd8050602cc3c0749901041b98855cde,
     type: 3}
 --- !u!1660057539 &9223372036854775807

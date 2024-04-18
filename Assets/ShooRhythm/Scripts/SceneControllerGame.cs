@@ -40,6 +40,9 @@ namespace ShooRhythm
         private HKUIDocument gameSeaFishingDocumentPrefab;
 
         [SerializeField]
+        private HKUIDocument gameFarmDocumentPrefab;
+
+        [SerializeField]
         private HKUIDocument gameNotificationDocumentPrefab;
 
         private readonly TinyStateMachine stateMachine = new();
@@ -80,6 +83,9 @@ namespace ShooRhythm
                             break;
                         case Define.TabType.SeaFishing:
                             stateMachine.Change(StateSeaFishing);
+                            break;
+                        case Define.TabType.Farm:
+                            stateMachine.Change(StateFarm);
                             break;
                     }
                 })
@@ -164,6 +170,13 @@ namespace ShooRhythm
                     scope
                 )
                 .Forget();
+            return UniTask.CompletedTask;
+        }
+
+        private UniTask StateFarm(CancellationToken scope)
+        {
+            var uiPresenterGameFarm = new UIPresenterGameFarm();
+            uiPresenterGameFarm.BeginAsync(gameFarmDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
     }
