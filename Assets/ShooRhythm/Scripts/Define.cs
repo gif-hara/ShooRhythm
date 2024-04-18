@@ -12,6 +12,7 @@ namespace ShooRhythm
             Production = 2,
             Battle = 3,
             Fishing = 4,
+            Farm = 5,
         }
 
         public enum TabType
@@ -24,6 +25,7 @@ namespace ShooRhythm
             Equipment = 5,
             RiverFishing = 6,
             SeaFishing = 7,
+            Farm = 8,
         }
 
         public enum NotificationType
