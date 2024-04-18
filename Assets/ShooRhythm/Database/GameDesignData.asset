@@ -44,3 +44,6 @@ MonoBehaviour:
   - footerName: "\u6D77"
     tabType: 7
     activeStatsName: Available.Tab.SeaFishing
+  - footerName: "\u8FB2\u5834"
+    tabType: 8
+    activeStatsName: Available.Tab.Farm
