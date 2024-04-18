@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace ShooRhythm
                 .Subscribe(x =>
                 {
                     var startString = "Item.";
-                    if (x.Name.StartsWith(startString, System.StringComparison.Ordinal))
+                    if (x.Name.StartsWith(startString, StringComparison.Ordinal))
                     {
                         var id = int.Parse(x.Name.Substring(startString.Length));
                         gameData.SetItem(id, x.Value);
@@ -31,10 +32,15 @@ namespace ShooRhythm
                     {
                         ObserveProductionMachine();
                     }
+                    if (x.Name == "Farm.PlantNumber")
+                    {
+                        gameData.FetchFarmData();
+                    }
                 })
                 .RegisterTo(cancellationToken);
 
             ObserveProductionMachine();
+            gameData.FetchFarmData();
 
             void ObserveProductionMachine()
             {
@@ -44,7 +50,7 @@ namespace ShooRhythm
                 for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
                 {
                     var machineId = i;
-                    for(var j=0; j<Define.MachineSlotCount; j++)
+                    for (var j = 0; j < Define.MachineSlotCount; j++)
                     {
                         ObserveProductionMachineSlot(machineId, j);
                     }
@@ -117,10 +123,30 @@ namespace ShooRhythm
             Debug.Log(gameData.Stats);
             return UniTask.FromResult(true);
         }
-        
+
         public UniTask<bool> SetUserEquipmentItemIdAsync(int userId, int x)
         {
             return SetStatsAsync($"UserData.{userId}.Equipment.ItemId", x);
+        }
+
+        public UniTask<bool> SetFarmPlantItemIdAsync(int plantId, int seedItemId)
+        {
+            var seedSpec = TinyServiceLocator.Resolve<MasterData>().SeedSpecs.Get(seedItemId);
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            gameData.Stats.Add($"Item.{seedItemId}", -1);
+            gameData.FarmDatas[plantId].SeedItemId.Value = seedSpec.Id;
+            gameData.FarmDatas[plantId].PlantTicks.Value = DateTime.UtcNow.Ticks;
+            return UniTask.FromResult(true);
+        }
+
+        public UniTask<bool> AcquireFarmPlantAsync(int plantId)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var seedSpec = gameData.FarmDatas[plantId].SeedSpec;
+            gameData.Stats.Add($"Item.{seedSpec.AcquireItemId}", 1);
+            gameData.FarmDatas[plantId].SeedItemId.Value = 0;
+            gameData.FarmDatas[plantId].PlantTicks.Value = 0;
+            return UniTask.FromResult(true);
         }
     }
 }
