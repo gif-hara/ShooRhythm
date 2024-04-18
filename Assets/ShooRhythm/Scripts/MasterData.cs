@@ -264,6 +264,8 @@ namespace ShooRhythm
 
             public int AcquireItemId;
 
+            public float GrowSeconds;
+
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, SeedSpec>
             {
