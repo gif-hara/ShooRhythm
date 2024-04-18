@@ -26,7 +26,7 @@ namespace ShooRhythm
         [SerializeField]
         private Contents collectionContents;
         public Contents Collections => collectionContents;
-        
+
         [SerializeField]
         private StatsData.DictionaryList grantStatsGameStart;
         public StatsData.DictionaryList GrantStatsGameStart => grantStatsGameStart;
@@ -34,10 +34,14 @@ namespace ShooRhythm
         [SerializeField]
         private Contents questContents;
         public Contents QuestContents => questContents;
-        
+
         [SerializeField]
         private WeaponSpec.DictionaryList weaponSpecs;
         public WeaponSpec.DictionaryList WeaponSpecs => weaponSpecs;
+
+        [SerializeField]
+        private SeedSpec.DictionaryList seedSpecs;
+        public SeedSpec.DictionaryList SeedSpecs => seedSpecs;
 
         public UniTask BootAsync()
         {
@@ -61,7 +65,8 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestCondition"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestIgnore"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestReward"),
-                GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("SeedSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
@@ -81,6 +86,7 @@ namespace ShooRhythm
             var questRewards = new StatsData.Group();
             questRewards.Set(JsonHelper.FromJson<StatsData>(database.Item10));
             weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item11));
+            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database.Item12));
 
             var collectionRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
@@ -241,9 +247,25 @@ namespace ShooRhythm
             public int ItemId;
 
             public int Strength;
-            
+
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, WeaponSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class SeedSpec
+        {
+            public int Id;
+
+            public int SeedItemId;
+
+            public int AcquireItemId;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, SeedSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }
