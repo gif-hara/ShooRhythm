@@ -25,13 +25,11 @@ namespace ShooRhythm
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             parentLayout.SetConstraintCount();
             var elements = new List<(int id, GameObject gameObject)>();
-            var specs = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List
-                .Where(x => x.CollectionType == Define.CollectionType.Collection);
-            foreach (var i in specs)
+            foreach (var i in TinyServiceLocator.Resolve<MasterData>().NewCollectionSpecs.List)
             {
                 var element = Object.Instantiate(elementPrefab, elementParent);
-                var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Get(i.AcquireItemId.ToString());
-                element.Q<TMP_Text>("Text").text = i.GetItem().Name;
+                var collection = i.ToContentsRecord();
+                element.Q<TMP_Text>("Text").text = i.GetAcquireItem().Name;
                 element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
