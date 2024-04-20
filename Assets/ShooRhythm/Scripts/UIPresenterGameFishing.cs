@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using R3;
 using R3.Triggers;
+using SCD;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -12,14 +13,15 @@ namespace ShooRhythm
     /// </summary>
     public sealed class UIPresenterGameFishing
     {
-        public async UniTask BeginAsync(HKUIDocument documentPrefab, GameDesignData.FishingDesignData fishingDesignData, CancellationToken cancellationToken)
+        public async UniTask BeginAsync(HKUIDocument documentPrefab, MasterData.FishingSpec.DictionaryList fishingDesignData, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
             var stateMachine = new TinyStateMachine();
             var rootCastButton = document.Q("Root.CastButton");
             var rootStrikeButton = document.Q("Root.StrikeButton");
             var rootHitIcon = document.Q("Root.HitIcon");
-            var collectionRecord = TinyServiceLocator.Resolve<MasterData>().Collections.Get(fishingDesignData.AcquireCollectionSpecName);
+            var currentFishingSpec = default(MasterData.FishingSpec);
+            var currentContentsRecord = default(Contents.Record);
             rootHitIcon.SetActive(false);
             stateMachine.Change(StateIdle);
 
@@ -39,13 +41,15 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Cast").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        if (collectionRecord.IsCompleted(TinyServiceLocator.Resolve<GameData>().Stats))
+                        currentFishingSpec = fishingDesignData.List[Random.Range(0, fishingDesignData.List.Count)];
+                        currentContentsRecord = currentFishingSpec.ToContentsRecord();
+                        if (currentContentsRecord.IsCompleted(TinyServiceLocator.Resolve<GameData>().Stats))
                         {
                             stateMachine.Change(StateCast);
                         }
                         else
                         {
-                            TinyServiceLocator.Resolve<GameMessage>().RequestNotification.OnNext(("釣り竿が必要です", null, Define.NotificationType.Negative));
+                            GameUtility.ShowContentsConditionsNotification(currentContentsRecord);
                         }
                     })
                     .RegisterTo(scope);
@@ -55,8 +59,8 @@ namespace ShooRhythm
             UniTask StateCast(CancellationToken scope)
             {
                 var hitSeconds = Random.Range(
-                    fishingDesignData.WaitSecondsMin,
-                    fishingDesignData.WaitSecondsMax
+                    currentFishingSpec.WaitSecondsMin,
+                    currentFishingSpec.WaitSecondsMax
                     );
                 var currentSeconds = 0f;
                 rootCastButton.SetActive(false);
@@ -82,7 +86,7 @@ namespace ShooRhythm
 
             async UniTask StateHit(CancellationToken scope)
             {
-                var postponementSeconds = fishingDesignData.PostponementSeconds;
+                var postponementSeconds = currentFishingSpec.PostponementSeconds;
                 var currentSeconds = 0f;
                 rootHitIcon.SetActive(true);
                 Observable.EveryUpdate(UnityFrameProvider.Update, scope)
@@ -98,7 +102,7 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Strike").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        TinyServiceLocator.Resolve<GameController>().CollectingAsync(collectionRecord).Forget();
+                        TinyServiceLocator.Resolve<GameController>().CollectingAsync(currentContentsRecord).Forget();
                         stateMachine.Change(StateIdle);
                     })
                     .RegisterTo(scope);

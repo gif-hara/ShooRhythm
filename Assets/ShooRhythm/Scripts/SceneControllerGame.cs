@@ -160,7 +160,7 @@ namespace ShooRhythm
             var uiPresenterGameFishing = new UIPresenterGameFishing();
             uiPresenterGameFishing.BeginAsync(
                     gameRiverFishingDocumentPrefab,
-                    TinyServiceLocator.Resolve<GameDesignData>().RiverFishingDesignData,
+                    TinyServiceLocator.Resolve<MasterData>().RiverFishingSpecs,
                     scope
                 )
                 .Forget();
@@ -172,7 +172,7 @@ namespace ShooRhythm
             var uiPresenterGameFishing = new UIPresenterGameFishing();
             uiPresenterGameFishing.BeginAsync(
                     gameSeaFishingDocumentPrefab,
-                    TinyServiceLocator.Resolve<GameDesignData>().SeaFishingDesignData,
+                    TinyServiceLocator.Resolve<MasterData>().SeaFishingSpecs,
                     scope
                 )
                 .Forget();
