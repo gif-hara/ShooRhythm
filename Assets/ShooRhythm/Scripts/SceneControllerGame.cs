@@ -43,6 +43,9 @@ namespace ShooRhythm
         private HKUIDocument gameFarmDocumentPrefab;
 
         [SerializeField]
+        private HKUIDocument gameMeadowDocumentPrefab;
+
+        [SerializeField]
         private HKUIDocument gameNotificationDocumentPrefab;
 
         private readonly TinyStateMachine stateMachine = new();
@@ -86,6 +89,9 @@ namespace ShooRhythm
                             break;
                         case Define.TabType.Farm:
                             stateMachine.Change(StateFarm);
+                            break;
+                        case Define.TabType.Meadow:
+                            stateMachine.Change(StateMeadow);
                             break;
                     }
                 })
@@ -177,6 +183,13 @@ namespace ShooRhythm
         {
             var uiPresenterGameFarm = new UIPresenterGameFarm();
             uiPresenterGameFarm.BeginAsync(gameFarmDocumentPrefab, scope).Forget();
+            return UniTask.CompletedTask;
+        }
+
+        private UniTask StateMeadow(CancellationToken scope)
+        {
+            var uiPresenterGameMeadow = new UIPresenterGameMeadow();
+            uiPresenterGameMeadow.BeginAsync(gameMeadowDocumentPrefab, scope).Forget();
             return UniTask.CompletedTask;
         }
     }
