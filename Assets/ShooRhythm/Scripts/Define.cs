@@ -26,6 +26,7 @@ namespace ShooRhythm
             RiverFishing = 6,
             SeaFishing = 7,
             Farm = 8,
+            Meadow = 9,
         }
 
         public enum NotificationType
