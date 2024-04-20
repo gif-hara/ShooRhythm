@@ -30,12 +30,12 @@ namespace ShooRhythm
             return self.Select(x => x.ToStatsRecordSubtraction());
         }
 
-        public static MasterData.Item GetAcquireItem(this MasterData.NewCollectionSpec self)
+        public static MasterData.Item GetAcquireItem(this MasterData.CollectionSpec self)
         {
             return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
 
-        public static Contents.Record ToContentsRecord(this MasterData.NewCollectionSpec self)
+        public static Contents.Record ToContentsRecord(this MasterData.CollectionSpec self)
         {
             return new Contents.Record(
                 self.Id.ToString(),

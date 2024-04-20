@@ -54,7 +54,7 @@ MonoBehaviour:
       Name: "\u677E\u660E"
     - Id: 10205
       Name: "\u91E3\u308A\u7AFF"
-  newCollectionSpecs:
+  collectionSpecs:
     list:
     - Id: 1
       AcquireItemId: 10101

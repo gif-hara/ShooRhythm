@@ -19,8 +19,8 @@ namespace ShooRhythm
         public Item.DictionaryList Items => items;
 
         [SerializeField]
-        private NewCollectionSpec.DictionaryList newCollectionSpecs;
-        public NewCollectionSpec.DictionaryList NewCollectionSpecs => newCollectionSpecs;
+        private CollectionSpec.DictionaryList collectionSpecs;
+        public CollectionSpec.DictionaryList CollectionSpecs => collectionSpecs;
 
         [SerializeField]
         private ProductionSpec.DictionaryList productionSpecs;
@@ -84,7 +84,7 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("SeedSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("MeadowSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("NewCollectionSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("CollectionSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("ProductionSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("ProductionCondition"),
                 GoogleSpreadSheetDownloader.DownloadAsync("RiverFishingSpec"),
@@ -106,7 +106,7 @@ namespace ShooRhythm
             weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database[7]));
             seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database[8]));
             meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database[9]));
-            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database[10]));
+            collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database[10]));
             productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database[11]));
             productionConditions.Set(JsonHelper.FromJson<StatsData>(database[12]));
             riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[13]));
@@ -168,7 +168,7 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class NewCollectionSpec
+        public class CollectionSpec
         {
             public int Id;
 
@@ -179,7 +179,7 @@ namespace ShooRhythm
             public int CoolTimeSeconds;
 
             [Serializable]
-            public sealed class DictionaryList : DictionaryList<int, NewCollectionSpec>
+            public sealed class DictionaryList : DictionaryList<int, CollectionSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }

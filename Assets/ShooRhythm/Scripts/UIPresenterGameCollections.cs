@@ -24,7 +24,7 @@ namespace ShooRhythm
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             parentLayout.SetConstraintCount();
             var elements = new List<(int id, GameObject gameObject)>();
-            foreach (var i in TinyServiceLocator.Resolve<MasterData>().NewCollectionSpecs.List)
+            foreach (var i in TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List)
             {
                 var element = Object.Instantiate(elementPrefab, elementParent);
                 var collection = i.ToContentsRecord();
