@@ -47,3 +47,6 @@ MonoBehaviour:
   - footerName: "\u8FB2\u5834"
     tabType: 8
     activeStatsName: Available.Tab.Farm
+  - footerName: "\u7267\u5834"
+    tabType: 9
+    activeStatsName: Available.Tab.Meadow
