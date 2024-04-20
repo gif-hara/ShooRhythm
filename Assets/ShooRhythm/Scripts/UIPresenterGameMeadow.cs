@@ -1,13 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
 using R3.Triggers;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace ShooRhythm
 {
@@ -34,10 +30,21 @@ namespace ShooRhythm
             void SetupAnimalButton(string rootName, int meadowSpecId)
             {
                 var rootElement = document.Q<HKUIDocument>(rootName);
+                var masterDataMeadowSpec = TinyServiceLocator.Resolve<MasterData>().MeadowSpecs.Get(meadowSpecId);
+                var contentsRecord = masterDataMeadowSpec.ToContentsRecord();
+                var gameController = TinyServiceLocator.Resolve<GameController>();
+                var gameData = TinyServiceLocator.Resolve<GameData>();
                 rootElement.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
-                    .Subscribe(_ =>
+                    .SubscribeAwait(async (_, ct) =>
                     {
-                        Debug.Log($"Clicked {rootName}");
+                        if (!contentsRecord.IsCompleted(gameData.Stats))
+                        {
+                            GameUtility.ShowContentsConditionsNotification(contentsRecord);
+                        }
+                        else
+                        {
+                            await gameController.CollectingAsync(contentsRecord);
+                        }
                     })
                     .RegisterTo(cancellationToken);
             }
