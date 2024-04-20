@@ -35,6 +35,12 @@ namespace ShooRhythm
             Negative = 1,
         }
 
+        public enum DungeonType
+        {
+            Grassland = 1,
+            Wetland = 2,
+        }
+
         public const int MachineSlotCount = 3;
     }
 }
