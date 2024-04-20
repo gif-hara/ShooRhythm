@@ -58,6 +58,10 @@ namespace ShooRhythm
         private MeadowSpec.DictionaryList meadowSpecs;
         public MeadowSpec.DictionaryList MeadowSpecs => meadowSpecs;
 
+        [SerializeField]
+        private EnemySpec.DictionaryList enemySpecs;
+        public EnemySpec.DictionaryList EnemySpecs => enemySpecs;
+
         public UniTask BootAsync()
         {
             TinyServiceLocator.Register(this);
@@ -84,28 +88,30 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("ProductionSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("ProductionCondition"),
                 GoogleSpreadSheetDownloader.DownloadAsync("RiverFishingSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("SeaFishingSpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("SeaFishingSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("EnemySpec")
             );
-            items.Set(JsonHelper.FromJson<Item>(database.Item1));
-            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database.Item2));
+            items.Set(JsonHelper.FromJson<Item>(database[0]));
+            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database[1]));
             var questSpecs = new QuestSpec.DictionaryList();
-            questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database.Item3));
+            questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[2]));
             var questRequired = new StatsData.Group();
-            questRequired.Set(JsonHelper.FromJson<StatsData>(database.Item4));
+            questRequired.Set(JsonHelper.FromJson<StatsData>(database[3]));
             var questConditions = new StatsData.Group();
-            questConditions.Set(JsonHelper.FromJson<StatsData>(database.Item5));
+            questConditions.Set(JsonHelper.FromJson<StatsData>(database[4]));
             var questIgnores = new StatsData.Group();
-            questIgnores.Set(JsonHelper.FromJson<StatsData>(database.Item6));
+            questIgnores.Set(JsonHelper.FromJson<StatsData>(database[5]));
             var questRewards = new StatsData.Group();
-            questRewards.Set(JsonHelper.FromJson<StatsData>(database.Item7));
-            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item8));
-            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database.Item9));
-            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database.Item10));
-            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database.Item11));
-            productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database.Item12));
-            productionConditions.Set(JsonHelper.FromJson<StatsData>(database.Item13));
-            riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database.Item14));
-            seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database.Item15));
+            questRewards.Set(JsonHelper.FromJson<StatsData>(database[6]));
+            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database[7]));
+            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database[8]));
+            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database[9]));
+            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database[10]));
+            productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database[11]));
+            productionConditions.Set(JsonHelper.FromJson<StatsData>(database[12]));
+            riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[13]));
+            seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[14]));
+            enemySpecs.Set(JsonHelper.FromJson<EnemySpec>(database[15]));
 
             var questContentsRecords = new List<Contents.Record>();
             foreach (var questSpec in questSpecs.List)
@@ -347,6 +353,28 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, MeadowSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class EnemySpec
+        {
+            public int Id;
+
+            public string Name;
+
+            public Define.DungeonType DungeonType;
+
+            public int HitPoint;
+
+            public int RewardItemId;
+
+            public int RewardItemAmount;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, EnemySpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }
