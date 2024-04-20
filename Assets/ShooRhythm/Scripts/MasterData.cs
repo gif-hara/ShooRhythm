@@ -23,6 +23,10 @@ namespace ShooRhythm
         public CollectionSpec.DictionaryList CollectionSpecs => collectionSpecs;
 
         [SerializeField]
+        private NewCollectionSpec.DictionaryList newCollectionSpecs;
+        public NewCollectionSpec.DictionaryList NewCollectionSpecs => newCollectionSpecs;
+
+        [SerializeField]
         private Contents collectionContents;
         public Contents Collections => collectionContents;
 
@@ -70,7 +74,8 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestReward"),
                 GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("SeedSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("MeadowSpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("MeadowSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("NewCollectionSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
@@ -92,6 +97,7 @@ namespace ShooRhythm
             weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item11));
             seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database.Item12));
             meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database.Item13));
+            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database.Item14));
 
             var collectionRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
@@ -166,6 +172,24 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, Item>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class NewCollectionSpec
+        {
+            public int Id;
+
+            public int AcquireItemId;
+
+            public int AcquireItemAmount;
+
+            public int CoolTimeSeconds;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, NewCollectionSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }

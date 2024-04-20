@@ -112,6 +112,48 @@ MonoBehaviour:
       AcquireItemId: 10205
       CoolTimeSeconds: 2
       CollectionType: 2
+  newCollectionSpecs:
+    list:
+    - Id: 1
+      AcquireItemId: 10101
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 2
+      AcquireItemId: 10102
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 3
+      AcquireItemId: 10103
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 4
+      AcquireItemId: 10104
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 5
+      AcquireItemId: 10105
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 6
+      AcquireItemId: 10106
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 7
+      AcquireItemId: 10107
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 8
+      AcquireItemId: 10108
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 9
+      AcquireItemId: 10109
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+    - Id: 10
+      AcquireItemId: 10110
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
   collectionContents:
     records:
     - <Name>k__BackingField: 10101
