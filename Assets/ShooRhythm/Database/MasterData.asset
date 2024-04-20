@@ -269,12 +269,15 @@ MonoBehaviour:
       Name: Available.Tab.Farm
       Amount: 1
     - Id: 9
-      Name: Productions.MachineNumber
+      Name: Available.Tab.Meadow
       Amount: 1
     - Id: 10
-      Name: Available.Quest.10101
+      Name: Productions.MachineNumber
       Amount: 1
     - Id: 11
+      Name: Available.Quest.10101
+      Amount: 1
+    - Id: 12
       Name: Farm.PlantNumber
       Amount: 1
   questContents:
