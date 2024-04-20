@@ -69,6 +69,23 @@ namespace ShooRhythm
             );
         }
 
+        public static Contents.Record ToContentsRecord(this MasterData.FishingSpec self)
+        {
+            return new Contents.Record(
+                self.Id.ToString(),
+                new List<Stats.Record>(),
+                new List<Stats.Record>(),
+                new List<Stats.Record>
+                {
+                    new($"Item.{self.NeedItemId}", self.NeedItemAmount)
+                },
+                new List<Stats.Record>
+                {
+                    new($"Item.{self.AcquireItemId}", self.AcquireItemAmount)
+                }
+            );
+        }
+
         public static Contents.Record ToContentsRecord(this MasterData.MeadowSpec self)
         {
             return new Contents.Record(
