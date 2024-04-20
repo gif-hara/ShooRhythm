@@ -34,6 +34,16 @@ MonoBehaviour:
       Name: "\u5C0F\u9EA6\u306E\u7A2E"
     - Id: 10110
       Name: "\u5C0F\u9EA6"
+    - Id: 10111
+      Name: "\u725B\u4E73"
+    - Id: 10112
+      Name: "\u8089"
+    - Id: 10113
+      Name: "\u5375"
+    - Id: 10114
+      Name: "\u7267\u8349\u306E\u7A2E"
+    - Id: 10115
+      Name: "\u7267\u8349"
     - Id: 10201
       Name: "\u9244\u5EF6\u3079\u68D2"
     - Id: 10202
@@ -297,3 +307,24 @@ MonoBehaviour:
       SeedItemId: 10109
       AcquireItemId: 10110
       GrowSeconds: 3
+    - Id: 10114
+      SeedItemId: 10114
+      AcquireItemId: 10115
+      GrowSeconds: 0
+  meadowSpecs:
+    list:
+    - Id: 1
+      NeedItemId: 10115
+      NeedItemAmount: 1
+      AcquireItemId: 0
+      AcquireItemAmount: 10111
+    - Id: 2
+      NeedItemId: 10115
+      NeedItemAmount: 1
+      AcquireItemId: 0
+      AcquireItemAmount: 10112
+    - Id: 3
+      NeedItemId: 10115
+      NeedItemAmount: 1
+      AcquireItemId: 0
+      AcquireItemAmount: 10113

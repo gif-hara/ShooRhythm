@@ -5,7 +5,6 @@ using Cysharp.Threading.Tasks;
 using HK;
 using SCD;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShooRhythm
 {
@@ -43,6 +42,10 @@ namespace ShooRhythm
         private SeedSpec.DictionaryList seedSpecs;
         public SeedSpec.DictionaryList SeedSpecs => seedSpecs;
 
+        [SerializeField]
+        private MeadowSpec.DictionaryList meadowSpecs;
+        public MeadowSpec.DictionaryList MeadowSpecs => meadowSpecs;
+
         public UniTask BootAsync()
         {
             TinyServiceLocator.Register(this);
@@ -66,7 +69,8 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestIgnore"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestReward"),
                 GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("SeedSpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("SeedSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("MeadowSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database.Item1));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
@@ -87,6 +91,7 @@ namespace ShooRhythm
             questRewards.Set(JsonHelper.FromJson<StatsData>(database.Item10));
             weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item11));
             seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database.Item12));
+            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database.Item13));
 
             var collectionRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
@@ -268,6 +273,26 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, SeedSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class MeadowSpec
+        {
+            public int Id;
+
+            public int NeedItemId;
+
+            public int NeedItemAmount;
+
+            public int AcquireItemId;
+
+            public int AcquireItemAmount;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, MeadowSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }
