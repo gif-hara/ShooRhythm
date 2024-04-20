@@ -189,7 +189,7 @@ MonoBehaviour:
     - Id: 10114
       SeedItemId: 10114
       AcquireItemId: 10115
-      GrowSeconds: 0
+      GrowSeconds: 4
   meadowSpecs:
     list:
     - Id: 1
