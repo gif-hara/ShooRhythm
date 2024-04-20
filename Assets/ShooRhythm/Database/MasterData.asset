@@ -195,15 +195,15 @@ MonoBehaviour:
     - Id: 1
       NeedItemId: 10115
       NeedItemAmount: 1
-      AcquireItemId: 0
-      AcquireItemAmount: 10111
+      AcquireItemId: 10111
+      AcquireItemAmount: 1
     - Id: 2
       NeedItemId: 10115
       NeedItemAmount: 1
-      AcquireItemId: 0
-      AcquireItemAmount: 10112
+      AcquireItemId: 10112
+      AcquireItemAmount: 1
     - Id: 3
       NeedItemId: 10115
       NeedItemAmount: 1
-      AcquireItemId: 0
-      AcquireItemAmount: 10113
+      AcquireItemId: 10113
+      AcquireItemAmount: 1
