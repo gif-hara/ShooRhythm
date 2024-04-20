@@ -209,9 +209,11 @@ MonoBehaviour:
       AcquireItemAmount: 1
   enemySpecs:
     list:
-    - Id: 10101
-      Name: "\u30B4\u30D6\u30EA\u30F3"
-      DungeonType: 1
-      HitPoint: 30
-      RewardItemId: 10105
-      RewardItemAmount: 1
+    - Key: 1
+      Value:
+      - Id: 10101
+        Name: "\u30B4\u30D6\u30EA\u30F3"
+        DungeonType: 1
+        HitPoint: 30
+        RewardItemId: 10105
+        RewardItemAmount: 1

@@ -59,8 +59,8 @@ namespace ShooRhythm
         public MeadowSpec.DictionaryList MeadowSpecs => meadowSpecs;
 
         [SerializeField]
-        private EnemySpec.DictionaryList enemySpecs;
-        public EnemySpec.DictionaryList EnemySpecs => enemySpecs;
+        private EnemySpec.Group enemySpecs;
+        public EnemySpec.Group EnemySpecs => enemySpecs;
 
         public UniTask BootAsync()
         {
@@ -359,6 +359,12 @@ namespace ShooRhythm
             public sealed class DictionaryList : DictionaryList<int, EnemySpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
+            }
+
+            [Serializable]
+            public sealed class Group : Group<Define.DungeonType, EnemySpec>
+            {
+                public Group() : base(x => x.DungeonType) { }
             }
         }
     }
