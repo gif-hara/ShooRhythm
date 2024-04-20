@@ -131,27 +131,11 @@ MonoBehaviour:
       AcquireItemAmount: 1
       CoolTimeSeconds: 1
     - Id: 5
-      AcquireItemId: 10105
-      AcquireItemAmount: 1
-      CoolTimeSeconds: 1
-    - Id: 6
-      AcquireItemId: 10106
-      AcquireItemAmount: 1
-      CoolTimeSeconds: 1
-    - Id: 7
-      AcquireItemId: 10107
-      AcquireItemAmount: 1
-      CoolTimeSeconds: 1
-    - Id: 8
-      AcquireItemId: 10108
-      AcquireItemAmount: 1
-      CoolTimeSeconds: 1
-    - Id: 9
       AcquireItemId: 10109
       AcquireItemAmount: 1
       CoolTimeSeconds: 1
-    - Id: 10
-      AcquireItemId: 10110
+    - Id: 6
+      AcquireItemId: 10114
       AcquireItemAmount: 1
       CoolTimeSeconds: 1
   collectionContents:
