@@ -27,6 +27,14 @@ namespace ShooRhythm
         public NewCollectionSpec.DictionaryList NewCollectionSpecs => newCollectionSpecs;
 
         [SerializeField]
+        private ProductionSpec.DictionaryList productionSpecs;
+        public ProductionSpec.DictionaryList ProductionSpecs => productionSpecs;
+
+        [SerializeField]
+        private StatsData.Group productionConditions;
+        public StatsData.Group ProductionConditions => productionConditions;
+
+        [SerializeField]
         private Contents collectionContents;
         public Contents Collections => collectionContents;
 
@@ -75,29 +83,33 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("WeaponSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("SeedSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("MeadowSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("NewCollectionSpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("NewCollectionSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("ProductionSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("ProductionCondition")
             );
-            items.Set(JsonHelper.FromJson<Item>(database.Item1));
-            collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database.Item2));
+            items.Set(JsonHelper.FromJson<Item>(database[0]));
+            collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database[1]));
             var collectionConditions = new StatsData.Group();
-            collectionConditions.Set(JsonHelper.FromJson<StatsData>(database.Item3));
+            collectionConditions.Set(JsonHelper.FromJson<StatsData>(database[2]));
             var collectionRewards = new StatsData.Group();
-            collectionRewards.Set(JsonHelper.FromJson<StatsData>(database.Item4));
-            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database.Item5));
+            collectionRewards.Set(JsonHelper.FromJson<StatsData>(database[3]));
+            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database[4]));
             var questSpecs = new QuestSpec.DictionaryList();
-            questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database.Item6));
+            questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[5]));
             var questRequired = new StatsData.Group();
-            questRequired.Set(JsonHelper.FromJson<StatsData>(database.Item7));
+            questRequired.Set(JsonHelper.FromJson<StatsData>(database[6]));
             var questConditions = new StatsData.Group();
-            questConditions.Set(JsonHelper.FromJson<StatsData>(database.Item8));
+            questConditions.Set(JsonHelper.FromJson<StatsData>(database[7]));
             var questIgnores = new StatsData.Group();
-            questIgnores.Set(JsonHelper.FromJson<StatsData>(database.Item9));
+            questIgnores.Set(JsonHelper.FromJson<StatsData>(database[8]));
             var questRewards = new StatsData.Group();
-            questRewards.Set(JsonHelper.FromJson<StatsData>(database.Item10));
-            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item11));
-            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database.Item12));
-            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database.Item13));
-            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database.Item14));
+            questRewards.Set(JsonHelper.FromJson<StatsData>(database[9]));
+            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database[10]));
+            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database[11]));
+            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database[12]));
+            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database[13]));
+            productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database[14]));
+            productionConditions.Set(JsonHelper.FromJson<StatsData>(database[15]));
 
             var collectionRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
@@ -208,6 +220,24 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, CollectionSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class ProductionSpec
+        {
+            public int Id;
+
+            public int AcquireItemId;
+
+            public int AcquireItemAmount;
+
+            public int CoolTimeSeconds;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, ProductionSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }

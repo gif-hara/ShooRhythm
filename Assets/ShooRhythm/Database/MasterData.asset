@@ -138,6 +138,22 @@ MonoBehaviour:
       AcquireItemId: 10114
       AcquireItemAmount: 1
       CoolTimeSeconds: 1
+  productionSpecs:
+    list:
+    - Id: 10201
+      AcquireItemId: 10201
+      AcquireItemAmount: 1
+      CoolTimeSeconds: 1
+  productionConditions:
+    list:
+    - Key: 10201
+      Value:
+      - Id: 10201
+        Name: Item.10101
+        Amount: 1
+      - Id: 10201
+        Name: Item.10103
+        Amount: 3
   collectionContents:
     records:
     - <Name>k__BackingField: 10101
