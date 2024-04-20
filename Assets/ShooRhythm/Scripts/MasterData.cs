@@ -19,10 +19,6 @@ namespace ShooRhythm
         public Item.DictionaryList Items => items;
 
         [SerializeField]
-        private CollectionSpec.DictionaryList collectionSpecs;
-        public CollectionSpec.DictionaryList CollectionSpecs => collectionSpecs;
-
-        [SerializeField]
         private NewCollectionSpec.DictionaryList newCollectionSpecs;
         public NewCollectionSpec.DictionaryList NewCollectionSpecs => newCollectionSpecs;
 
@@ -41,10 +37,6 @@ namespace ShooRhythm
         [SerializeField]
         private FishingSpec.DictionaryList seaFishingSpecs;
         public FishingSpec.DictionaryList SeaFishingSpecs => seaFishingSpecs;
-
-        [SerializeField]
-        private Contents collectionContents;
-        public Contents Collections => collectionContents;
 
         [SerializeField]
         private StatsData.DictionaryList grantStatsGameStart;
@@ -79,9 +71,6 @@ namespace ShooRhythm
             Debug.Log("Begin MasterData Update");
             var database = await UniTask.WhenAll(
                 GoogleSpreadSheetDownloader.DownloadAsync("Item"),
-                GoogleSpreadSheetDownloader.DownloadAsync("CollectionSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("CollectionCondition"),
-                GoogleSpreadSheetDownloader.DownloadAsync("CollectionReward"),
                 GoogleSpreadSheetDownloader.DownloadAsync("GrantStatsGameStart"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("QuestRequired"),
@@ -97,55 +86,26 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("RiverFishingSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("SeaFishingSpec")
             );
-            items.Set(JsonHelper.FromJson<Item>(database[0]));
-            collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database[1]));
-            var collectionConditions = new StatsData.Group();
-            collectionConditions.Set(JsonHelper.FromJson<StatsData>(database[2]));
-            var collectionRewards = new StatsData.Group();
-            collectionRewards.Set(JsonHelper.FromJson<StatsData>(database[3]));
-            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database[4]));
+            items.Set(JsonHelper.FromJson<Item>(database.Item1));
+            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database.Item2));
             var questSpecs = new QuestSpec.DictionaryList();
-            questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[5]));
+            questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database.Item3));
             var questRequired = new StatsData.Group();
-            questRequired.Set(JsonHelper.FromJson<StatsData>(database[6]));
+            questRequired.Set(JsonHelper.FromJson<StatsData>(database.Item4));
             var questConditions = new StatsData.Group();
-            questConditions.Set(JsonHelper.FromJson<StatsData>(database[7]));
+            questConditions.Set(JsonHelper.FromJson<StatsData>(database.Item5));
             var questIgnores = new StatsData.Group();
-            questIgnores.Set(JsonHelper.FromJson<StatsData>(database[8]));
+            questIgnores.Set(JsonHelper.FromJson<StatsData>(database.Item6));
             var questRewards = new StatsData.Group();
-            questRewards.Set(JsonHelper.FromJson<StatsData>(database[9]));
-            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database[10]));
-            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database[11]));
-            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database[12]));
-            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database[13]));
-            productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database[14]));
-            productionConditions.Set(JsonHelper.FromJson<StatsData>(database[15]));
-            riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[16]));
-            seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[17]));
-
-            var collectionRecords = new List<Contents.Record>();
-            foreach (var rewardSpec in collectionSpecs.List)
-            {
-                var conditions = new List<Stats.Record>();
-                if (collectionConditions.TryGetValue(rewardSpec.Id, out var c))
-                {
-                    conditions.AddRange(c.Select(x => new Stats.Record(x.Name, x.Amount)));
-                }
-                var rewards = new List<Stats.Record>();
-                if (collectionRewards.TryGetValue(rewardSpec.Id, out var r))
-                {
-                    rewards.AddRange(r.Select(x => new Stats.Record(x.Name, x.Amount)));
-                }
-                var record = new Contents.Record(
-                    rewardSpec.Id.ToString(),
-                    new List<Stats.Record>(),
-                    new List<Stats.Record>(),
-                    conditions,
-                    rewards
-                );
-                collectionRecords.Add(record);
-            }
-            collectionContents = new Contents(collectionRecords);
+            questRewards.Set(JsonHelper.FromJson<StatsData>(database.Item7));
+            weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database.Item8));
+            seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database.Item9));
+            meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database.Item10));
+            newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database.Item11));
+            productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database.Item12));
+            productionConditions.Set(JsonHelper.FromJson<StatsData>(database.Item13));
+            riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database.Item14));
+            seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database.Item15));
 
             var questContentsRecords = new List<Contents.Record>();
             foreach (var questSpec in questSpecs.List)
