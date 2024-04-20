@@ -35,6 +35,14 @@ namespace ShooRhythm
         public StatsData.Group ProductionConditions => productionConditions;
 
         [SerializeField]
+        private FishingSpec.DictionaryList riverFishingSpecs;
+        public FishingSpec.DictionaryList RiverFishingSpecs => riverFishingSpecs;
+
+        [SerializeField]
+        private FishingSpec.DictionaryList seaFishingSpecs;
+        public FishingSpec.DictionaryList SeaFishingSpecs => seaFishingSpecs;
+
+        [SerializeField]
         private Contents collectionContents;
         public Contents Collections => collectionContents;
 
@@ -85,7 +93,9 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("MeadowSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("NewCollectionSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("ProductionSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("ProductionCondition")
+                GoogleSpreadSheetDownloader.DownloadAsync("ProductionCondition"),
+                GoogleSpreadSheetDownloader.DownloadAsync("RiverFishingSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("SeaFishingSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database[0]));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database[1]));
@@ -110,6 +120,8 @@ namespace ShooRhythm
             newCollectionSpecs.Set(JsonHelper.FromJson<NewCollectionSpec>(database[13]));
             productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database[14]));
             productionConditions.Set(JsonHelper.FromJson<StatsData>(database[15]));
+            riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[16]));
+            seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[17]));
 
             var collectionRecords = new List<Contents.Record>();
             foreach (var rewardSpec in collectionSpecs.List)
@@ -238,6 +250,34 @@ namespace ShooRhythm
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, ProductionSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class FishingSpec
+        {
+            public int Id;
+
+            public int AcquireItemId;
+
+            public int AcquireItemAmount;
+
+            public int NeedItemId;
+
+            public int NeedItemAmount;
+
+            public float CoolTimeSeconds;
+
+            public float WaitSecondsMin;
+
+            public float WaitSecondsMax;
+
+            public float PostponementSeconds;
+
+            [Serializable]
+            public class DictionaryList : DictionaryList<int, FishingSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }

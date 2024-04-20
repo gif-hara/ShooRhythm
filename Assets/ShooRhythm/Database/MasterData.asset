@@ -154,6 +154,28 @@ MonoBehaviour:
       - Id: 10201
         Name: Item.10103
         Amount: 3
+  riverFishingSpecs:
+    list:
+    - Id: 1
+      AcquireItemId: 10107
+      AcquireItemAmount: 1
+      NeedItemId: 10205
+      NeedItemAmount: 1
+      CoolTimeSeconds: 1
+      WaitSecondsMin: 0.5
+      WaitSecondsMax: 6
+      PostponementSeconds: 1
+  seaFishingSpecs:
+    list:
+    - Id: 1
+      AcquireItemId: 10107
+      AcquireItemAmount: 1
+      NeedItemId: 10205
+      NeedItemAmount: 1
+      CoolTimeSeconds: 1
+      WaitSecondsMin: 0.5
+      WaitSecondsMax: 6
+      PostponementSeconds: 1
   collectionContents:
     records:
     - <Name>k__BackingField: 10101
