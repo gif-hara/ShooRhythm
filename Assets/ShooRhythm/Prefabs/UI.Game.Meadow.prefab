@@ -186,17 +186,17 @@ PrefabInstance:
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
       propertyPath: elements.Array.data[0].overrideName
-      value: Button.Cow
+      value: Root.Cow
       objectReference: {fileID: 0}
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
       propertyPath: elements.Array.data[1].overrideName
-      value: Button.Pig
+      value: Root.Pig
       objectReference: {fileID: 0}
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
       propertyPath: elements.Array.data[2].overrideName
-      value: Button.Chicken
+      value: Root.Chicken
       objectReference: {fileID: 0}
     - target: {fileID: 2648174666714030058, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
