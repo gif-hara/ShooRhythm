@@ -80,23 +80,22 @@ namespace ShooRhythm
                     return UniTask.CompletedTask;
                 }
 
-                var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Records
+                var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
                     .FirstOrDefault(x =>
                     {
-                        if (x.Conditions.Count != conditionNames.Length)
+                        var conditions = x.GetProductionCondition();
+                        if (conditions.Count != conditionNames.Length)
                         {
                             return false;
                         }
-                        return !x.Conditions.Select(y => y.Name).Except(conditionNames).Any();
+                        return !conditions.Select(y => y.Name).Except(conditionNames).Any();
                     });
                 var statsName = $"Productions.Machine.{machineId}.Product";
-                if (collection == null)
+                if (productionSpec == null)
                 {
                     return SetStatsAsync(statsName, 0);
                 }
-                var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(int.Parse(collection.Name));
-                Assert.IsNotNull(collectionSpec, $"CollectionSpec is null. CollectionId:{collection.Name}");
-                return SetStatsAsync(statsName, collectionSpec.AcquireItemId);
+                return SetStatsAsync(statsName, productionSpec.AcquireItemId);
             }
         }
 

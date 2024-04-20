@@ -72,18 +72,19 @@ namespace ShooRhythm
                         {
                             return;
                         }
-                        var collection = TinyServiceLocator.Resolve<MasterData>().Collections.Get(itemId.ToString());
-                        if (collection == null)
+                        var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(itemId);
+                        if (productionSpec == null)
                         {
                             Debug.LogWarning($"Collection is null. CollectionId:{itemId}");
                             return;
                         }
-                        if (!collection.IsCompleted(gameData.Stats))
+                        var contentsRecord = productionSpec.ToContentsRecord();
+                        if (!contentsRecord.IsCompleted(gameData.Stats))
                         {
                             Debug.Log("TODO Not Completed Collection");
                             return;
                         }
-                        await gameController.CollectingAsync(collection);
+                        await gameController.CollectingAsync(contentsRecord);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 TinyServiceLocator.Resolve<GameData>().Stats.OnChangedAsObservable(cancellationToken)
