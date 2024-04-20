@@ -186,24 +186,6 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class CollectionSpec
-        {
-            public int Id;
-
-            public int AcquireItemId;
-
-            public int CoolTimeSeconds;
-
-            public Define.CollectionType CollectionType;
-
-            [Serializable]
-            public sealed class DictionaryList : DictionaryList<int, CollectionSpec>
-            {
-                public DictionaryList() : base(x => x.Id) { }
-            }
-        }
-
-        [Serializable]
         public class ProductionSpec
         {
             public int Id;
