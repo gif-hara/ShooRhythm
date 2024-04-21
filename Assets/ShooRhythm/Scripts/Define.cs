@@ -27,6 +27,7 @@ namespace ShooRhythm
             SeaFishing = 7,
             Farm = 8,
             Meadow = 9,
+            Grassland = 10,
         }
 
         public enum NotificationType
@@ -39,6 +40,13 @@ namespace ShooRhythm
         {
             Grassland = 1,
             Wetland = 2,
+        }
+
+        public enum AttackResultType
+        {
+            Unknown = 0,
+            Hit = 1,
+            Defeat = 2,
         }
 
         public const int MachineSlotCount = 3;
