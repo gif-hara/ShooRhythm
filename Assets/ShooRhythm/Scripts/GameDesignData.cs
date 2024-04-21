@@ -13,15 +13,19 @@ namespace ShooRhythm
         [SerializeField]
         private FishingDesignData riverFishingDesignData;
         public FishingDesignData RiverFishingDesignData => riverFishingDesignData;
-        
+
         [SerializeField]
         private FishingDesignData seaFishingDesignData;
         public FishingDesignData SeaFishingDesignData => seaFishingDesignData;
-        
+
         [SerializeField]
         private List<FooterData> footers;
         public List<FooterData> Footers => footers;
-        
+
+        [SerializeField]
+        private int defaultDamage;
+        public int DefaultDamage => defaultDamage;
+
         [Serializable]
         public class FishingDesignData
         {
@@ -31,14 +35,14 @@ namespace ShooRhythm
             [SerializeField]
             private float waitSecondsMin;
             public float WaitSecondsMin => waitSecondsMin;
-            
+
             /// <summary>
             /// ヒット状態になるまでの最大待機時間（秒）
             /// </summary>
             [SerializeField]
             private float waitSecondsMax;
             public float WaitSecondsMax => waitSecondsMax;
-            
+
             /// <summary>
             /// ヒットしてから釣り上げられる猶予（秒）
             /// </summary>
@@ -60,11 +64,11 @@ namespace ShooRhythm
             [SerializeField]
             private string footerName;
             public string FooterName => footerName;
-            
+
             [SerializeField]
             private Define.TabType tabType;
             public Define.TabType TabType => tabType;
-            
+
             [SerializeField]
             private string activeStatsName;
             public string ActiveStatsName => activeStatsName;
