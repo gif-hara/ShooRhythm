@@ -98,5 +98,19 @@ namespace ShooRhythm
                 }
             );
         }
+
+        public static Contents.Record ToContentsRecord(this MasterData.EnemySpec self)
+        {
+            return new Contents.Record(
+                self.Id.ToString(),
+                new List<Stats.Record>(),
+                new List<Stats.Record>(),
+                new List<Stats.Record>(),
+                new List<Stats.Record>
+                {
+                    new($"Item.{self.RewardItemId}", self.RewardItemAmount)
+                }
+            );
+        }
     }
 }
