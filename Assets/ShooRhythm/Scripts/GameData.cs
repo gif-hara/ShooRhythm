@@ -15,6 +15,8 @@ namespace ShooRhythm
 
         public List<FarmData> FarmDatas { get; } = new();
 
+        public Dictionary<Define.DungeonType, EnemyInstanceData> DungeonEnemyInstanceDatas { get; } = new();
+
         public int UserId { get; set; } = 0;
 
         public void SetItem(int id, int count)

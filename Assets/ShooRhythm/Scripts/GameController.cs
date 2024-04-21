@@ -147,5 +147,48 @@ namespace ShooRhythm
             gameData.FarmDatas[plantId].PlantTicks.Value = 0;
             return UniTask.FromResult(true);
         }
+
+        public async UniTask<EnemyInstanceData> GetEnemyInstanceDataAsync(Define.DungeonType dungeonType)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            if (gameData.DungeonEnemyInstanceDatas.TryGetValue(dungeonType, out var enemyInstanceData))
+            {
+                return enemyInstanceData;
+            }
+
+            var result = await CreateEnemyInstanceDataAsync(dungeonType);
+            gameData.DungeonEnemyInstanceDatas[dungeonType] = result;
+            return result;
+        }
+
+        public async UniTask<Define.AttackResultType> AttackEnemyAsync(Define.DungeonType dungeonType, int damage)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var enemyInstanceData = gameData.DungeonEnemyInstanceDatas[dungeonType];
+            enemyInstanceData.HitPoint -= damage;
+            if (enemyInstanceData.HitPoint <= 0)
+            {
+                var enemySpec = TinyServiceLocator.Resolve<MasterData>().EnemySpecs.Get(dungeonType)
+                    .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
+                var result = await UniTask.WhenAll(
+                    CollectingAsync(enemySpec.ToContentsRecord()),
+                    CreateEnemyInstanceDataAsync(dungeonType)
+                );
+
+                gameData.DungeonEnemyInstanceDatas[dungeonType] = result.Item2;
+                return Define.AttackResultType.Defeat;
+            }
+            return Define.AttackResultType.Hit;
+        }
+
+        private UniTask<EnemyInstanceData> CreateEnemyInstanceDataAsync(Define.DungeonType dungeonType)
+        {
+            var result = new EnemyInstanceData();
+            var enemySpecs = TinyServiceLocator.Resolve<MasterData>().EnemySpecs.Get(dungeonType);
+            var enemySpec = enemySpecs[UnityEngine.Random.Range(0, enemySpecs.Count)];
+            result.EnemyId = enemySpec.Id;
+            result.HitPoint = enemySpec.HitPoint;
+            return UniTask.FromResult(result);
+        }
     }
 }
