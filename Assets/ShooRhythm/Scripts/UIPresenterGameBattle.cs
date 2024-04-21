@@ -1,6 +1,10 @@
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
+using R3;
+using R3.Triggers;
+using TMPro;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -10,9 +14,28 @@ namespace ShooRhythm
     /// </summary>
     public sealed class UIPresenterGameBattle
     {
-        public async UniTask BeginAsync(HKUIDocument documentPrefab, CancellationToken cancellationToken)
+        public async UniTask BeginAsync(HKUIDocument documentPrefab, Define.DungeonType dungeonType, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
+            var gameController = TinyServiceLocator.Resolve<GameController>();
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var masterData = TinyServiceLocator.Resolve<MasterData>();
+            var enemyInstanceData = await gameController.GetEnemyInstanceDataAsync(dungeonType);
+            var enemySpec = masterData.EnemySpecs.Get(dungeonType)
+                .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
+
+            document.Q<TMP_Text>("Text.Enemy").text = enemySpec.Name;
+
+            document.Q<ObservablePointerClickTrigger>("Button.Attack").OnPointerClickAsObservable()
+                .SubscribeAwait(async (_, ct) =>
+                {
+                    var equipmentItemId = gameData.UserEquipmentItemId;
+                    var damage = equipmentItemId == 0
+                        ? TinyServiceLocator.Resolve<GameDesignData>().DefaultDamage
+                        : masterData.WeaponSpecs.Get(equipmentItemId).Strength;
+                    await gameController.AttackEnemyAsync(dungeonType, damage);
+                })
+                .AddTo(document);
 
             await UniTask.WaitUntilCanceled(cancellationToken);
 
