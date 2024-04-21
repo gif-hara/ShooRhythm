@@ -16,6 +16,9 @@ namespace ShooRhythm
         private GameDesignData gameDesignData;
 
         [SerializeField]
+        private HKUIDocument gameNotificationDocumentPrefab;
+
+        [SerializeField]
         private HKUIDocument gameFooterDocumentPrefab;
 
         [SerializeField]
@@ -46,7 +49,7 @@ namespace ShooRhythm
         private HKUIDocument gameMeadowDocumentPrefab;
 
         [SerializeField]
-        private HKUIDocument gameNotificationDocumentPrefab;
+        private HKUIDocument gameBattleDocumentPrefab;
 
         private readonly TinyStateMachine stateMachine = new();
 
@@ -96,6 +99,9 @@ namespace ShooRhythm
                             break;
                         case Define.TabType.Meadow:
                             stateMachine.Change(StateMeadow);
+                            break;
+                        case Define.TabType.Grassland:
+                            stateMachine.Change(StateGrassland);
                             break;
                     }
                 })
@@ -194,6 +200,13 @@ namespace ShooRhythm
         {
             var uiPresenterGameMeadow = new UIPresenterGameMeadow();
             uiPresenterGameMeadow.BeginAsync(gameMeadowDocumentPrefab, scope).Forget();
+            return UniTask.CompletedTask;
+        }
+
+        private UniTask StateGrassland(CancellationToken scope)
+        {
+            var uiPresenterGameBattle = new UIPresenterGameBattle();
+            uiPresenterGameBattle.BeginAsync(gameBattleDocumentPrefab, Define.DungeonType.Grassland, scope).Forget();
             return UniTask.CompletedTask;
         }
     }

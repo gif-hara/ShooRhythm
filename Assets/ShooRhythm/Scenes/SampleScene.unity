@@ -561,6 +561,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameDesignData: {fileID: 11400000, guid: 42916f1d52a784ce186192f3826458c4, type: 2}
+  gameNotificationDocumentPrefab: {fileID: 4582918645779481610, guid: cd8050602cc3c0749901041b98855cde,
+    type: 3}
   gameFooterDocumentPrefab: {fileID: 2154618791193963821, guid: da34287096ad1384599e69eed35f4d2b,
     type: 3}
   gameItemsDocumentPrefab: {fileID: 8952608029526600457, guid: 9aa3dc84b6f166746a6790a45210f7f7,
@@ -581,7 +583,7 @@ MonoBehaviour:
     type: 3}
   gameMeadowDocumentPrefab: {fileID: 8952608029526600457, guid: 5d06d2d779298f64680fd1893e379a63,
     type: 3}
-  gameNotificationDocumentPrefab: {fileID: 4582918645779481610, guid: cd8050602cc3c0749901041b98855cde,
+  gameBattleDocumentPrefab: {fileID: 8952608029526600457, guid: c98b13f051fbc614dadf3979cabf7701,
     type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
