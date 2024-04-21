@@ -50,4 +50,7 @@ MonoBehaviour:
   - footerName: "\u7267\u5834"
     tabType: 9
     activeStatsName: Available.Tab.Meadow
+  - footerName: "\u8349\u539F"
+    tabType: 10
+    activeStatsName: Available.Tab.Grassland
   defaultDamage: 5
