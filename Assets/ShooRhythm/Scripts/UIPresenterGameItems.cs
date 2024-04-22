@@ -21,27 +21,47 @@ namespace ShooRhythm
             var parentLayout = document.Q<GridLayoutGroup>("ListElementParent");
             parentLayout.SetConstraintCount();
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
-            var elements = new List<(int id, GameObject gameObject)>();
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            foreach (var i in gameData.Items)
-            {
-                var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(i.Key);
-                var element = Object.Instantiate(elementPrefab, elementParent);
-                element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
-                i.Value
-                    .Subscribe(itemNumber =>
-                    {
-                        element.Q<TMP_Text>("Text.Number").text = itemNumber.ToString();
-                    })
-                    .RegisterTo(cancellationToken);
-                elements.Add((i.Key, element.gameObject));
-            }
+            var elements = new List<GameObject>();
+            CreateElements();
+            TinyServiceLocator.Resolve<GameMessage>().AddedItem
+                .Subscribe(_ =>
+                {
+                    CreateElements();
+                })
+                .RegisterTo(cancellationToken);
 
             await UniTask.WaitUntilCanceled(cancellationToken);
 
             if (document != null)
             {
                 Object.Destroy(document.gameObject);
+            }
+
+            void CreateElements()
+            {
+                foreach (var element in elements)
+                {
+                    Object.Destroy(element);
+                }
+                elements.Clear();
+                foreach (var i in gameData.Items)
+                {
+                    var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(i.Key);
+                    var element = Object.Instantiate(elementPrefab, elementParent);
+                    var scope = CancellationTokenSource.CreateLinkedTokenSource(
+                        element.destroyCancellationToken,
+                        cancellationToken
+                        );
+                    element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
+                    i.Value
+                        .Subscribe(itemNumber =>
+                        {
+                            element.Q<TMP_Text>("Text.Number").text = itemNumber.ToString();
+                        })
+                        .RegisterTo(scope.Token);
+                    elements.Add(element.gameObject);
+                }
             }
         }
     }

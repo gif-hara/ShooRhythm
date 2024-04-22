@@ -11,5 +11,7 @@ namespace ShooRhythm
         public readonly Subject<Define.TabType> RequestChangeTab = new();
 
         public readonly Subject<(string message, Sprite sprite, Define.NotificationType notificationType)> RequestNotification = new();
+        
+        public readonly Subject<int> AddedItem = new();
     }
 }

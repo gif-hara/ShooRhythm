@@ -25,6 +25,7 @@ namespace ShooRhythm
             if (!Items.ContainsKey(id))
             {
                 Items.Add(id, new ReactiveProperty<int>(count));
+                TinyServiceLocator.Resolve<GameMessage>().AddedItem.OnNext(id);
             }
             else
             {
