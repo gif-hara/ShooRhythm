@@ -55,7 +55,11 @@ namespace ShooRhythm
                             }
                             else
                             {
-                                Debug.Log("Not completed");
+                                TinyServiceLocator.Resolve<GameMessage>().RequestNotification.OnNext((
+                                    "アイテムが足りません",
+                                    null, 
+                                    Define.NotificationType.Negative
+                                    ));
                             }
                         })
                         .RegisterTo(element.destroyCancellationToken);
