@@ -109,7 +109,7 @@ namespace ShooRhythm
                 uiPresenterSelectItems.OnSelectedItemAsObservable()
                     .SubscribeAwait(async (itemId, ct) =>
                     {
-                        await gameController.SetProductMachineSlot(selectMachineId, selectSlotId, itemId);
+                        await gameController.SetProductMachineSlotAsync(selectMachineId, selectSlotId, itemId);
                     })
                     .RegisterTo(cancellationToken);
             }

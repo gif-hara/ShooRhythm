@@ -140,7 +140,7 @@ namespace ShooRhythm
             TinyServiceLocator.Resolve<GameData>().ProductMachineData.Add(new ProductMachineData());
         }
         
-        public UniTask<bool> SetProductMachineSlot(int machineId, int slotId, int itemId)
+        public UniTask<bool> SetProductMachineSlotAsync(int machineId, int slotId, int itemId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var productMachineData = gameData.ProductMachineData[machineId];
@@ -151,20 +151,19 @@ namespace ShooRhythm
                 .ToArray();
             if (!conditionNames.Any())
             {
-                return UniTask.FromResult(true);
+                var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
+                    .FirstOrDefault(x =>
+                    {
+                        var conditions = x.GetProductionCondition();
+                        if (conditions.Count != conditionNames.Length)
+                        {
+                            return false;
+                        }
+                        return !conditions.Select(y => y.Name).Except(conditionNames).Any();
+                    });
+                productMachineData.productItemId.Value = productionSpec?.AcquireItemId ?? 0;
             }
 
-            var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
-                .FirstOrDefault(x =>
-                {
-                    var conditions = x.GetProductionCondition();
-                    if (conditions.Count != conditionNames.Length)
-                    {
-                        return false;
-                    }
-                    return !conditions.Select(y => y.Name).Except(conditionNames).Any();
-                });
-            productMachineData.productItemId.Value = productionSpec?.AcquireItemId ?? 0;
             return UniTask.FromResult(true);
         }
     }
