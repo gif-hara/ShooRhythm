@@ -33,7 +33,7 @@ namespace ShooRhythm
                     .SubscribeAwait(async (_, ct) =>
                     {
                         await TinyServiceLocator.Resolve<GameController>()
-                            .CollectingAsync(collection);
+                            .ApplyRewardAsync(collection);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 elements.Add((i.Id, element.gameObject));

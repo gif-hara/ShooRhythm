@@ -102,7 +102,7 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Strike").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        TinyServiceLocator.Resolve<GameController>().CollectingAsync(currentContentsRecord).Forget();
+                        TinyServiceLocator.Resolve<GameController>().ApplyRewardAsync(currentContentsRecord).Forget();
                         stateMachine.Change(StateIdle);
                     })
                     .RegisterTo(scope);

@@ -84,7 +84,7 @@ namespace ShooRhythm
                             Debug.Log("TODO Not Completed Collection");
                             return;
                         }
-                        await gameController.CollectingAsync(contentsRecord);
+                        await gameController.ApplyRewardAsync(contentsRecord);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 TinyServiceLocator.Resolve<GameData>().Stats.OnChangedAsObservable(cancellationToken)

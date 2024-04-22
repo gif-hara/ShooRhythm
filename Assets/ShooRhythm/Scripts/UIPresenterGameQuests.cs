@@ -50,7 +50,7 @@ namespace ShooRhythm
                         {
                             if (quest.IsCompleted(gameData.Stats))
                             {
-                                await gameController.CollectingAsync(quest);
+                                await gameController.ApplyRewardAsync(quest);
                                 CreateElements();
                             }
                             else

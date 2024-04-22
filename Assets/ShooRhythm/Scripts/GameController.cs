@@ -115,10 +115,10 @@ namespace ShooRhythm
             return UniTask.FromResult(true);
         }
 
-        public UniTask<bool> CollectingAsync(Contents.Record collection)
+        public UniTask<bool> ApplyRewardAsync(Contents.Record contentsRecord)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            collection.ApplyRewards(gameData.Stats);
+            contentsRecord.ApplyRewards(gameData.Stats);
             Debug.Log(gameData.Stats);
             return UniTask.FromResult(true);
         }
@@ -171,7 +171,7 @@ namespace ShooRhythm
                 var enemySpec = TinyServiceLocator.Resolve<MasterData>().EnemySpecs.Get(dungeonType)
                     .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
                 var result = await UniTask.WhenAll(
-                    CollectingAsync(enemySpec.ToContentsRecord()),
+                    ApplyRewardAsync(enemySpec.ToContentsRecord()),
                     CreateEnemyInstanceDataAsync(dungeonType)
                 );
 

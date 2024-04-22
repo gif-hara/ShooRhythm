@@ -43,7 +43,7 @@ namespace ShooRhythm
                         }
                         else
                         {
-                            await gameController.CollectingAsync(contentsRecord);
+                            await gameController.ApplyRewardAsync(contentsRecord);
                         }
                     })
                     .RegisterTo(cancellationToken);
