@@ -73,6 +73,10 @@ namespace ShooRhythm
             {
                 gameController.AddProductMachine();
             }
+            for (var i = 0; i < gameDesignData.InitialFarmNumber; i++)
+            {
+                gameController.AddFarmData();
+            }
 
             gameMessage.RequestChangeTab
                 .Subscribe(x =>

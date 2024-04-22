@@ -43,17 +43,5 @@ namespace ShooRhythm
         {
             return Items.TryGetValue(id, out var reactiveProperty) ? reactiveProperty.Value : 0;
         }
-
-        public void FetchFarmData()
-        {
-            var diff = Stats.Get("Farm.PlantNumber") - FarmDatas.Count;
-            if (diff > 0)
-            {
-                for (var i = 0; i < diff; i++)
-                {
-                    FarmDatas.Add(new FarmData());
-                }
-            }
-        }
     }
 }

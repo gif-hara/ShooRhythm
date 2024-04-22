@@ -17,7 +17,6 @@ namespace ShooRhythm
         public GameController(CancellationToken cancellationToken)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            CancellationTokenSource productionMachineScope = default;
             gameData.Stats.OnChangedAsObservable(cancellationToken)
                 .Subscribe(x =>
                 {
@@ -27,14 +26,8 @@ namespace ShooRhythm
                         var id = int.Parse(x.Name.Substring(startString.Length));
                         gameData.SetItem(id, x.Value);
                     }
-                    if (x.Name == "Farm.PlantNumber")
-                    {
-                        gameData.FetchFarmData();
-                    }
                 })
                 .RegisterTo(cancellationToken);
-
-            gameData.FetchFarmData();
         }
 
         public UniTask<bool> AddStatsAsync(string name, int value)
@@ -138,6 +131,11 @@ namespace ShooRhythm
         public void AddProductMachine()
         {
             TinyServiceLocator.Resolve<GameData>().ProductMachineData.Add(new ProductMachineData());
+        }
+
+        public void AddFarmData()
+        {
+            TinyServiceLocator.Resolve<GameData>().FarmDatas.Add(new FarmData());
         }
         
         public UniTask<bool> SetProductMachineSlotAsync(int machineId, int slotId, int itemId)

@@ -55,3 +55,4 @@ MonoBehaviour:
     activeStatsName: Available.Tab.Grassland
   defaultDamage: 5
   initialProductMachineNumber: 1
+  initialFarmNumber: 1
