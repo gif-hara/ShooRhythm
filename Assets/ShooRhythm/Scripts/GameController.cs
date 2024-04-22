@@ -27,10 +27,6 @@ namespace ShooRhythm
                         var id = int.Parse(x.Name.Substring(startString.Length));
                         gameData.SetItem(id, x.Value);
                     }
-                    if (x.Name == "Productions.MachineNumber")
-                    {
-                        ObserveProductionMachine();
-                    }
                     if (x.Name == "Farm.PlantNumber")
                     {
                         gameData.FetchFarmData();
@@ -38,63 +34,7 @@ namespace ShooRhythm
                 })
                 .RegisterTo(cancellationToken);
 
-            ObserveProductionMachine();
             gameData.FetchFarmData();
-
-            void ObserveProductionMachine()
-            {
-                productionMachineScope?.Cancel();
-                productionMachineScope?.Dispose();
-                productionMachineScope = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                for (var i = 0; i < gameData.ProductMachineData.Count; i++)
-                {
-                    for (var j = 0; j < Define.MachineSlotCount; j++)
-                    {
-                        ObserveProductionMachineSlot(i, j);
-                    }
-                }
-            }
-            void ObserveProductionMachineSlot(int machineId, int slotId)
-            {
-                gameData.Stats.OnChangedAsObservable(productionMachineScope.Token)
-                    .Subscribe(x =>
-                    {
-                        if (x.Name == $"Productions.Machine.{machineId}.Slot.{slotId}.ItemId")
-                        {
-                            TrySetProductionMachineProductAsync(machineId).Forget();
-                        }
-                    })
-                    .RegisterTo(productionMachineScope.Token);
-            }
-            UniTask TrySetProductionMachineProductAsync(int machineId)
-            {
-                var conditionNames = Enumerable.Range(0, Define.MachineSlotCount)
-                    .Select(x => gameData.Stats.Get($"Productions.Machine.{machineId}.Slot.{x}.ItemId"))
-                    .Where(x => x != 0)
-                    .Select(x => $"Item.{x}")
-                    .ToArray();
-                if (!conditionNames.Any())
-                {
-                    return UniTask.CompletedTask;
-                }
-
-                var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
-                    .FirstOrDefault(x =>
-                    {
-                        var conditions = x.GetProductionCondition();
-                        if (conditions.Count != conditionNames.Length)
-                        {
-                            return false;
-                        }
-                        return !conditions.Select(y => y.Name).Except(conditionNames).Any();
-                    });
-                var statsName = $"Productions.Machine.{machineId}.Product";
-                if (productionSpec == null)
-                {
-                    return SetStatsAsync(statsName, 0);
-                }
-                return SetStatsAsync(statsName, productionSpec.AcquireItemId);
-            }
         }
 
         public UniTask<bool> AddStatsAsync(string name, int value)
