@@ -137,7 +137,7 @@ namespace ShooRhythm
         {
             TinyServiceLocator.Resolve<GameData>().FarmDatas.Add(new FarmData());
         }
-        
+
         public UniTask<bool> SetProductMachineSlotAsync(int machineId, int slotId, int itemId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
@@ -147,7 +147,7 @@ namespace ShooRhythm
                 .Where(x => x.Value != 0)
                 .Select(x => $"Item.{x}")
                 .ToArray();
-            if (!conditionNames.Any())
+            if (conditionNames.Any())
             {
                 var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
                     .FirstOrDefault(x =>
