@@ -69,6 +69,10 @@ namespace ShooRhythm
 #endif
 
             gameController.AddUserData(0);
+            for (var i = 0; i < gameDesignData.InitialProductMachineNumber; i++)
+            {
+                gameController.AddProductMachine();
+            }
 
             gameMessage.RequestChangeTab
                 .Subscribe(x =>

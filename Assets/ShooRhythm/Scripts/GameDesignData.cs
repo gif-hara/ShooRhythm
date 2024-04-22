@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShooRhythm
 {
@@ -25,6 +26,13 @@ namespace ShooRhythm
         [SerializeField]
         private int defaultDamage;
         public int DefaultDamage => defaultDamage;
+
+        /// <summary>
+        /// 製作機の初期値
+        /// </summary>
+        [SerializeField]
+        private int initialProductMachineNumber;
+        public int InitialProductMachineNumber => initialProductMachineNumber;
 
         [Serializable]
         public class FishingDesignData

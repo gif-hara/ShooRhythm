@@ -23,6 +23,8 @@ namespace ShooRhythm
         public int CurrentUserId { get; set; } = 0;
         
         public UserData CurrentUserData => UserData[CurrentUserId];
+        
+        public List<ProductMachineData> ProductMachineData { get; } = new();
 
         public void SetItem(int id, int count)
         {

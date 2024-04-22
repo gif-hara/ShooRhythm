@@ -6,7 +6,6 @@ using HK;
 using R3;
 using SCD;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace ShooRhythm
 {
@@ -47,12 +46,11 @@ namespace ShooRhythm
                 productionMachineScope?.Cancel();
                 productionMachineScope?.Dispose();
                 productionMachineScope = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                for (var i = 0; i < gameData.Stats.Get("Productions.MachineNumber"); i++)
+                for (var i = 0; i < gameData.ProductMachineData.Count; i++)
                 {
-                    var machineId = i;
                     for (var j = 0; j < Define.MachineSlotCount; j++)
                     {
-                        ObserveProductionMachineSlot(machineId, j);
+                        ObserveProductionMachineSlot(i, j);
                     }
                 }
             }
@@ -195,6 +193,39 @@ namespace ShooRhythm
         public void AddUserData(int userId)
         {
             TinyServiceLocator.Resolve<GameData>().UserData.Add(userId, new UserData());
+        }
+
+        public void AddProductMachine()
+        {
+            TinyServiceLocator.Resolve<GameData>().ProductMachineData.Add(new ProductMachineData());
+        }
+        
+        public UniTask<bool> SetProductMachineSlot(int machineId, int slotId, int itemId)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var productMachineData = gameData.ProductMachineData[machineId];
+            productMachineData.slotItemIds[slotId].Value = itemId;
+            var conditionNames = productMachineData.slotItemIds
+                .Where(x => x.Value != 0)
+                .Select(x => $"Item.{x}")
+                .ToArray();
+            if (!conditionNames.Any())
+            {
+                return UniTask.FromResult(true);
+            }
+
+            var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
+                .FirstOrDefault(x =>
+                {
+                    var conditions = x.GetProductionCondition();
+                    if (conditions.Count != conditionNames.Length)
+                    {
+                        return false;
+                    }
+                    return !conditions.Select(y => y.Name).Except(conditionNames).Any();
+                });
+            productMachineData.productItemId.Value = productionSpec?.AcquireItemId ?? 0;
+            return UniTask.FromResult(true);
         }
     }
 }
