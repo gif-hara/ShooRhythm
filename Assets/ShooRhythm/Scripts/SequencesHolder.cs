@@ -11,5 +11,7 @@ namespace ShooRhythm
     {
         [SerializeReference, SubclassSelector]
         private List<ISequence> sequences = default;
+
+        public List<ISequence> Sequences => sequences;
     }
 }
