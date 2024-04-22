@@ -511,7 +511,7 @@ PrefabInstance:
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
       propertyPath: elements.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
@@ -526,6 +526,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
+      propertyPath: elements.Array.data[2].document
+      value: 
+      objectReference: {fileID: 756346924569530787, guid: f1a015b90ac814b44b6092231b2a3c5d,
+        type: 3}
+    - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
       propertyPath: elements.Array.data[0].overrideName
       value: ListElementParent
       objectReference: {fileID: 0}
@@ -533,6 +539,11 @@ PrefabInstance:
         type: 3}
       propertyPath: elements.Array.data[1].overrideName
       value: ListElementPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
+      propertyPath: elements.Array.data[2].overrideName
+      value: AcquireItemEffect
       objectReference: {fileID: 0}
     - target: {fileID: 2648174666714030058, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
