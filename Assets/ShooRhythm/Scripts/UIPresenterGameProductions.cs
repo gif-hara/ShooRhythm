@@ -64,7 +64,8 @@ namespace ShooRhythm
 
             void ObserveListElementProductButton(HKUIDocument element, int machineId)
             {
-                element.Q<Button>("Product.Button").OnClickAsObservable()
+                var button = element.Q<Button>("Product.Button");
+                button.OnClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         var itemId = gameData.Stats.Get($"Productions.Machine.{machineId}.Product");
@@ -85,6 +86,7 @@ namespace ShooRhythm
                             return;
                         }
                         await gameController.ApplyRewardAsync(contentsRecord);
+                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 TinyServiceLocator.Resolve<GameData>().Stats.OnChangedAsObservable(cancellationToken)
