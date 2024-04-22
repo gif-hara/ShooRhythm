@@ -1,7 +1,9 @@
-using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using HK;
 using SCD;
 using UnityEngine;
+using UnitySequencerSystem;
 
 namespace ShooRhythm
 {
@@ -32,6 +34,16 @@ namespace ShooRhythm
                     Debug.LogWarning($"Unknown record name: {i.Name}");
                 }
             }
+        }
+
+        public static UniTask PlayAcquireItemEffectAsync(HKUIDocument document, RectTransform parent, CancellationToken cancellationToken)
+        {
+            var effectPrefab = document.Q<HKUIDocument>("AcquireItemEffect");
+            var effect = Object.Instantiate(effectPrefab, parent);
+            var container = new Container();
+            var sequences = effect.Q<SequencesHolder>("Effect").Sequences;
+            var sequencer = new Sequencer(container, sequences);
+            return sequencer.PlayAsync(cancellationToken);
         }
     }
 }
