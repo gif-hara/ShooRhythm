@@ -27,13 +27,15 @@ namespace ShooRhythm
             foreach (var i in TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List)
             {
                 var element = Object.Instantiate(elementPrefab, elementParent);
-                var collection = i.ToContentsRecord();
+                var contentsRecord = i.ToContentsRecord();
                 element.Q<TMP_Text>("Text").text = i.GetAcquireItem().Name;
-                element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
+                var button = element.Q<ObservablePointerClickTrigger>("Button");
+                button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         await TinyServiceLocator.Resolve<GameController>()
-                            .ApplyRewardAsync(collection);
+                            .ApplyRewardAsync(contentsRecord);
+                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 elements.Add((i.Id, element.gameObject));
