@@ -22,8 +22,7 @@ namespace ShooRhythm
             uiPresenterGameSelectItem.OnSelectedItemAsObservable()
                 .SubscribeAwait(async (x, ct) =>
                 {
-                    await TinyServiceLocator.Resolve<GameController>().SetUserEquipmentItemIdAsync(gameData.UserId, x);
-                    UpdateEquipmentViews();
+                    await TinyServiceLocator.Resolve<GameController>().SetUserEquipmentItemIdAsync(gameData.CurrentUserId, x);
                 })
                 .RegisterTo(cancellationToken);
             uiPresenterGameSelectItem.BeginAsync(
@@ -33,22 +32,21 @@ namespace ShooRhythm
                     return x.Where(y => masterData.WeaponSpecs.ContainsKey(y.Key));
                 })
                 .Forget();
-            UpdateEquipmentViews();
-
+            gameData.CurrentUserData.equipmentItemId
+                .Subscribe(x =>
+                {
+                    var masterDataItem = x != 0 ? masterData.Items.Get(x) : null;
+                    masterData.WeaponSpecs.TryGetValue(x, out var weaponSpec);
+                    document.Q<TMP_Text>("Text.EquipmentName").text = masterDataItem != null ? masterDataItem.Name : "None";
+                    document.Q<TMP_Text>("Text.Strength").text = weaponSpec != null ? weaponSpec.Strength.ToString() : "0";
+                })
+                .RegisterTo(cancellationToken);
+            
             await UniTask.WaitUntilCanceled(cancellationToken);
 
             if (document != null && document.gameObject != null)
             {
                 Object.Destroy(document.gameObject);
-            }
-
-            void UpdateEquipmentViews()
-            {
-                var equipmentItemId = gameData.UserEquipmentItemId;
-                var masterDataItem = equipmentItemId != 0 ? masterData.Items.Get(equipmentItemId) : null;
-                masterData.WeaponSpecs.TryGetValue(equipmentItemId, out var weaponSpec);
-                document.Q<TMP_Text>("Text.EquipmentName").text = masterDataItem != null ? masterDataItem.Name : "None";
-                document.Q<TMP_Text>("Text.Strength").text = weaponSpec != null ? weaponSpec.Strength.ToString() : "0";
             }
         }
     }

@@ -17,8 +17,12 @@ namespace ShooRhythm
         public List<FarmData> FarmDatas { get; } = new();
 
         public Dictionary<Define.DungeonType, EnemyInstanceData> DungeonEnemyInstanceDatas { get; } = new();
+        
+        public Dictionary<int, UserData> UserData { get; } = new();
 
-        public int UserId { get; set; } = 0;
+        public int CurrentUserId { get; set; } = 0;
+        
+        public UserData CurrentUserData => UserData[CurrentUserId];
 
         public void SetItem(int id, int count)
         {
@@ -49,7 +53,5 @@ namespace ShooRhythm
                 }
             }
         }
-
-        public int UserEquipmentItemId => Stats.Get($"UserData.{UserId}.Equipment.ItemId");
     }
 }

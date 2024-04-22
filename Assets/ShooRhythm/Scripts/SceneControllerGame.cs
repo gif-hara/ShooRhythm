@@ -68,6 +68,8 @@ namespace ShooRhythm
             gameDebugController.Begin(destroyCancellationToken);
 #endif
 
+            gameController.AddUserData(0);
+
             gameMessage.RequestChangeTab
                 .Subscribe(x =>
                 {

@@ -29,7 +29,7 @@ namespace ShooRhythm
             document.Q<ObservablePointerClickTrigger>("Button.Attack").OnPointerClickAsObservable()
                 .SubscribeAwait(async (_, ct) =>
                 {
-                    var equipmentItemId = gameData.UserEquipmentItemId;
+                    var equipmentItemId = gameData.CurrentUserData.equipmentItemId.Value;
                     var damage = equipmentItemId == 0
                         ? TinyServiceLocator.Resolve<GameDesignData>().DefaultDamage
                         : masterData.WeaponSpecs.Get(equipmentItemId).Strength;

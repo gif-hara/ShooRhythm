@@ -125,7 +125,8 @@ namespace ShooRhythm
 
         public UniTask<bool> SetUserEquipmentItemIdAsync(int userId, int x)
         {
-            return SetStatsAsync($"UserData.{userId}.Equipment.ItemId", x);
+            TinyServiceLocator.Resolve<GameData>().UserData[userId].equipmentItemId.Value = x;
+            return UniTask.FromResult(true);
         }
 
         public UniTask<bool> SetFarmPlantItemIdAsync(int plantId, int seedItemId)
@@ -181,7 +182,7 @@ namespace ShooRhythm
             return Define.AttackResultType.Hit;
         }
 
-        private UniTask<EnemyInstanceData> CreateEnemyInstanceDataAsync(Define.DungeonType dungeonType)
+        private static UniTask<EnemyInstanceData> CreateEnemyInstanceDataAsync(Define.DungeonType dungeonType)
         {
             var result = new EnemyInstanceData();
             var enemySpecs = TinyServiceLocator.Resolve<MasterData>().EnemySpecs.Get(dungeonType);
@@ -189,6 +190,11 @@ namespace ShooRhythm
             result.EnemyId = enemySpec.Id;
             result.HitPoint = enemySpec.HitPoint;
             return UniTask.FromResult(result);
+        }
+
+        public void AddUserData(int userId)
+        {
+            TinyServiceLocator.Resolve<GameData>().UserData.Add(userId, new UserData());
         }
     }
 }
