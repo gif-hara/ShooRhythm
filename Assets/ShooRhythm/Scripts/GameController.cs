@@ -14,7 +14,7 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameController
     {
-        public GameController(CancellationToken cancellationToken)
+        public GameController(int userId, CancellationToken cancellationToken)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             gameData.Stats.OnChangedAsObservable(cancellationToken)
@@ -25,6 +25,21 @@ namespace ShooRhythm
                     {
                         var id = int.Parse(x.Name.Substring(startString.Length));
                         gameData.SetItem(id, x.Value);
+                    }
+                })
+                .RegisterTo(cancellationToken);
+            AddUserData(userId);
+            Observable.EveryUpdate(cancellationToken)
+                .Subscribe(_ =>
+                {
+                    for (var i = 0; i < gameData.CurrentUserData.coolTimeData.Count; i++)
+                    {
+                        var coolTimeData = gameData.CurrentUserData.coolTimeData[i];
+                        coolTimeData.CoolTime.Value -= Time.deltaTime;
+                        if (coolTimeData.CoolTime.Value < 0)
+                        {
+                            coolTimeData.CoolTime.Value = 0;
+                        }
                     }
                 })
                 .RegisterTo(cancellationToken);
@@ -125,7 +140,8 @@ namespace ShooRhythm
 
         public void AddUserData(int userId)
         {
-            TinyServiceLocator.Resolve<GameData>().UserData.Add(userId, new UserData());
+            var initialCoolTimeNumber = TinyServiceLocator.Resolve<GameDesignData>().InitialCoolTimeNumber;
+            TinyServiceLocator.Resolve<GameData>().UserData.Add(userId, new UserData(initialCoolTimeNumber));
         }
 
         public void AddProductMachine()
