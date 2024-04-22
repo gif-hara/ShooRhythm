@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HK;
+using R3;
 using SCD;
 
 namespace ShooRhythm
@@ -11,7 +12,7 @@ namespace ShooRhythm
     {
         public Stats Stats { get; } = new();
 
-        public Dictionary<int, int> Items { get; } = new();
+        public Dictionary<int, ReactiveProperty<int>> Items { get; } = new();
 
         public List<FarmData> FarmDatas { get; } = new();
 
@@ -21,13 +22,19 @@ namespace ShooRhythm
 
         public void SetItem(int id, int count)
         {
-            Items[id] = count;
-            TinyServiceLocator.Resolve<GameMessage>().UpdatedItem.OnNext((id, count));
+            if (!Items.ContainsKey(id))
+            {
+                Items.Add(id, new ReactiveProperty<int>(count));
+            }
+            else
+            {
+                Items[id].Value = count;
+            }
         }
 
         public int GetItem(int id)
         {
-            return Items.TryGetValue(id, out var count) ? count : 0;
+            return Items.TryGetValue(id, out var reactiveProperty) ? reactiveProperty.Value : 0;
         }
 
         public void FetchFarmData()

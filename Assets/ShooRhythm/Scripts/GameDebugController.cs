@@ -22,7 +22,7 @@ namespace ShooRhythm
                     {
                         foreach (var item in masterData.Items.List)
                         {
-                            gameController.SetStatsAsync($"Item.{item.Id}", 99).Forget();
+                            gameController.AddStatsAsync($"Item.{item.Id}", 99).Forget();
                         }
                     }
                 })

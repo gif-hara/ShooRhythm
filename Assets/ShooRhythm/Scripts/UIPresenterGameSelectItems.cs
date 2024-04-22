@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
@@ -17,7 +18,7 @@ namespace ShooRhythm
         private readonly Subject<int> onSelectedItem = new();
         public Observable<int> OnSelectedItemAsObservable() => onSelectedItem;
 
-        public UniTask BeginAsync(HKUIDocument document, Func<Dictionary<int, int>, IEnumerable<KeyValuePair<int, int>>> itemSelector)
+        public UniTask BeginAsync(HKUIDocument document, Func<Dictionary<int, ReactiveProperty<int>>, IEnumerable<KeyValuePair<int, ReactiveProperty<int>>>> itemSelector)
         {
             var listElementParentName = "ListElementParent";
             var elementParent = document.Q<RectTransform>(listElementParentName);
@@ -30,7 +31,12 @@ namespace ShooRhythm
                 var element = UnityEngine.Object.Instantiate(elementPrefab, elementParent);
                 var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(i.Key);
                 element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
-                element.Q<TMP_Text>("Text.Number").text = i.Value.ToString();
+                i.Value
+                    .Subscribe(itemNumber =>
+                    {
+                        element.Q<TMP_Text>("Text.Number").text = itemNumber.ToString();
+                    })
+                    .RegisterTo(element.destroyCancellationToken);
                 element.Q<Button>("Button").OnClickAsObservable()
                     .Subscribe(_ =>
                     {
