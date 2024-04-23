@@ -26,8 +26,27 @@ namespace ShooRhythm
             var alreadyShowSelectItems = false;
             for (var i = 0; i < gameData.ProductMachineData.Count; i++)
             {
+                ObserveProductMachine(i);
+            }
+            
+            TinyServiceLocator.Resolve<GameMessage>().AddedProductMachineData
+                .Subscribe(_ =>
+                {
+                    ObserveProductMachine(gameData.ProductMachineData.Count - 1);
+                })
+                .RegisterTo(cancellationToken);
+
+            await UniTask.WaitUntilCanceled(cancellationToken);
+
+            if (document != null)
+            {
+                Object.Destroy(document.gameObject);
+            }
+
+            void ObserveProductMachine(int machineIndex)
+            { 
+                var productMachineData = gameData.ProductMachineData[machineIndex];
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
-                var productMachineData = gameData.ProductMachineData[i];
                 var button = element.Q<Button>("Product.Button");
                 button.OnClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
@@ -70,12 +89,11 @@ namespace ShooRhythm
                     .RegisterTo(element.destroyCancellationToken);
                 for (var j = 0; j < Define.MachineSlotCount; j++)
                 {
-                    var machineId = i;
                     var slotId = j;
                     element.Q<Button>($"Slot.{slotId % Define.MachineSlotCount}.Button").OnClickAsObservable()
                         .Subscribe(_ =>
                         {
-                            selectMachineId = machineId;
+                            selectMachineId = machineIndex;
                             selectSlotId = slotId;
                             ShowSelectItems();
                         })
@@ -88,13 +106,6 @@ namespace ShooRhythm
                         })
                         .RegisterTo(cancellationToken);
                 }
-            }
-
-            await UniTask.WaitUntilCanceled(cancellationToken);
-
-            if (document != null)
-            {
-                Object.Destroy(document.gameObject);
             }
 
             void ShowSelectItems()
