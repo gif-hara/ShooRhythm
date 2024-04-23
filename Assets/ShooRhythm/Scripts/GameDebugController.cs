@@ -32,6 +32,11 @@ namespace ShooRhythm
                         gameController.AddProductMachine();
                         Debug.Log("[DEBUG] AddProductMachine");
                     }
+                    if(Keyboard.current.f3Key.wasPressedThisFrame)
+                    {
+                        gameController.AddFarmData();
+                        Debug.Log("[DEBUG] AddFarmData");
+                    }
                 })
                 .RegisterTo(cancellationToken);
         }
