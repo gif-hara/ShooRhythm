@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1678321455312932093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1463503880241846361}
+  m_Layer: 5
+  m_Name: AcquireItemEffectParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1463503880241846361
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678321455312932093}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5266917047303747493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 120, y: 120}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2284591026610877390
 GameObject:
   m_ObjectHideFlags: 0
@@ -543,7 +578,7 @@ PrefabInstance:
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
       propertyPath: elements.Array.size
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
@@ -572,6 +607,17 @@ PrefabInstance:
       objectReference: {fileID: 7640666163666553617}
     - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
+      propertyPath: elements.Array.data[5].document
+      value: 
+      objectReference: {fileID: 756346924569530787, guid: f1a015b90ac814b44b6092231b2a3c5d,
+        type: 3}
+    - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
+      propertyPath: elements.Array.data[6].document
+      value: 
+      objectReference: {fileID: 1678321455312932093}
+    - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
       propertyPath: elements.Array.data[0].overrideName
       value: Root.CastButton
       objectReference: {fileID: 0}
@@ -594,6 +640,16 @@ PrefabInstance:
         type: 3}
       propertyPath: elements.Array.data[4].overrideName
       value: Root.HitIcon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
+      propertyPath: elements.Array.data[5].overrideName
+      value: AcquireItemEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2154618791193963821, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
+      propertyPath: elements.Array.data[6].overrideName
+      value: AcquireItemEffectParent
       objectReference: {fileID: 0}
     - target: {fileID: 2648174666714030058, guid: bf465ff38c088bd448e7dea40eef578c,
         type: 3}
@@ -740,6 +796,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7987669615730943222}
+    - targetCorrespondingSourceObject: {fileID: 2940686627162059137, guid: bf465ff38c088bd448e7dea40eef578c,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1463503880241846361}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf465ff38c088bd448e7dea40eef578c, type: 3}
 --- !u!224 &5266917047303747493 stripped
