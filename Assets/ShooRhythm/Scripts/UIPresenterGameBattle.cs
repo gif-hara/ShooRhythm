@@ -6,6 +6,7 @@ using R3;
 using R3.Triggers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace ShooRhythm
 {
@@ -23,6 +24,7 @@ namespace ShooRhythm
             var enemyInstanceData = await gameController.GetEnemyInstanceDataAsync(dungeonType);
             var enemySpec = masterData.EnemySpecs.Get(dungeonType)
                 .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
+            Assert.IsNotNull(enemySpec, $"EnemySpec is null. dungeonType: {dungeonType}, enemyId: {enemyInstanceData.EnemyId}");
 
             document.Q<TMP_Text>("Text.Enemy").text = enemySpec.Name;
 
@@ -33,7 +35,11 @@ namespace ShooRhythm
                     var damage = equipmentItemId == 0
                         ? TinyServiceLocator.Resolve<GameDesignData>().DefaultDamage
                         : masterData.WeaponSpecs.Get(equipmentItemId).Strength;
-                    await gameController.AttackEnemyAsync(dungeonType, damage);
+                    var attackResultType = await gameController.AttackEnemyAsync(dungeonType, damage);
+                    if (attackResultType == Define.AttackResultType.Defeat)
+                    {
+                        GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), cancellationToken).Forget();
+                    }
                 })
                 .AddTo(document);
 

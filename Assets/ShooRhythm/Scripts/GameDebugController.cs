@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ShooRhythm
@@ -11,7 +12,7 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameDebugController
     {
-        public void Begin(CancellationToken cancellationToken)
+        public static void Begin(CancellationToken cancellationToken)
         {
             var masterData = TinyServiceLocator.Resolve<MasterData>();
             var gameController = TinyServiceLocator.Resolve<GameController>();
@@ -24,6 +25,17 @@ namespace ShooRhythm
                         {
                             gameController.AddStatsAsync($"Item.{item.Id}", 99).Forget();
                         }
+                        Debug.Log("[DEBUG] Add All Items");
+                    }
+                    if(Keyboard.current.f2Key.wasPressedThisFrame)
+                    {
+                        gameController.AddProductMachine();
+                        Debug.Log("[DEBUG] AddProductMachine");
+                    }
+                    if(Keyboard.current.f3Key.wasPressedThisFrame)
+                    {
+                        gameController.AddFarmData();
+                        Debug.Log("[DEBUG] AddFarmData");
                     }
                 })
                 .RegisterTo(cancellationToken);

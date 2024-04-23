@@ -34,7 +34,8 @@ namespace ShooRhythm
                 var contentsRecord = masterDataMeadowSpec.ToContentsRecord();
                 var gameController = TinyServiceLocator.Resolve<GameController>();
                 var gameData = TinyServiceLocator.Resolve<GameData>();
-                rootElement.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
+                var button = rootElement.Q<ObservablePointerClickTrigger>("Button");
+                button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         if (!contentsRecord.IsCompleted(gameData.Stats))
@@ -44,6 +45,7 @@ namespace ShooRhythm
                         else
                         {
                             await gameController.ApplyRewardAsync(contentsRecord);
+                            GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, cancellationToken).Forget();
                         }
                     })
                     .RegisterTo(cancellationToken);

@@ -64,8 +64,7 @@ namespace ShooRhythm
             var gameMessage = new GameMessage();
             TinyServiceLocator.RegisterAsync(gameMessage).Forget();
 #if DEBUG
-            var gameDebugController = new GameDebugController();
-            gameDebugController.Begin(destroyCancellationToken);
+            GameDebugController.Begin(destroyCancellationToken);
 #endif
 
             for (var i = 0; i < gameDesignData.InitialProductMachineNumber; i++)

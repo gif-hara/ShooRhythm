@@ -13,5 +13,9 @@ namespace ShooRhythm
         public readonly Subject<(string message, Sprite sprite, Define.NotificationType notificationType)> RequestNotification = new();
         
         public readonly Subject<int> AddedItem = new();
+        
+        public readonly Subject<Unit> AddedProductMachineData = new();
+        
+        public readonly Subject<Unit> AddedFarmData = new();
     }
 }
