@@ -29,9 +29,27 @@ namespace ShooRhythm
             var updateProgressScopes = new List<CancellationTokenSource>();
             for (var i = 0; i < gameData.FarmDatas.Count; i++)
             {
-                var plantId = i;
+                CreateElement(i);
+            }
+
+            TinyServiceLocator.Resolve<GameMessage>().AddedFarmData
+                .Subscribe(_ =>
+                {
+                    CreateElement(gameData.FarmDatas.Count - 1);
+                })
+                .RegisterTo(cancellationToken);
+
+            await UniTask.WaitUntilCanceled(cancellationToken);
+
+            if (document != null)
+            {
+                UnityEngine.Object.Destroy(document.gameObject);
+            }
+
+            void CreateElement(int index)
+            {
                 var listElement = UnityEngine.Object.Instantiate(listElementPrefab, listElementParent);
-                var farmData = gameData.FarmDatas[plantId];
+                var farmData = gameData.FarmDatas[index];
                 updateProgressScopes.Add(null);
                 farmData.SeedItemId
                     .Subscribe(x =>
@@ -52,8 +70,8 @@ namespace ShooRhythm
                     .Subscribe(x =>
                     {
 
-                        updateProgressScopes[plantId]?.Cancel();
-                        updateProgressScopes[plantId]?.Dispose();
+                        updateProgressScopes[index]?.Cancel();
+                        updateProgressScopes[index]?.Dispose();
                         if (x == 0)
                         {
                             listElement.Q<Slider>("Progress").value = 0;
@@ -67,7 +85,7 @@ namespace ShooRhythm
                             }
                             var start = farmData.PlantTicks.Value;
                             var end = new DateTime(farmData.PlantTicks.Value).AddSeconds(farmData.SeedSpec.GrowSeconds).Ticks;
-                            updateProgressScopes[plantId] = CancellationTokenSource.CreateLinkedTokenSource(
+                            updateProgressScopes[index] = CancellationTokenSource.CreateLinkedTokenSource(
                                 cancellationToken,
                                 listElement.destroyCancellationToken
                             );
@@ -78,14 +96,14 @@ namespace ShooRhythm
                                     listElement.Q<Slider>("Progress").value = (float)progress;
                                     if (progress >= 1)
                                     {
-                                        updateProgressScopes[plantId]?.Cancel();
-                                        updateProgressScopes[plantId]?.Dispose();
-                                        updateProgressScopes[plantId] = null;
+                                        updateProgressScopes[index]?.Cancel();
+                                        updateProgressScopes[index]?.Dispose();
+                                        updateProgressScopes[index] = null;
                                         var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(farmData.SeedSpec.AcquireItemId);
                                         listElement.Q<TextMeshProUGUI>("Name").text = masterDataItem.Name;
                                     }
                                 })
-                                .RegisterTo(updateProgressScopes[plantId].Token);
+                                .RegisterTo(updateProgressScopes[index].Token);
                         }
                     })
                     .RegisterTo(listElement.destroyCancellationToken);
@@ -95,23 +113,16 @@ namespace ShooRhythm
                     {
                         if (farmData.IsCompleted)
                         {
-                            await gameController.AcquireFarmPlantAsync(plantId);
+                            await gameController.AcquireFarmPlantAsync(index);
                             GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
                         }
                         else
                         {
-                            selectedPlantId = plantId;
+                            selectedPlantId = index;
                             ShowSelectItems();
                         }
                     })
                     .AddTo(listElement);
-            }
-
-            await UniTask.WaitUntilCanceled(cancellationToken);
-
-            if (document != null)
-            {
-                UnityEngine.Object.Destroy(document.gameObject);
             }
 
             void ShowSelectItems()
