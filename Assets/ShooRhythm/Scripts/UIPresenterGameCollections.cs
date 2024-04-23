@@ -22,6 +22,7 @@ namespace ShooRhythm
             var elementParent = document.Q<RectTransform>(listElementParentName);
             var parentLayout = document.Q<GridLayoutGroup>(listElementParentName);
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
+            var gameData = TinyServiceLocator.Resolve<GameData>();
             parentLayout.SetConstraintCount();
             var elements = new List<(int id, GameObject gameObject)>();
             foreach (var i in TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List)
@@ -33,9 +34,16 @@ namespace ShooRhythm
                 button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
+                        var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                        if (availableCoolTimeIndex == -1)
+                        {
+                            GameUtility.ShowRequireCoolDownNotification();
+                            return;
+                        }
                         await TinyServiceLocator.Resolve<GameController>()
                             .ApplyRewardAsync(contentsRecord);
                         GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
+                        gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, i.CoolTimeSeconds);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 elements.Add((i.Id, element.gameObject));

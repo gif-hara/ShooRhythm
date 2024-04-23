@@ -45,5 +45,17 @@ namespace ShooRhythm
             var sequencer = new Sequencer(container, sequences);
             return sequencer.PlayAsync(cancellationToken);
         }
+
+        public static void ShowRequireCoolDownNotification()
+        {
+            var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
+            gameMessage.RequestNotification.OnNext(
+                (
+                    "クールダウン中です",
+                    null,
+                    Define.NotificationType.Negative
+                )
+            );
+        }
     }
 }

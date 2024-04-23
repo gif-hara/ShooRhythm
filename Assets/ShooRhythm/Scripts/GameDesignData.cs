@@ -33,14 +33,17 @@ namespace ShooRhythm
         [SerializeField]
         private int initialProductMachineNumber;
         public int InitialProductMachineNumber => initialProductMachineNumber;
-        
+
         /// <summary>
         /// 農場の初期値
         /// </summary>
-        [FormerlySerializedAs("initialPlantNumber")]
         [SerializeField]
         private int initialFarmNumber;
         public int InitialFarmNumber => initialFarmNumber;
+
+        [SerializeField]
+        private int initialCoolTimeNumber;
+        public int InitialCoolTimeNumber => initialCoolTimeNumber;
 
         [Serializable]
         public class FishingDesignData
