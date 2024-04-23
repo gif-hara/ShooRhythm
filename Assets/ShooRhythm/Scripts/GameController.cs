@@ -131,6 +131,7 @@ namespace ShooRhythm
         public void AddProductMachine()
         {
             TinyServiceLocator.Resolve<GameData>().ProductMachineData.Add(new ProductMachineData());
+            TinyServiceLocator.Resolve<GameMessage>().AddedProductMachineData.OnNext(Unit.Default);
         }
 
         public void AddFarmData()
