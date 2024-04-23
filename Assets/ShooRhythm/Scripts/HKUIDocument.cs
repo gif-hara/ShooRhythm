@@ -50,6 +50,21 @@ namespace HK
             Debug.LogError($"Component not found: {typeof(T)} on object {name}");
             return null;
         }
+        
+        public (T1, T2) Q<T1, T2>(string name) where T1 : Component where T2 : Component
+        {
+            return (Q<T1>(name), Q<T2>(name));
+        }
+        
+        public (T1, T2, T3) Q<T1, T2, T3>(string name) where T1 : Component where T2 : Component where T3 : Component
+        {
+            return (Q<T1>(name), Q<T2>(name), Q<T3>(name));
+        }
+        
+        public (T1, T2, T3, T4) Q<T1, T2, T3, T4>(string name) where T1 : Component where T2 : Component where T3 : Component where T4 : Component
+        {
+            return (Q<T1>(name), Q<T2>(name), Q<T3>(name), Q<T4>(name));
+        }
 
         /// <summary>
         /// Retrieves the UI element with the specified name.
