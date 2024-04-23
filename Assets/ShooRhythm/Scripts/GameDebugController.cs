@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ShooRhythm
@@ -24,6 +25,12 @@ namespace ShooRhythm
                         {
                             gameController.AddStatsAsync($"Item.{item.Id}", 99).Forget();
                         }
+                        Debug.Log("[DEBUG] Add All Items");
+                    }
+                    if(Keyboard.current.f2Key.wasPressedThisFrame)
+                    {
+                        gameController.AddProductMachine();
+                        Debug.Log("[DEBUG] AddProductMachine");
                     }
                 })
                 .RegisterTo(cancellationToken);
