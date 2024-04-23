@@ -56,3 +56,4 @@ MonoBehaviour:
   defaultDamage: 5
   initialProductMachineNumber: 1
   initialFarmNumber: 1
+  initialCoolTimeNumber: 1
