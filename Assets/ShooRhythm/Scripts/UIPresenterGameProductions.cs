@@ -18,8 +18,11 @@ namespace ShooRhythm
             var document = Object.Instantiate(documentPrefab);
             var selectMachineId = -1;
             var selectSlotId = -1;
-            var listElementParent = document.Q<Transform>("ListElementParent");
+            const string listElementParentName = "ListElementParent";
+            var listElementParent = document.Q<Transform>(listElementParentName);
+            var parentLayout = document.Q<GridLayoutGroup>(listElementParentName);
             var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
+            parentLayout.SetConstraintCount();
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var gameController = TinyServiceLocator.Resolve<GameController>();
             var alreadyShowSelectItems = false;
