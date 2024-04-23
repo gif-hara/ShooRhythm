@@ -11,7 +11,7 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameDebugController
     {
-        public void Begin(CancellationToken cancellationToken)
+        public static void Begin(CancellationToken cancellationToken)
         {
             var masterData = TinyServiceLocator.Resolve<MasterData>();
             var gameController = TinyServiceLocator.Resolve<GameController>();
