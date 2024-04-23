@@ -33,7 +33,11 @@ namespace ShooRhythm
                     var damage = equipmentItemId == 0
                         ? TinyServiceLocator.Resolve<GameDesignData>().DefaultDamage
                         : masterData.WeaponSpecs.Get(equipmentItemId).Strength;
-                    await gameController.AttackEnemyAsync(dungeonType, damage);
+                    var attackResultType = await gameController.AttackEnemyAsync(dungeonType, damage);
+                    if (attackResultType == Define.AttackResultType.Defeat)
+                    {
+                        GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), cancellationToken).Forget();
+                    }
                 })
                 .AddTo(document);
 
