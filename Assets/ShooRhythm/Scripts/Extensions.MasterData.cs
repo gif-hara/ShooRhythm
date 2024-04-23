@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using HK;
 using SCD;
+using UnityEngine;
 
 namespace ShooRhythm
 {
@@ -111,6 +113,21 @@ namespace ShooRhythm
                     new($"Item.{self.RewardItemId}", self.RewardItemAmount)
                 }
             );
+        }
+
+        public static UniTask<Sprite> GetIconAsync(this MasterData.Item self)
+        {
+            return AssetLoader.LoadAsync<Sprite>($"Textures/Item.{self.Id}");
+        }
+
+        public static MasterData.Item GetAcquireItemMasterData(this MasterData.MeadowSpec self)
+        {
+            return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
+        }
+
+        public static MasterData.Item GetAcquireItemMasterData(this MasterData.CollectionSpec self)
+        {
+            return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
     }
 }
