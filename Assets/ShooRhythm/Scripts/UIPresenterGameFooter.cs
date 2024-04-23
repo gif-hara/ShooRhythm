@@ -62,17 +62,14 @@ namespace ShooRhythm
             {
                 var element = Object.Instantiate(coolTimeListElementPrefab, coolTimeListElementParent);
                 var slider = element.Q<Slider>("Slider");
+                var maxObject = element.Q("MaxObject");
                 var coolTimeData = gameData.CurrentUserData.coolTimeData[index];
                 coolTimeData.CoolTime
                     .Subscribe(x =>
                     {
                         var max = coolTimeData.Max;
-                        if (max == 0)
-                        {
-                            slider.value = 1;
-                            return;
-                        }
-                        slider.value = (coolTimeData.Max - x) / coolTimeData.Max;
+                        slider.value = max == 0 ? 1 : (max - x) / max;
+                        maxObject.SetActiveIfNeed(max == 0 || x <= 0);
                     })
                     .RegisterTo(element.destroyCancellationToken);
             }
