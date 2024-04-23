@@ -93,6 +93,8 @@ MonoBehaviour:
   elements:
   - document: {fileID: 4801955941026563953}
     overrideName: Effect
+  - document: {fileID: 9203658662653823208}
+    overrideName: 
 --- !u!1 &4801955941026563953
 GameObject:
   m_ObjectHideFlags: 0
@@ -328,7 +330,7 @@ GameObject:
   - component: {fileID: 2989651649729842184}
   - component: {fileID: 2843440053504040881}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,7 +376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9811321, g: 0.66180134, b: 0.66180134, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
