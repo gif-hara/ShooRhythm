@@ -137,6 +137,7 @@ namespace ShooRhythm
         public void AddFarmData()
         {
             TinyServiceLocator.Resolve<GameData>().FarmDatas.Add(new FarmData());
+            TinyServiceLocator.Resolve<GameMessage>().AddedFarmData.OnNext(Unit.Default);
         }
         
         public UniTask<bool> SetProductMachineSlotAsync(int machineId, int slotId, int itemId)
