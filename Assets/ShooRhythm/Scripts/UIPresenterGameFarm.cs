@@ -89,12 +89,14 @@ namespace ShooRhythm
                         }
                     })
                     .RegisterTo(listElement.destroyCancellationToken);
-                listElement.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
+                var button = listElement.Q<ObservablePointerClickTrigger>("Button");
+                button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         if (farmData.IsCompleted)
                         {
                             await gameController.AcquireFarmPlantAsync(plantId);
+                            GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
                         }
                         else
                         {
