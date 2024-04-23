@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
@@ -21,9 +20,7 @@ namespace ShooRhythm
 
         public UniTask BeginAsync(HKUIDocument document, Func<Dictionary<int, ReactiveProperty<int>>, IEnumerable<KeyValuePair<int, ReactiveProperty<int>>>> itemSelector)
         {
-            var listElementParentName = "ListElementParent";
-            var elementParent = document.Q<RectTransform>(listElementParentName);
-            var parentLayout = document.Q<GridLayoutGroup>(listElementParentName);
+            var (elementParent, parentLayout) = document.Q<RectTransform, GridLayoutGroup>("ListElementParent");
             var elementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
             parentLayout.SetConstraintCount();
             var elements = new List<GameObject>();
