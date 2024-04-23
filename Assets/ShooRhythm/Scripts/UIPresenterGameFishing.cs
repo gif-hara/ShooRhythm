@@ -103,7 +103,7 @@ namespace ShooRhythm
                     .Subscribe(_ =>
                     {
                         TinyServiceLocator.Resolve<GameController>().ApplyRewardAsync(currentContentsRecord).Forget();
-                        GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), cancellationToken).Forget();
+                        GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), null, cancellationToken).Forget();
                         stateMachine.Change(StateIdle);
                     })
                     .RegisterTo(scope);

@@ -28,7 +28,7 @@ namespace ShooRhythm
             {
                 ObserveProductMachine(i);
             }
-            
+
             TinyServiceLocator.Resolve<GameMessage>().AddedProductMachineData
                 .Subscribe(_ =>
                 {
@@ -44,7 +44,7 @@ namespace ShooRhythm
             }
 
             void ObserveProductMachine(int machineIndex)
-            { 
+            {
                 var productMachineData = gameData.ProductMachineData[machineIndex];
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
                 var button = element.Q<Button>("Product.Button");
@@ -69,7 +69,7 @@ namespace ShooRhythm
                             return;
                         }
                         await gameController.ApplyRewardAsync(contentsRecord);
-                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
+                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, ct).Forget();
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 productMachineData.productItemId

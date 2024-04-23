@@ -40,7 +40,8 @@ namespace ShooRhythm
                         }
                         await TinyServiceLocator.Resolve<GameController>()
                             .ApplyRewardAsync(contentsRecord);
-                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, ct).Forget();
+                        var iconTask = i.GetAcquireItemMasterData().GetIconAsync();
+                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, iconTask, ct).Forget();
                         gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, i.CoolTimeSeconds);
                     })
                     .RegisterTo(element.destroyCancellationToken);

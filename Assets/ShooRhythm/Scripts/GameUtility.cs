@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using SCD;
 using UnityEngine;
+using UnityEngine.UI;
 using UnitySequencerSystem;
 
 namespace ShooRhythm
@@ -36,14 +37,18 @@ namespace ShooRhythm
             }
         }
 
-        public static UniTask PlayAcquireItemEffectAsync(HKUIDocument document, RectTransform parent, CancellationToken cancellationToken)
+        public static async UniTask PlayAcquireItemEffectAsync(HKUIDocument document, RectTransform parent, UniTask<Sprite>? iconTask, CancellationToken cancellationToken)
         {
             var effectPrefab = document.Q<HKUIDocument>("AcquireItemEffect");
             var effect = Object.Instantiate(effectPrefab, parent);
+            if (iconTask != null)
+            {
+                effect.Q<Image>("Icon").sprite = await iconTask.Value;
+            }
             var container = new Container();
             var sequences = effect.Q<SequencesHolder>("Effect").Sequences;
             var sequencer = new Sequencer(container, sequences);
-            return sequencer.PlayAsync(cancellationToken);
+            await sequencer.PlayAsync(cancellationToken);
         }
 
         public static void ShowRequireCoolDownNotification()

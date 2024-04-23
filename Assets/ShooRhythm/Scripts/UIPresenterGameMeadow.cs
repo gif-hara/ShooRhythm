@@ -45,7 +45,7 @@ namespace ShooRhythm
                         else
                         {
                             await gameController.ApplyRewardAsync(contentsRecord);
-                            GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, cancellationToken).Forget();
+                            GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, cancellationToken).Forget();
                         }
                     })
                     .RegisterTo(cancellationToken);

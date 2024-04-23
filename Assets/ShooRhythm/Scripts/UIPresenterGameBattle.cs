@@ -38,7 +38,7 @@ namespace ShooRhythm
                     var attackResultType = await gameController.AttackEnemyAsync(dungeonType, damage);
                     if (attackResultType == Define.AttackResultType.Defeat)
                     {
-                        GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), cancellationToken).Forget();
+                        GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), null, cancellationToken).Forget();
                     }
                 })
                 .AddTo(document);
