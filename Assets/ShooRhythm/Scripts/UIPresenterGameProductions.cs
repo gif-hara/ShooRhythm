@@ -62,13 +62,13 @@ namespace ShooRhythm
                             Debug.LogWarning($"Collection is null. CollectionId:{itemId}");
                             return;
                         }
-                        var contentsRecord = productionSpec.ToContentsRecord();
-                        if (!contentsRecord.IsCompleted(gameData.Stats))
+                        var conditions = productionSpec.GetProductionCondition();
+                        if (!conditions.IsAllPossession(gameData))
                         {
                             Debug.Log("TODO Not Completed Collection");
                             return;
                         }
-                        await gameController.ApplyRewardAsync(contentsRecord);
+                        await gameController.ProcessProductionAcquireProductAsync(itemId);
                         GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, ct).Forget();
                     })
                     .RegisterTo(element.destroyCancellationToken);

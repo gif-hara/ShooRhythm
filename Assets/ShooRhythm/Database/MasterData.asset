@@ -93,11 +93,11 @@ MonoBehaviour:
     - Key: 10201
       Value:
       - Id: 10201
-        Name: Item.10101
-        Amount: 1
+        NeedItemId: 10101
+        NeedItemAmount: 1
       - Id: 10201
-        Name: Item.10103
-        Amount: 3
+        NeedItemId: 10103
+        NeedItemAmount: 3
   riverFishingSpecs:
     list:
     - Id: 1

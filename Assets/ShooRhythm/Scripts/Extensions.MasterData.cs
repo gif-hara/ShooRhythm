@@ -36,23 +36,10 @@ namespace ShooRhythm
         {
             return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
-        
+
         public static List<MasterData.NeedItem> GetProductionCondition(this MasterData.ProductionSpec self)
         {
             return TinyServiceLocator.Resolve<MasterData>().ProductionConditions.Get(self.Id);
-        }
-
-        public static Contents.Record ToContentsRecord(this MasterData.ProductionSpec self)
-        {
-            var rewards = new List<Stats.Record>(self.GetProductionCondition().ToStatsRecordsSubtraction());
-            rewards.Add(new($"Item.{self.AcquireItemId}", self.AcquireItemAmount));
-            return new Contents.Record(
-                self.Id.ToString(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>(),
-                self.GetProductionCondition().ToStatsRecords().ToList(),
-                rewards
-            );
         }
 
         public static Contents.Record ToContentsRecord(this MasterData.FishingSpec self)
@@ -119,11 +106,11 @@ namespace ShooRhythm
             return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
 
-        public static bool IsAllPossession(IEnumerable<MasterData.NeedItem> self, GameData gameData)
+        public static bool IsAllPossession(this IEnumerable<MasterData.NeedItem> self, GameData gameData)
         {
             return self.All(x =>
             {
-                if(gameData.Items.TryGetValue(x.NeedItemId, out var amount))
+                if (gameData.Items.TryGetValue(x.NeedItemId, out var amount))
                 {
                     return amount.Value >= x.NeedItemAmount;
                 }

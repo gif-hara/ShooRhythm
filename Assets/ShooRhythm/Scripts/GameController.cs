@@ -44,7 +44,7 @@ namespace ShooRhythm
                 })
                 .RegisterTo(cancellationToken);
         }
-        
+
         public UniTask<bool> ApplyRewardAsync(Contents.Record contentsRecord)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
@@ -139,7 +139,7 @@ namespace ShooRhythm
             TinyServiceLocator.Resolve<GameData>().FarmDatas.Add(new FarmData());
             TinyServiceLocator.Resolve<GameMessage>().AddedFarmData.OnNext(Unit.Default);
         }
-        
+
         public UniTask<bool> AddContentAvailabilityAsync(string contentAvailability)
         {
             TinyServiceLocator.Resolve<GameData>().ContentAvailabilities.Add(contentAvailability);
@@ -157,7 +157,7 @@ namespace ShooRhythm
             var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(collectionSpecId);
             return AddItemAsync(collectionSpec.AcquireItemId, collectionSpec.AcquireItemAmount);
         }
-        
+
         public UniTask<bool> ProcessProductionSetSlotAsync(int machineId, int slotId, int itemId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
@@ -185,14 +185,24 @@ namespace ShooRhythm
             return UniTask.FromResult(true);
         }
 
-        public UniTask<bool> ProcessProductionAcquireProductAsync(int productionSpecId)
+        public async UniTask<bool> ProcessProductionAcquireProductAsync(int itemId)
         {
-            var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(productionSpecId);
+            var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(itemId);
             var needItems = productionSpec.GetProductionCondition();
+            if (needItems.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
+            {
+                var tasks = needItems
+                    .Select(x => AddItemAsync(x.NeedItemId, -x.NeedItemAmount))
+                    .Concat(new[]
+                    {
+                        AddItemAsync(productionSpec.AcquireItemId, productionSpec.AcquireItemAmount)
+                    });
+                await UniTask.WhenAll(tasks);
+            }
 
-            return UniTask.FromResult(true);
+            return true;
         }
-        
+
         private UniTask<bool> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
@@ -206,7 +216,7 @@ namespace ShooRhythm
             {
                 reactiveProperty.Value += amount;
             }
-            
+
             return UniTask.FromResult(true);
         }
     }
