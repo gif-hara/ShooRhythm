@@ -182,5 +182,12 @@ namespace ShooRhythm
 
             return UniTask.FromResult(true);
         }
+        
+        public UniTask<bool> AddContentAvailabilityAsync(string contentAvailability)
+        {
+            TinyServiceLocator.Resolve<GameData>().ContentAvailabilities.Add(contentAvailability);
+            TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(contentAvailability);
+            return UniTask.FromResult(true);
+        }
     }
 }

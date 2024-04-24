@@ -76,6 +76,11 @@ namespace ShooRhythm
                 gameController.AddFarmData();
             }
 
+            await UniTask.WhenAll(
+                TinyServiceLocator.Resolve<MasterData>().GrantStatsGameStart.List
+                    .Select(x => gameController.AddContentAvailabilityAsync(x.Name))
+            );
+
             gameMessage.RequestChangeTab
                 .Subscribe(x =>
                 {
@@ -114,12 +119,7 @@ namespace ShooRhythm
                     }
                 })
                 .RegisterTo(destroyCancellationToken);
-
-            foreach (var i in TinyServiceLocator.Resolve<MasterData>().GrantStatsGameStart.List)
-            {
-                gameData.Stats.Set(i.Name, i.Amount);
-            }
-
+            
             var uiPresenterGameFooter = new UIPresenterGameFooter();
             uiPresenterGameFooter.BeginAsync(gameFooterDocumentPrefab, destroyCancellationToken).Forget();
             var uiPresenterGameNotification = new UIPresenterGameNotification();

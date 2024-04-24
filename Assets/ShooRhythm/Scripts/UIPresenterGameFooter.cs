@@ -24,7 +24,7 @@ namespace ShooRhythm
             var coolTimeListElementPrefab = document.Q<HKUIDocument>("CoolTimeListElementPrefab");
             foreach (var i in TinyServiceLocator.Resolve<GameDesignData>().Footers)
             {
-                CreateButtonElement(i.FooterName, i.TabType, i.ActiveStatsName);
+                CreateButtonElement(i.FooterName, i.TabType);
             }
             for (var i = 0; i < gameData.CurrentUserData.coolTimeData.Count; i++)
             {
@@ -38,7 +38,7 @@ namespace ShooRhythm
                 Object.Destroy(document.gameObject);
             }
 
-            void CreateButtonElement(string text, Define.TabType tabType, string isActiveStatsName)
+            void CreateButtonElement(string text, Define.TabType tabType)
             {
                 var element = Object.Instantiate(buttonListElementPrefab, buttonListElementParent);
                 element.Q<TMP_Text>("Text").text = text;
@@ -48,12 +48,11 @@ namespace ShooRhythm
                         TinyServiceLocator.Resolve<GameMessage>().RequestChangeTab.OnNext(tabType);
                     })
                     .RegisterTo(element.destroyCancellationToken);
-                element.gameObject.SetActiveIfNeed(gameData.Stats.Contains(isActiveStatsName));
-                gameData.Stats.OnChangedAsObservable()
-                    .Where(x => x.Name == isActiveStatsName)
+                element.gameObject.SetActiveIfNeed(gameData.ContentAvailabilities.Contains(tabType.ToContentAvailabilityName()));
+                TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability
                     .Subscribe(x =>
                     {
-                        element.gameObject.SetActiveIfNeed(gameData.Stats.Contains(isActiveStatsName));
+                        element.gameObject.SetActiveIfNeed(gameData.ContentAvailabilities.Contains(tabType.ToContentAvailabilityName()));
                     })
                     .RegisterTo(element.destroyCancellationToken);
             }

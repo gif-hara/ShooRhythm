@@ -17,5 +17,7 @@ namespace ShooRhythm
         public readonly Subject<Unit> AddedProductMachineData = new();
         
         public readonly Subject<Unit> AddedFarmData = new();
+        
+        public readonly Subject<string> AddedContentAvailability = new();
     }
 }

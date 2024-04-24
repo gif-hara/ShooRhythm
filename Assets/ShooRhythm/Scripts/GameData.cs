@@ -11,6 +11,8 @@ namespace ShooRhythm
     public sealed class GameData
     {
         public Stats Stats { get; } = new();
+        
+        public HashSet<string> ContentAvailabilities { get; } = new();
 
         public Dictionary<int, ReactiveProperty<int>> Items { get; } = new();
 
