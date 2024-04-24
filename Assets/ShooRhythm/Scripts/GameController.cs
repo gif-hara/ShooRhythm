@@ -44,23 +44,7 @@ namespace ShooRhythm
                 })
                 .RegisterTo(cancellationToken);
         }
-
-        public UniTask<bool> AddStatsAsync(string name, int value)
-        {
-            var gameData = TinyServiceLocator.Resolve<GameData>();
-            gameData.Stats.Add(name, value);
-            Debug.Log(gameData.Stats);
-            return UniTask.FromResult(true);
-        }
-
-        public UniTask<bool> SetStatsAsync(string name, int value)
-        {
-            var gameData = TinyServiceLocator.Resolve<GameData>();
-            gameData.Stats.Set(name, value);
-            Debug.Log(gameData.Stats);
-            return UniTask.FromResult(true);
-        }
-
+        
         public UniTask<bool> ApplyRewardAsync(Contents.Record contentsRecord)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();

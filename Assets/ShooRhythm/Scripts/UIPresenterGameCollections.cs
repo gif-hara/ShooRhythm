@@ -38,8 +38,9 @@ namespace ShooRhythm
                             GameUtility.ShowRequireCoolDownNotification();
                             return;
                         }
+
                         await TinyServiceLocator.Resolve<GameController>()
-                            .ApplyRewardAsync(contentsRecord);
+                            .AddItemAsync(i.AcquireItemId, i.AcquireItemAmount);
                         var iconTask = i.GetAcquireItemMasterData().GetIconAsync();
                         GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, iconTask, ct).Forget();
                         gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, i.CoolTimeSeconds);
