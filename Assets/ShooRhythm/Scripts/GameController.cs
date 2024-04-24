@@ -189,5 +189,22 @@ namespace ShooRhythm
             TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(contentAvailability);
             return UniTask.FromResult(true);
         }
+        
+        public UniTask<bool> AddItemAsync(int itemId, int amount)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
+            if (!gameData.Items.TryGetValue(itemId, out var reactiveProperty))
+            {
+                gameData.Items.Add(itemId, new ReactiveProperty<int>(amount));
+                gameMessage.AddedItem.OnNext(itemId);
+            }
+            else
+            {
+                reactiveProperty.Value += amount;
+            }
+            
+            return UniTask.FromResult(true);
+        }
     }
 }
