@@ -139,15 +139,33 @@ namespace ShooRhythm
             TinyServiceLocator.Resolve<GameData>().FarmDatas.Add(new FarmData());
             TinyServiceLocator.Resolve<GameMessage>().AddedFarmData.OnNext(Unit.Default);
         }
+        
+        public UniTask<bool> AddContentAvailabilityAsync(string contentAvailability)
+        {
+            TinyServiceLocator.Resolve<GameData>().ContentAvailabilities.Add(contentAvailability);
+            TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(contentAvailability);
+            return UniTask.FromResult(true);
+        }
 
-        public UniTask<bool> SetProductMachineSlotAsync(int machineId, int slotId, int itemId)
+        public UniTask<bool> DebugAddItemAsync(int itemId, int amount)
+        {
+            return AddItemAsync(itemId, amount);
+        }
+
+        public UniTask<bool> ProcessCollectionAsync(int collectionSpecId)
+        {
+            var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(collectionSpecId);
+            return AddItemAsync(collectionSpec.AcquireItemId, collectionSpec.AcquireItemAmount);
+        }
+        
+        public UniTask<bool> ProcessProductionSetSlotAsync(int machineId, int slotId, int itemId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var productMachineData = gameData.ProductMachineData[machineId];
             productMachineData.slotItemIds[slotId].Value = itemId;
             var conditionNames = productMachineData.slotItemIds
                 .Where(x => x.Value != 0)
-                .Select(x => $"Item.{x}")
+                .Select(x => x.Value)
                 .ToArray();
             if (conditionNames.Any())
             {
@@ -159,22 +177,23 @@ namespace ShooRhythm
                         {
                             return false;
                         }
-                        return !conditions.Select(y => y.Name).Except(conditionNames).Any();
+                        return !conditions.Select(y => y.NeedItemId).Except(conditionNames).Any();
                     });
                 productMachineData.productItemId.Value = productionSpec?.AcquireItemId ?? 0;
             }
 
             return UniTask.FromResult(true);
         }
-        
-        public UniTask<bool> AddContentAvailabilityAsync(string contentAvailability)
+
+        public UniTask<bool> ProcessProductionAcquireProductAsync(int productionSpecId)
         {
-            TinyServiceLocator.Resolve<GameData>().ContentAvailabilities.Add(contentAvailability);
-            TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(contentAvailability);
+            var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(productionSpecId);
+            var needItems = productionSpec.GetProductionCondition();
+
             return UniTask.FromResult(true);
         }
         
-        public UniTask<bool> AddItemAsync(int itemId, int amount)
+        private UniTask<bool> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var gameMessage = TinyServiceLocator.Resolve<GameMessage>();

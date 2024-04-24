@@ -23,7 +23,7 @@ namespace ShooRhythm
                     {
                         foreach (var item in masterData.Items.List)
                         {
-                            gameController.AddItemAsync(item.Id, 99).Forget();
+                            gameController.DebugAddItemAsync(item.Id, 99).Forget();
                         }
                         Debug.Log("[DEBUG] Add All Items");
                     }

@@ -90,7 +90,7 @@ namespace ShooRhythm
                 for (var j = 0; j < Define.MachineSlotCount; j++)
                 {
                     var slotId = j;
-                    element.Q<Button>($"Slot.{slotId % Define.MachineSlotCount}.Button").OnClickAsObservable()
+                    element.Q<Button>($"Slot.{slotId}.Button").OnClickAsObservable()
                         .Subscribe(_ =>
                         {
                             selectMachineId = machineIndex;
@@ -121,7 +121,7 @@ namespace ShooRhythm
                 uiPresenterSelectItems.OnSelectedItemAsObservable()
                     .SubscribeAwait(async (itemId, ct) =>
                     {
-                        await gameController.SetProductMachineSlotAsync(selectMachineId, selectSlotId, itemId);
+                        await gameController.ProcessProductionSetSlotAsync(selectMachineId, selectSlotId, itemId);
                     })
                     .RegisterTo(cancellationToken);
             }

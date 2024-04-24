@@ -26,7 +26,6 @@ namespace ShooRhythm
             foreach (var i in TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List)
             {
                 var element = Object.Instantiate(elementPrefab, elementParent);
-                var contentsRecord = i.ToContentsRecord();
                 element.Q<TMP_Text>("Text").text = i.GetAcquireItem().Name;
                 var button = element.Q<ObservablePointerClickTrigger>("Button");
                 button.OnPointerClickAsObservable()
@@ -39,8 +38,7 @@ namespace ShooRhythm
                             return;
                         }
 
-                        await TinyServiceLocator.Resolve<GameController>()
-                            .AddItemAsync(i.AcquireItemId, i.AcquireItemAmount);
+                        await TinyServiceLocator.Resolve<GameController>().ProcessCollectionAsync(i.Id);
                         var iconTask = i.GetAcquireItemMasterData().GetIconAsync();
                         GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, iconTask, ct).Forget();
                         gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, i.CoolTimeSeconds);

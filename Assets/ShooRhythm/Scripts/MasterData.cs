@@ -27,8 +27,8 @@ namespace ShooRhythm
         public ProductionSpec.DictionaryList ProductionSpecs => productionSpecs;
 
         [SerializeField]
-        private StatsData.Group productionConditions;
-        public StatsData.Group ProductionConditions => productionConditions;
+        private NeedItem.Group productionConditions;
+        public NeedItem.Group ProductionConditions => productionConditions;
 
         [SerializeField]
         private FishingSpec.DictionaryList riverFishingSpecs;
@@ -108,7 +108,7 @@ namespace ShooRhythm
             meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database[9]));
             collectionSpecs.Set(JsonHelper.FromJson<CollectionSpec>(database[10]));
             productionSpecs.Set(JsonHelper.FromJson<ProductionSpec>(database[11]));
-            productionConditions.Set(JsonHelper.FromJson<StatsData>(database[12]));
+            productionConditions.Set(JsonHelper.FromJson<NeedItem>(database[12]));
             riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[13]));
             seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[14]));
             enemySpecs.Set(JsonHelper.FromJson<EnemySpec>(database[15]));
@@ -164,6 +164,28 @@ namespace ShooRhythm
             public sealed class DictionaryList : DictionaryList<int, Item>
             {
                 public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+        [Serializable]
+        public class NeedItem
+        {
+            public int Id;
+            
+            public int NeedItemId;
+            
+            public int NeedItemAmount;
+            
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, NeedItem>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+            
+            [Serializable]
+            public sealed class Group : Group<int, NeedItem>
+            {
+                public Group() : base(x => x.Id) { }
             }
         }
 
