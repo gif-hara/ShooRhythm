@@ -44,6 +44,8 @@ MonoBehaviour:
       Name: "\u7267\u8349\u306E\u7A2E"
     - Id: 10115
       Name: "\u7267\u8349"
+    - Id: 10116
+      Name: "\u308A\u3093\u3054"
     - Id: 10201
       Name: "\u9244\u5EF6\u3079\u68D2"
     - Id: 10202
@@ -121,43 +123,37 @@ MonoBehaviour:
   grantStatsGameStart:
     list:
     - Id: 1
-      Name: Available.Tab.Items
+      Name: TabType.Items
       Amount: 1
     - Id: 2
-      Name: Available.Tab.Collections
+      Name: TabType.Collections
       Amount: 1
     - Id: 3
-      Name: Available.Tab.Productions
+      Name: TabType.Productions
       Amount: 1
     - Id: 4
-      Name: Available.Tab.Quests
+      Name: TabType.Quests
       Amount: 1
     - Id: 5
-      Name: Available.Tab.Equipment
+      Name: TabType.Equipment
       Amount: 1
     - Id: 6
-      Name: Available.Tab.RiverFishing
+      Name: TabType.RiverFishing
       Amount: 1
     - Id: 7
-      Name: Available.Tab.SeaFishing
+      Name: TabType.SeaFishing
       Amount: 1
     - Id: 8
-      Name: Available.Tab.Farm
+      Name: TabType.Farm
       Amount: 1
     - Id: 9
-      Name: Available.Tab.Meadow
+      Name: TabType.Meadow
       Amount: 1
     - Id: 10
-      Name: Available.Tab.Grassland
+      Name: TabType.Grassland
       Amount: 1
     - Id: 11
-      Name: Productions.MachineNumber
-      Amount: 1
-    - Id: 12
       Name: Available.Quest.10101
-      Amount: 1
-    - Id: 13
-      Name: Farm.PlantNumber
       Amount: 1
   questContents:
     records:
