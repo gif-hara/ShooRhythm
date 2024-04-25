@@ -215,6 +215,17 @@ namespace ShooRhythm
             return AddItemAsync(fishingSpec.AcquireItemId, fishingSpec.AcquireItemAmount);
         }
 
+        public async UniTask<bool> ProcessMeadowAsync(int meadowId)
+        {
+            var meadowSpec = TinyServiceLocator.Resolve<MasterData>().MeadowSpecs.Get(meadowId);
+            var results = await UniTask.WhenAll(
+                AddItemAsync(meadowSpec.NeedItemId, -meadowSpec.NeedItemAmount),
+                AddItemAsync(meadowSpec.AcquireItemId, meadowSpec.AcquireItemAmount)
+            );
+
+            return results.Item1 && results.Item2;
+        }
+
         private UniTask<bool> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();

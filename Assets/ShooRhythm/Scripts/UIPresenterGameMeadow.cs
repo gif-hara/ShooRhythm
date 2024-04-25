@@ -31,21 +31,19 @@ namespace ShooRhythm
             {
                 var rootElement = document.Q<HKUIDocument>(rootName);
                 var masterDataMeadowSpec = TinyServiceLocator.Resolve<MasterData>().MeadowSpecs.Get(meadowSpecId);
-                var contentsRecord = masterDataMeadowSpec.ToContentsRecord();
                 var gameController = TinyServiceLocator.Resolve<GameController>();
-                var gameData = TinyServiceLocator.Resolve<GameData>();
                 var button = rootElement.Q<ObservablePointerClickTrigger>("Button");
                 button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
-                        if (!contentsRecord.IsCompleted(gameData.Stats))
+                        if (masterDataMeadowSpec.HasItems())
                         {
-                            GameUtility.ShowContentsConditionsNotification(contentsRecord);
+                            await gameController.ProcessMeadowAsync(meadowSpecId);
+                            GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, cancellationToken).Forget();
                         }
                         else
                         {
-                            await gameController.ApplyRewardAsync(contentsRecord);
-                            GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, cancellationToken).Forget();
+                            masterDataMeadowSpec.ShowRequireItemNotification();
                         }
                     })
                     .RegisterTo(cancellationToken);
