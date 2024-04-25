@@ -340,7 +340,7 @@ MonoBehaviour:
     - rid: 4357835539116720198
       type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
       data:
-        audioClip: {fileID: 8300000, guid: 7ed9e603ce11f0443baeb6eebb55f636, type: 3}
+        audioClip: {fileID: 8300000, guid: 702e7cd04c8d6da4daead054f5e2db94, type: 3}
 --- !u!1 &7697409023081842196
 GameObject:
   m_ObjectHideFlags: 0
