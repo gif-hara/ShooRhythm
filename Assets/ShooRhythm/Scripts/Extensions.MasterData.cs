@@ -22,20 +22,6 @@ namespace ShooRhythm
             return TinyServiceLocator.Resolve<MasterData>().ProductionConditions.Get(self.Id);
         }
 
-        public static Contents.Record ToContentsRecord(this MasterData.EnemySpec self)
-        {
-            return new Contents.Record(
-                self.Id.ToString(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>
-                {
-                    new($"Item.{self.RewardItemId}", self.RewardItemAmount)
-                }
-            );
-        }
-
         public static UniTask<Sprite> GetIconAsync(this MasterData.Item self)
         {
             return AssetLoader.LoadAsync<Sprite>($"Textures/Item.{self.Id}");

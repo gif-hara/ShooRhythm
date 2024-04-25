@@ -21,7 +21,7 @@ namespace ShooRhythm
             var gameController = TinyServiceLocator.Resolve<GameController>();
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var masterData = TinyServiceLocator.Resolve<MasterData>();
-            var enemyInstanceData = await gameController.GetEnemyInstanceDataAsync(dungeonType);
+            var enemyInstanceData = await gameController.ProcessBattleGetEnemyInstanceDataAsync(dungeonType);
             var enemySpec = masterData.EnemySpecs.Get(dungeonType)
                 .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
             Assert.IsNotNull(enemySpec, $"EnemySpec is null. dungeonType: {dungeonType}, enemyId: {enemyInstanceData.EnemyId}");
@@ -35,7 +35,7 @@ namespace ShooRhythm
                     var damage = equipmentItemId == 0
                         ? TinyServiceLocator.Resolve<GameDesignData>().DefaultDamage
                         : masterData.WeaponSpecs.Get(equipmentItemId).Strength;
-                    var attackResultType = await gameController.AttackEnemyAsync(dungeonType, damage);
+                    var attackResultType = await gameController.ProcessBattleAttackEnemyAsync(dungeonType, damage);
                     if (attackResultType == Define.AttackResultType.Defeat)
                     {
                         GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), null, cancellationToken).Forget();
