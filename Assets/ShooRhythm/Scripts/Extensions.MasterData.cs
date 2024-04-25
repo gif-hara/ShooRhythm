@@ -22,24 +22,6 @@ namespace ShooRhythm
             return TinyServiceLocator.Resolve<MasterData>().ProductionConditions.Get(self.Id);
         }
 
-        public static Contents.Record ToContentsRecord(this MasterData.MeadowSpec self)
-        {
-            return new Contents.Record(
-                self.Id.ToString(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>
-                {
-                    new($"Item.{self.NeedItemId}", self.NeedItemAmount)
-                },
-                new List<Stats.Record>
-                {
-                    new($"Item.{self.AcquireItemId}", self.AcquireItemAmount),
-                    new($"Item.{self.NeedItemId}", -self.NeedItemAmount)
-                }
-            );
-        }
-
         public static Contents.Record ToContentsRecord(this MasterData.EnemySpec self)
         {
             return new Contents.Record(
@@ -57,11 +39,6 @@ namespace ShooRhythm
         public static UniTask<Sprite> GetIconAsync(this MasterData.Item self)
         {
             return AssetLoader.LoadAsync<Sprite>($"Textures/Item.{self.Id}");
-        }
-
-        public static MasterData.Item GetAcquireItemMasterData(this MasterData.MeadowSpec self)
-        {
-            return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
 
         public static MasterData.Item GetAcquireItemMasterData(this MasterData.CollectionSpec self)
