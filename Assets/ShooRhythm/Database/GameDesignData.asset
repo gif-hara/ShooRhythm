@@ -26,33 +26,43 @@ MonoBehaviour:
   - footerName: "\u9053\u5177"
     tabType: 1
     activeStatsName: Available.Tab.Items
+    icon: {fileID: 21300000, guid: e0a2e754b5a7aa44d809e0c5888e0d33, type: 3}
   - footerName: "\u63A1\u96C6"
     tabType: 2
     activeStatsName: Available.Tab.Collections
+    icon: {fileID: 21300000, guid: 6e750003872c53f47aece5a858355ae4, type: 3}
   - footerName: "\u88FD\u4F5C"
     tabType: 3
     activeStatsName: Available.Tab.Productions
+    icon: {fileID: 21300000, guid: a95fc498554cf2e418fe304ed3b145c1, type: 3}
   - footerName: "\u7D0D\u54C1"
     tabType: 4
     activeStatsName: Available.Tab.Quests
+    icon: {fileID: 0}
   - footerName: "\u88C5\u5099"
     tabType: 5
     activeStatsName: Available.Tab.Equipment
+    icon: {fileID: 0}
   - footerName: "\u5DDD"
     tabType: 6
     activeStatsName: Available.Tab.RiverFishing
+    icon: {fileID: 0}
   - footerName: "\u6D77"
     tabType: 7
     activeStatsName: Available.Tab.SeaFishing
+    icon: {fileID: 0}
   - footerName: "\u8FB2\u5834"
     tabType: 8
     activeStatsName: Available.Tab.Farm
+    icon: {fileID: 0}
   - footerName: "\u7267\u5834"
     tabType: 9
     activeStatsName: Available.Tab.Meadow
+    icon: {fileID: 0}
   - footerName: "\u8349\u539F"
     tabType: 10
     activeStatsName: Available.Tab.Grassland
+    icon: {fileID: 0}
   defaultDamage: 5
   initialProductMachineNumber: 1
   initialFarmNumber: 1
