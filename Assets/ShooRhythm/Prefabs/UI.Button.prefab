@@ -161,6 +161,7 @@ MonoBehaviour:
   trigger: {fileID: 7247908679341760645}
   sequences:
   - rid: 8290056386574549047
+  - rid: 8290056571003338752
   references:
     version: 2
     RefIds:
@@ -213,6 +214,16 @@ MonoBehaviour:
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
+    - rid: 8290056571003338752
+      type: {class: SetSprite, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        target:
+          rid: 8290056571003338754
+        sprite: {fileID: 21300000, guid: e83510588316d584d97a3a8ba0cf60fd, type: 3}
+    - rid: 8290056571003338754
+      type: {class: ImageResolver/Reference, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        target: {fileID: 2989651649729842184}
 --- !u!114 &6756989835934593117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -228,6 +239,7 @@ MonoBehaviour:
   trigger: {fileID: 4213558570336037411}
   sequences:
   - rid: 8290056386574549004
+  - rid: 8290056571003338753
   references:
     version: 2
     RefIds:
@@ -280,6 +292,16 @@ MonoBehaviour:
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
+    - rid: 8290056571003338753
+      type: {class: SetSprite, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        target:
+          rid: 8290056571003338755
+        sprite: {fileID: 21300000, guid: f334b4b490945e84eb5fa5362811cfa7, type: 3}
+    - rid: 8290056571003338755
+      type: {class: ImageResolver/Reference, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        target: {fileID: 2989651649729842184}
 --- !u!114 &1765090176997565053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,58 +330,6 @@ MonoBehaviour:
       data:
         value:
         - rid: 8290056386574549012
-        - rid: 4357835539116720152
-    - rid: 4357835539116720152
-      type: {class: BindToLocalScale, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
-      data:
-        targetResolver:
-          rid: 4357835539116720153
-        parameters:
-          fromResolver:
-            rid: 4357835539116720154
-          toResolver:
-            rid: 4357835539116720155
-          durationResolver:
-            rid: 4357835539116720156
-          delayResolver:
-            rid: 4357835539116720157
-          loopCountResolver:
-            rid: 4357835539116720158
-          loopType: 0
-          motionSchedulerResolver:
-            rid: 4357835539116720159
-          ease: 5
-    - rid: 4357835539116720153
-      type: {class: TransformResolver/Reference, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        target: {fileID: 6768498061479969721}
-    - rid: 4357835539116720154
-      type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        value: {x: 1, y: 1, z: 1}
-    - rid: 4357835539116720155
-      type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        value: {x: 1.1, y: 1.1, z: 1.1}
-    - rid: 4357835539116720156
-      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 0.1
-    - rid: 4357835539116720157
-      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 0
-    - rid: 4357835539116720158
-      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 1
-    - rid: 4357835539116720159
-      type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
-        asm: UnitySequencerSystem}
-      data: 
     - rid: 8290056386574549012
       type: {class: BindToGraphicColor, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
@@ -437,7 +407,6 @@ MonoBehaviour:
       data:
         value:
         - rid: 8290056386574549030
-        - rid: 8290056386574549031
     - rid: 8290056386574549030
       type: {class: BindToGraphicColor, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
@@ -458,26 +427,6 @@ MonoBehaviour:
           motionSchedulerResolver:
             rid: 8290056386574549037
           ease: 0
-    - rid: 8290056386574549031
-      type: {class: BindToLocalScale, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
-      data:
-        targetResolver:
-          rid: 8290056386574549038
-        parameters:
-          fromResolver:
-            rid: 8290056386574549039
-          toResolver:
-            rid: 8290056386574549040
-          durationResolver:
-            rid: 8290056386574549041
-          delayResolver:
-            rid: 8290056386574549042
-          loopCountResolver:
-            rid: 8290056386574549043
-          loopType: 0
-          motionSchedulerResolver:
-            rid: 8290056386574549044
-          ease: 5
     - rid: 8290056386574549032
       type: {class: ColorResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
@@ -499,37 +448,6 @@ MonoBehaviour:
       data:
         value: 1
     - rid: 8290056386574549037
-      type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
-        asm: UnitySequencerSystem}
-      data: 
-    - rid: 8290056386574549038
-      type: {class: TransformResolver/Reference, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        target: {fileID: 6768498061479969721}
-    - rid: 8290056386574549039
-      type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        value: {x: 1.1, y: 1.1, z: 1.1}
-    - rid: 8290056386574549040
-      type: {class: Vector3Resolver/Constant, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        value: {x: 1, y: 1, z: 1}
-    - rid: 8290056386574549041
-      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 0.1
-    - rid: 8290056386574549042
-      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 0
-    - rid: 8290056386574549043
-      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
-      data:
-        value: 1
-    - rid: 8290056386574549044
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
@@ -738,8 +656,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: f334b4b490945e84eb5fa5362811cfa7, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
