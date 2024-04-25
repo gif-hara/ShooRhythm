@@ -54,6 +54,8 @@ namespace ShooRhythm
                         cancellationToken
                         );
                     element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
+                    var icon = element.Q<Image>("Icon");
+                    SetIconAsync(icon, masterDataItem.GetIconAsync()).Forget();
                     i.Value
                         .Subscribe(itemNumber =>
                         {
@@ -62,6 +64,12 @@ namespace ShooRhythm
                         .RegisterTo(scope.Token);
                     elements.Add(element.gameObject);
                 }
+            }
+
+            async UniTaskVoid SetIconAsync(Image image, UniTask<Sprite> sprite)
+            {
+                image.sprite = await sprite;
+                image.gameObject.SetActiveIfNeed(image.sprite != null);
             }
         }
     }
