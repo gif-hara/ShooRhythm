@@ -172,7 +172,7 @@ namespace ShooRhythm
                 var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
                     .FirstOrDefault(x =>
                     {
-                        var conditions = x.GetProductionCondition();
+                        var conditions = x.GetProductionNeedItems();
                         if (conditions.Count != conditionNames.Length)
                         {
                             return false;
@@ -188,7 +188,7 @@ namespace ShooRhythm
         public async UniTask<bool> ProcessProductionAcquireProductAsync(int itemId)
         {
             var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(itemId);
-            var needItems = productionSpec.GetProductionCondition();
+            var needItems = productionSpec.GetProductionNeedItems();
             if (needItems.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
             {
                 var tasks = needItems

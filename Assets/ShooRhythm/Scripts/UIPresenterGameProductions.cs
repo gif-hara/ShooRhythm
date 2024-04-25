@@ -62,7 +62,7 @@ namespace ShooRhythm
                             Debug.LogWarning($"Collection is null. CollectionId:{itemId}");
                             return;
                         }
-                        var conditions = productionSpec.GetProductionCondition();
+                        var conditions = productionSpec.GetProductionNeedItems();
                         if (!conditions.IsAllPossession(gameData))
                         {
                             Debug.Log("TODO Not Completed Collection");

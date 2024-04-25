@@ -17,26 +17,9 @@ namespace ShooRhythm
             return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
 
-        public static List<MasterData.NeedItem> GetProductionCondition(this MasterData.ProductionSpec self)
+        public static List<MasterData.NeedItem> GetProductionNeedItems(this MasterData.ProductionSpec self)
         {
             return TinyServiceLocator.Resolve<MasterData>().ProductionConditions.Get(self.Id);
-        }
-
-        public static Contents.Record ToContentsRecord(this MasterData.FishingSpec self)
-        {
-            return new Contents.Record(
-                self.Id.ToString(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>(),
-                new List<Stats.Record>
-                {
-                    new($"Item.{self.NeedItemId}", self.NeedItemAmount)
-                },
-                new List<Stats.Record>
-                {
-                    new($"Item.{self.AcquireItemId}", self.AcquireItemAmount)
-                }
-            );
         }
 
         public static Contents.Record ToContentsRecord(this MasterData.MeadowSpec self)
