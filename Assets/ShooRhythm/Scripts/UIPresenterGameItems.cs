@@ -54,8 +54,7 @@ namespace ShooRhythm
                         cancellationToken
                         );
                     element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
-                    var icon = element.Q<Image>("Icon");
-                    SetIconAsync(icon, masterDataItem.GetIconAsync()).Forget();
+                    SetIconAsync(element.Q<Image>("Icon"), masterDataItem.GetIconAsync()).Forget();
                     i.Value
                         .Subscribe(itemNumber =>
                         {
