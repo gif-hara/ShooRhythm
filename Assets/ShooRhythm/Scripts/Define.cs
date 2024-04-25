@@ -49,6 +49,12 @@ namespace ShooRhythm
             Defeat = 2,
         }
 
+        public enum FishingType
+        {
+            River = 1,
+            Sea = 2,
+        }
+
         public const int MachineSlotCount = 3;
     }
 }

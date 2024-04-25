@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
@@ -34,6 +35,27 @@ namespace ShooRhythm
                 {
                     Debug.LogWarning($"Unknown record name: {i.Name}");
                 }
+            }
+        }
+
+        public static void ShowRequireItemNotification(int itemId, int amount)
+        {
+            var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(itemId);
+            var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
+            gameMessage.RequestNotification.OnNext(
+                (
+                    $"{masterDataItem.Name}が{amount}個必要です",
+                    null,
+                    Define.NotificationType.Negative
+                )
+            );
+        }
+
+        public static void ShowRequireItemNotification(IEnumerable<(int itemId, int amount)> data)
+        {
+            foreach (var (itemId, amount) in data)
+            {
+                ShowRequireItemNotification(itemId, amount);
             }
         }
 

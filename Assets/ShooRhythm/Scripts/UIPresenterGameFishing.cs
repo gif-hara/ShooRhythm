@@ -13,9 +13,16 @@ namespace ShooRhythm
     /// </summary>
     public sealed class UIPresenterGameFishing
     {
-        public async UniTask BeginAsync(HKUIDocument documentPrefab, MasterData.FishingSpec.DictionaryList fishingDesignData, CancellationToken cancellationToken)
+        public async UniTask BeginAsync(HKUIDocument documentPrefab, Define.FishingType fishingType, CancellationToken cancellationToken)
         {
             var document = Object.Instantiate(documentPrefab);
+            var masterData = TinyServiceLocator.Resolve<MasterData>();
+            var fishingSpecs = fishingType switch
+            {
+                Define.FishingType.River => masterData.RiverFishingSpecs,
+                Define.FishingType.Sea => masterData.SeaFishingSpecs,
+                _ => throw new System.NotImplementedException(),
+            };
             var stateMachine = new TinyStateMachine();
             var rootCastButton = document.Q("Root.CastButton");
             var rootStrikeButton = document.Q("Root.StrikeButton");
@@ -41,15 +48,14 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Cast").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        currentFishingSpec = fishingDesignData.List[Random.Range(0, fishingDesignData.List.Count)];
-                        currentContentsRecord = currentFishingSpec.ToContentsRecord();
-                        if (currentContentsRecord.IsCompleted(TinyServiceLocator.Resolve<GameData>().Stats))
+                        currentFishingSpec = fishingSpecs.List[Random.Range(0, fishingSpecs.List.Count)];
+                        if (currentFishingSpec.HasItems())
                         {
                             stateMachine.Change(StateCast);
                         }
                         else
                         {
-                            GameUtility.ShowContentsConditionsNotification(currentContentsRecord);
+                            currentFishingSpec.ShowRequireItemNotification();
                         }
                     })
                     .RegisterTo(scope);
@@ -102,7 +108,15 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Strike").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
-                        TinyServiceLocator.Resolve<GameController>().ApplyRewardAsync(currentContentsRecord).Forget();
+                        var gameController = TinyServiceLocator.Resolve<GameController>();
+                        if (fishingType == Define.FishingType.River)
+                        {
+                            gameController.ProcessRiverFishingAsync(currentFishingSpec.Id).Forget();
+                        }
+                        else if (fishingType == Define.FishingType.Sea)
+                        {
+                            gameController.ProcessSeaFishingAsync(currentFishingSpec.Id).Forget();
+                        }
                         GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), null, cancellationToken).Forget();
                         stateMachine.Change(StateIdle);
                     })

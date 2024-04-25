@@ -119,7 +119,7 @@ namespace ShooRhythm
                     }
                 })
                 .RegisterTo(destroyCancellationToken);
-            
+
             var uiPresenterGameFooter = new UIPresenterGameFooter();
             uiPresenterGameFooter.BeginAsync(gameFooterDocumentPrefab, destroyCancellationToken).Forget();
             var uiPresenterGameNotification = new UIPresenterGameNotification();
@@ -178,7 +178,7 @@ namespace ShooRhythm
             var uiPresenterGameFishing = new UIPresenterGameFishing();
             uiPresenterGameFishing.BeginAsync(
                     gameRiverFishingDocumentPrefab,
-                    TinyServiceLocator.Resolve<MasterData>().RiverFishingSpecs,
+                    Define.FishingType.River,
                     scope
                 )
                 .Forget();
@@ -190,7 +190,7 @@ namespace ShooRhythm
             var uiPresenterGameFishing = new UIPresenterGameFishing();
             uiPresenterGameFishing.BeginAsync(
                     gameSeaFishingDocumentPrefab,
-                    TinyServiceLocator.Resolve<MasterData>().SeaFishingSpecs,
+                    Define.FishingType.Sea,
                     scope
                 )
                 .Forget();

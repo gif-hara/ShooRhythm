@@ -203,6 +203,18 @@ namespace ShooRhythm
             return true;
         }
 
+        public UniTask<bool> ProcessRiverFishingAsync(int riverFishingId)
+        {
+            var fishingSpec = TinyServiceLocator.Resolve<MasterData>().RiverFishingSpecs.Get(riverFishingId);
+            return AddItemAsync(fishingSpec.AcquireItemId, fishingSpec.AcquireItemAmount);
+        }
+
+        public UniTask<bool> ProcessSeaFishingAsync(int seaFishingId)
+        {
+            var fishingSpec = TinyServiceLocator.Resolve<MasterData>().SeaFishingSpecs.Get(seaFishingId);
+            return AddItemAsync(fishingSpec.AcquireItemId, fishingSpec.AcquireItemAmount);
+        }
+
         private UniTask<bool> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
