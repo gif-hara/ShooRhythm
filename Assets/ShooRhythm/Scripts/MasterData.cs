@@ -347,7 +347,7 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class MeadowSpec
+        public class MeadowSpec : IRequireItem
         {
             public int Id;
 
@@ -358,6 +358,10 @@ namespace ShooRhythm
             public int AcquireItemId;
 
             public int AcquireItemAmount;
+
+            int IRequireItem.NeedItemId => NeedItemId;
+
+            int IRequireItem.NeedItemAmount => NeedItemAmount;
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, MeadowSpec>
