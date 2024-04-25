@@ -25,8 +25,10 @@ namespace ShooRhythm
             var elements = new List<(int id, GameObject gameObject)>();
             foreach (var i in TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.List)
             {
+                var masterDataItem = i.GetAcquireItemMasterData();
                 var element = Object.Instantiate(elementPrefab, elementParent);
                 element.Q<TMP_Text>("Text").text = i.GetAcquireItem().Name;
+                SetIconAsync(element.Q<Image>("Icon"), masterDataItem.GetIconAsync()).Forget();
                 var button = element.Q<ObservablePointerClickTrigger>("Button");
                 button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
@@ -52,6 +54,12 @@ namespace ShooRhythm
             if (document != null)
             {
                 Object.Destroy(document.gameObject);
+            }
+
+            static async UniTaskVoid SetIconAsync(Image image, UniTask<Sprite> iconTask)
+            {
+                image.sprite = await iconTask;
+                image.gameObject.SetActiveIfNeed(image.sprite != null);
             }
         }
     }
