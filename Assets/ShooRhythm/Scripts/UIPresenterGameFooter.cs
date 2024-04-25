@@ -24,7 +24,7 @@ namespace ShooRhythm
             var coolTimeListElementPrefab = document.Q<HKUIDocument>("CoolTimeListElementPrefab");
             foreach (var i in TinyServiceLocator.Resolve<GameDesignData>().Footers)
             {
-                CreateButtonElement(i.FooterName, i.TabType);
+                CreateButtonElement(i.FooterName, i.TabType, i.Icon);
             }
             for (var i = 0; i < gameData.CurrentUserData.coolTimeData.Count; i++)
             {
@@ -38,10 +38,12 @@ namespace ShooRhythm
                 Object.Destroy(document.gameObject);
             }
 
-            void CreateButtonElement(string text, Define.TabType tabType)
+            void CreateButtonElement(string text, Define.TabType tabType, Sprite sprite = null)
             {
                 var element = Object.Instantiate(buttonListElementPrefab, buttonListElementParent);
                 element.Q<TMP_Text>("Text").text = text;
+                element.Q<Image>("Icon").sprite = sprite;
+                element.Q<Image>("Icon").gameObject.SetActiveIfNeed(sprite != null);
                 element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {

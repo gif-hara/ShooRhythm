@@ -91,6 +91,10 @@ namespace ShooRhythm
             [SerializeField]
             private string activeStatsName;
             public string ActiveStatsName => activeStatsName;
+
+            [SerializeField]
+            private Sprite icon;
+            public Sprite Icon => icon;
         }
     }
 }
