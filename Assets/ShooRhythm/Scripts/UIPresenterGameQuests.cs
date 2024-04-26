@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using R3.Triggers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,7 +52,7 @@ namespace ShooRhythm
                     elements.Add(element);
                     var elementElementParent = element.Q<Transform>("ListElementParent");
                     var elementElementPrefab = element.Q<HKUIDocument>("ListElementPrefab");
-                    element.Q<Button>("Button").OnClickAsObservable()
+                    element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
                         .SubscribeAwait(async (_, ct) =>
                         {
                             if (conditions.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
@@ -74,7 +75,12 @@ namespace ShooRhythm
                         var elementElement = Object.Instantiate(elementElementPrefab, elementElementParent);
                         var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(condition.NeedItemId);
                         var isSatisfied = condition.HasItems();
-                        elementElement.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
+                        var icon = elementElement.Q<Image>("Icon");
+                        var nameText = elementElement.Q<TMP_Text>("Text.Name");
+                        icon.sprite = masterDataItem.Icon;
+                        icon.enabled = masterDataItem.Icon != null;
+                        nameText.text = masterDataItem.Name;
+                        nameText.enabled = masterDataItem.Icon == null;
                         elementElement.Q<TMP_Text>("Text.Number").text = condition.NeedItemAmount.ToString();
                         elementElement.Q("Background.Enough").SetActiveIfNeed(isSatisfied);
                         elementElement.Q("Background.NotEnough").SetActiveIfNeed(!isSatisfied);
