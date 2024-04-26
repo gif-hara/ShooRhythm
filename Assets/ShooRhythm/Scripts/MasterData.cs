@@ -43,23 +43,23 @@ namespace ShooRhythm
         [SerializeField]
         private QuestSpec.DictionaryList questSpecs;
         public QuestSpec.DictionaryList QuestSpecs => questSpecs;
-        
+
         [SerializeField]
         private AvailableContent.Group questRequires;
         public AvailableContent.Group QuestRequires => questRequires;
-        
+
         [SerializeField]
         private AvailableContent.Group questIgnores;
         public AvailableContent.Group QuestIgnores => questIgnores;
-        
+
         [SerializeField]
         private NeedItem.Group questConditions;
         public NeedItem.Group QuestConditions => questConditions;
-        
+
         [SerializeField]
         private AvailableContent.Group questRewards;
         public AvailableContent.Group QuestRewards => questRewards;
-        
+
         [SerializeField]
         private WeaponSpec.DictionaryList weaponSpecs;
         public WeaponSpec.DictionaryList WeaponSpecs => weaponSpecs;
@@ -138,7 +138,7 @@ namespace ShooRhythm
             public int Id;
 
             public string Name;
-            
+
             public Sprite Icon;
 
             [Serializable]
@@ -180,13 +180,13 @@ namespace ShooRhythm
             public int Id;
 
             public string Name;
-            
+
             [Serializable]
             public class DictionaryList : DictionaryList<int, AvailableContent>
             {
                 public DictionaryList() : base(x => x.Id) { }
             }
-            
+
             [Serializable]
             public class Group : Group<int, AvailableContent>
             {
@@ -261,7 +261,7 @@ namespace ShooRhythm
                 public DictionaryList() : base(x => x.Id) { }
             }
         }
-        
+
         [Serializable]
         public class QuestSpec
         {
@@ -273,7 +273,7 @@ namespace ShooRhythm
                 public DictionaryList() : base(x => x.Id) { }
             }
         }
-        
+
         [Serializable]
         public class WeaponSpec
         {
@@ -291,7 +291,7 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class SeedSpec
+        public class SeedSpec : INeedItem
         {
             public int Id;
 
@@ -300,6 +300,10 @@ namespace ShooRhythm
             public int AcquireItemId;
 
             public float GrowSeconds;
+
+            public int NeedItemId => SeedItemId;
+
+            public int NeedItemAmount => 1;
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, SeedSpec>
