@@ -144,7 +144,7 @@ namespace ShooRhythm
                 uiPresenterSelectItems.OnSelectedItemAsObservable()
                     .SubscribeAwait(async (itemId, ct) =>
                     {
-                        await gameController.SetFarmPlantItemIdAsync(selectedPlantId, itemId);
+                        await gameController.ProcessFarmSetPlantItemIdAsync(selectedPlantId, itemId);
                     })
                     .RegisterTo(cancellationToken);
             }

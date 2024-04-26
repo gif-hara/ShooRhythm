@@ -59,14 +59,21 @@ namespace ShooRhythm
             return UniTask.FromResult(true);
         }
 
-        public UniTask<bool> SetFarmPlantItemIdAsync(int plantId, int seedItemId)
+        public UniTask<bool> ProcessFarmSetPlantItemIdAsync(int plantId, int seedItemId)
         {
             var seedSpec = TinyServiceLocator.Resolve<MasterData>().SeedSpecs.Get(seedItemId);
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            gameData.Stats.Add($"Item.{seedItemId}", -1);
-            gameData.FarmDatas[plantId].SeedItemId.Value = seedSpec.Id;
-            gameData.FarmDatas[plantId].PlantTicks.Value = DateTime.UtcNow.Ticks;
-            return UniTask.FromResult(true);
+            if (seedSpec.HasItems())
+            {
+                AddItemAsync(seedSpec.SeedItemId, -1).Forget();
+                gameData.FarmDatas[plantId].SeedItemId.Value = seedSpec.Id;
+                gameData.FarmDatas[plantId].PlantTicks.Value = DateTime.UtcNow.Ticks;
+                return UniTask.FromResult(true);
+            }
+            else
+            {
+                return UniTask.FromResult(false);
+            }
         }
 
         public UniTask<bool> AcquireFarmPlantAsync(int plantId)
