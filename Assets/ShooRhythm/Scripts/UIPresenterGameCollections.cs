@@ -29,13 +29,8 @@ namespace ShooRhythm
                 var element = Object.Instantiate(elementPrefab, elementParent);
                 var nameText = element.Q<TMP_Text>("Text");
                 nameText.text = i.GetAcquireItem().Name;
-                element.Q<Image>("Icon").SetIconAsync(
-                    masterDataItem.GetIconAsync(),
-                    x =>
-                    {
-                        nameText.enabled = x == null;
-                    })
-                    .Forget();
+                element.Q<Image>("Icon").sprite = masterDataItem.Icon;
+                nameText.enabled = masterDataItem.Icon == null;
                 var button = element.Q<ObservablePointerClickTrigger>("Button");
                 button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
@@ -48,8 +43,7 @@ namespace ShooRhythm
                         }
 
                         await TinyServiceLocator.Resolve<GameController>().ProcessCollectionAsync(i.Id);
-                        var iconTask = i.GetAcquireItemMasterData().GetIconAsync();
-                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, iconTask, ct).Forget();
+                        GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, i.GetAcquireItemMasterData().Icon, ct).Forget();
                         gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, i.CoolTimeSeconds);
                     })
                     .RegisterTo(element.destroyCancellationToken);

@@ -16,46 +16,67 @@ MonoBehaviour:
     list:
     - Id: 10101
       Name: "\u6728\u6750"
+      Icon: {fileID: 21300000, guid: 1601dc79019a0404a833a67f1f3265a4, type: 3}
     - Id: 10102
       Name: "\u77F3\u6750"
+      Icon: {fileID: 0}
     - Id: 10103
       Name: "\u9244\u9271\u77F3"
+      Icon: {fileID: 0}
     - Id: 10104
       Name: "\u9285\u9271\u77F3"
+      Icon: {fileID: 0}
     - Id: 10105
       Name: "\u5E03"
+      Icon: {fileID: 0}
     - Id: 10106
       Name: "\u30B8\u30A7\u30EB"
+      Icon: {fileID: 0}
     - Id: 10107
       Name: "\u30CB\u30B8\u30DE\u30B9"
+      Icon: {fileID: 0}
     - Id: 10108
       Name: "\u30DE\u30B0\u30ED"
+      Icon: {fileID: 0}
     - Id: 10109
       Name: "\u5C0F\u9EA6\u306E\u7A2E"
+      Icon: {fileID: 0}
     - Id: 10110
       Name: "\u5C0F\u9EA6"
+      Icon: {fileID: 0}
     - Id: 10111
       Name: "\u725B\u4E73"
+      Icon: {fileID: 0}
     - Id: 10112
       Name: "\u8089"
+      Icon: {fileID: 0}
     - Id: 10113
       Name: "\u5375"
+      Icon: {fileID: 0}
     - Id: 10114
       Name: "\u7267\u8349\u306E\u7A2E"
+      Icon: {fileID: 0}
     - Id: 10115
       Name: "\u7267\u8349"
+      Icon: {fileID: 0}
     - Id: 10116
       Name: "\u308A\u3093\u3054"
+      Icon: {fileID: 0}
     - Id: 10201
       Name: "\u9244\u5EF6\u3079\u68D2"
+      Icon: {fileID: 0}
     - Id: 10202
       Name: "\u9285\u5EF6\u3079\u68D2"
+      Icon: {fileID: 0}
     - Id: 10203
       Name: "\u3053\u3093\u68D2"
+      Icon: {fileID: 0}
     - Id: 10204
       Name: "\u677E\u660E"
+      Icon: {fileID: 0}
     - Id: 10205
       Name: "\u91E3\u308A\u7AFF"
+      Icon: {fileID: 0}
   collectionSpecs:
     list:
     - Id: 1

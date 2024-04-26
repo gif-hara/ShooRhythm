@@ -21,12 +21,7 @@ namespace ShooRhythm
         {
             return TinyServiceLocator.Resolve<MasterData>().ProductionConditions.Get(self.Id);
         }
-
-        public static UniTask<Sprite> GetIconAsync(this MasterData.Item self)
-        {
-            return AssetLoader.LoadAsync<Sprite>($"Textures/Item.{self.Id}");
-        }
-
+        
         public static MasterData.Item GetAcquireItemMasterData(this MasterData.CollectionSpec self)
         {
             return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);

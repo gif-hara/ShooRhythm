@@ -55,12 +55,8 @@ namespace ShooRhythm
                         );
                     var nameText = element.Q<TMP_Text>("Text.Name");
                     nameText.text = masterDataItem.Name;
-                    element.Q<Image>("Icon").SetIconAsync(
-                        masterDataItem.GetIconAsync(),
-                        x =>
-                        {
-                            nameText.enabled = x == null;
-                        }).Forget();
+                    element.Q<Image>("Icon").sprite = masterDataItem.Icon;
+                    nameText.enabled = masterDataItem.Icon == null;
                     i.Value
                         .Subscribe(itemNumber =>
                         {

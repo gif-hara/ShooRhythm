@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using HK;
+using UnityEditor;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -105,6 +106,10 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("EnemySpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database[0]));
+            foreach (var i in items.List)
+            {
+                i.Icon = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/ShooRhythm/Textures/Item.{i.Id}.png");
+            }
             grantStatsGameStart.Set(JsonHelper.FromJson<AvailableContent>(database[1]));
             questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[2]));
             questRequires.Set(JsonHelper.FromJson<AvailableContent>(database[3]));
@@ -133,6 +138,8 @@ namespace ShooRhythm
             public int Id;
 
             public string Name;
+            
+            public Sprite Icon;
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, Item>

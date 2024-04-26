@@ -38,31 +38,31 @@ MonoBehaviour:
   - footerName: "\u7D0D\u54C1"
     tabType: 4
     activeStatsName: Available.Tab.Quests
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 4d5ff0c4274354380b79f82e4ff83204, type: 3}
   - footerName: "\u88C5\u5099"
     tabType: 5
     activeStatsName: Available.Tab.Equipment
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 9cbc7e35ff8934fb4b3d9052612f6cb5, type: 3}
   - footerName: "\u5DDD"
     tabType: 6
     activeStatsName: Available.Tab.RiverFishing
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: d0ba163e45ef0428c8a3211d641dceff, type: 3}
   - footerName: "\u6D77"
     tabType: 7
     activeStatsName: Available.Tab.SeaFishing
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 0d51d71b80f88492fa3e6dece0f4a052, type: 3}
   - footerName: "\u8FB2\u5834"
     tabType: 8
     activeStatsName: Available.Tab.Farm
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 5146fcbf353f647c893b96b95e0fb5e4, type: 3}
   - footerName: "\u7267\u5834"
     tabType: 9
     activeStatsName: Available.Tab.Meadow
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: d16ba1cbef7994294bada88ebb5d4e7a, type: 3}
   - footerName: "\u8349\u539F"
     tabType: 10
     activeStatsName: Available.Tab.Grassland
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: ab9b866eabc3f41bd86381d311f2805b, type: 3}
   defaultDamage: 5
   initialProductMachineNumber: 1
   initialFarmNumber: 1
