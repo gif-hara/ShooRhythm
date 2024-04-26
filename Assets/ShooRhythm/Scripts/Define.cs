@@ -59,7 +59,16 @@ namespace ShooRhythm
         {
             Unknown = 0,
             Success = 1,
+
+            /// <summary>
+            /// アイテムが足りない
+            /// </summary>
             NotEnoughItem = 2,
+
+            /// <summary>
+            /// 農場のタイマーが進行中
+            /// </summary>
+            FarmTimerInProgress = 3,
         }
 
         public const int MachineSlotCount = 3;

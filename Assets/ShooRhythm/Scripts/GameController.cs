@@ -34,13 +34,13 @@ namespace ShooRhythm
                 .RegisterTo(cancellationToken);
         }
 
-        public UniTask<bool> SetUserEquipmentItemIdAsync(int userId, int x)
+        public UniTask<Define.ProcessResultType> SetUserEquipmentItemIdAsync(int userId, int x)
         {
             TinyServiceLocator.Resolve<GameData>().UserData[userId].equipmentItemId.Value = x;
-            return UniTask.FromResult(true);
+            return UniTask.FromResult(Define.ProcessResultType.Success);
         }
 
-        public UniTask<bool> ProcessFarmSetPlantItemIdAsync(int plantId, int seedItemId)
+        public UniTask<Define.ProcessResultType> ProcessFarmSetPlantItemIdAsync(int plantId, int seedItemId)
         {
             var seedSpec = TinyServiceLocator.Resolve<MasterData>().SeedSpecs.Get(seedItemId);
             var gameData = TinyServiceLocator.Resolve<GameData>();
@@ -49,15 +49,15 @@ namespace ShooRhythm
                 AddItemAsync(seedSpec.SeedItemId, -1).Forget();
                 gameData.FarmDatas[plantId].SeedItemId.Value = seedSpec.Id;
                 gameData.FarmDatas[plantId].PlantTicks.Value = DateTime.UtcNow.Ticks;
-                return UniTask.FromResult(true);
+                return UniTask.FromResult(Define.ProcessResultType.Success);
             }
             else
             {
-                return UniTask.FromResult(false);
+                return UniTask.FromResult(Define.ProcessResultType.NotEnoughItem);
             }
         }
 
-        public UniTask<bool> ProcessFarmAcquirePlantItemAsync(int plantId)
+        public UniTask<Define.ProcessResultType> ProcessFarmAcquirePlantItemAsync(int plantId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var seedSpec = gameData.FarmDatas[plantId].SeedSpec;
@@ -66,25 +66,25 @@ namespace ShooRhythm
                 AddItemAsync(seedSpec.AcquireItemId, 1).Forget();
                 gameData.FarmDatas[plantId].SeedItemId.Value = 0;
                 gameData.FarmDatas[plantId].PlantTicks.Value = 0;
-                return UniTask.FromResult(true);
+                return UniTask.FromResult(Define.ProcessResultType.Success);
             }
             else
             {
-                return UniTask.FromResult(false);
+                return UniTask.FromResult(Define.ProcessResultType.FarmTimerInProgress);
             }
         }
 
-        public async UniTask<EnemyInstanceData> ProcessBattleGetEnemyInstanceDataAsync(Define.DungeonType dungeonType)
+        public async UniTask<Define.ProcessResultType> ProcessBattleGetEnemyInstanceDataAsync(Define.DungeonType dungeonType)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             if (gameData.DungeonEnemyInstanceDatas.TryGetValue(dungeonType, out var enemyInstanceData))
             {
-                return enemyInstanceData;
+                return Define.ProcessResultType.Success;
             }
 
             var result = await CreateEnemyInstanceDataAsync(dungeonType);
             gameData.DungeonEnemyInstanceDatas[dungeonType] = result;
-            return result;
+            return Define.ProcessResultType.Success;
         }
 
         public async UniTask<Define.AttackResultType> ProcessBattleAttackEnemyAsync(Define.DungeonType dungeonType, int damage)
@@ -135,52 +135,52 @@ namespace ShooRhythm
             TinyServiceLocator.Resolve<GameMessage>().AddedFarmData.OnNext(Unit.Default);
         }
 
-        public UniTask<bool> AddAvailableContentAsync(string availableContent)
+        public UniTask<Define.ProcessResultType> AddAvailableContentAsync(string availableContent)
         {
             TinyServiceLocator.Resolve<GameData>().AvailableContents.Add(availableContent);
             TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(availableContent);
-            return UniTask.FromResult(true);
+            return UniTask.FromResult(Define.ProcessResultType.Success);
         }
 
-        public UniTask<bool> DebugAddItemAsync(int itemId, int amount)
+        public UniTask<Define.ProcessResultType> DebugAddItemAsync(int itemId, int amount)
         {
             return AddItemAsync(itemId, amount);
         }
 
-        public UniTask<bool> ProcessCollectionAsync(int collectionSpecId)
+        public UniTask<Define.ProcessResultType> ProcessCollectionAsync(int collectionSpecId)
         {
             var collectionSpec = TinyServiceLocator.Resolve<MasterData>().CollectionSpecs.Get(collectionSpecId);
             return AddItemAsync(collectionSpec.AcquireItemId, collectionSpec.AcquireItemAmount);
         }
 
-        public UniTask<bool> ProcessProductionSetSlotAsync(int machineId, int slotId, int itemId)
+        public UniTask<Define.ProcessResultType> ProcessProductionSetSlotAsync(int machineId, int slotId, int itemId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var productMachineData = gameData.ProductMachineData[machineId];
             productMachineData.slotItemIds[slotId].Value = itemId;
-            var conditionNames = productMachineData.slotItemIds
+            var slotItemIds = productMachineData.slotItemIds
                 .Where(x => x.Value != 0)
                 .Select(x => x.Value)
                 .ToArray();
-            if (conditionNames.Any())
+            if (slotItemIds.Any())
             {
                 var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.List
                     .FirstOrDefault(x =>
                     {
                         var conditions = x.GetProductionNeedItems();
-                        if (conditions.Count != conditionNames.Length)
+                        if (conditions.Count != slotItemIds.Length)
                         {
                             return false;
                         }
-                        return !conditions.Select(y => y.NeedItemId).Except(conditionNames).Any();
+                        return !conditions.Select(y => y.NeedItemId).Except(slotItemIds).Any();
                     });
                 productMachineData.productItemId.Value = productionSpec?.AcquireItemId ?? 0;
             }
 
-            return UniTask.FromResult(true);
+            return UniTask.FromResult(Define.ProcessResultType.Success);
         }
 
-        public async UniTask<bool> ProcessProductionAcquireProductAsync(int itemId)
+        public async UniTask<Define.ProcessResultType> ProcessProductionAcquireProductAsync(int itemId)
         {
             var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(itemId);
             var needItems = productionSpec.GetProductionNeedItems();
@@ -192,36 +192,51 @@ namespace ShooRhythm
                     {
                         AddItemAsync(productionSpec.AcquireItemId, productionSpec.AcquireItemAmount)
                     });
-                await UniTask.WhenAll(tasks);
+                var result = await UniTask.WhenAll(tasks);
+                return result.All(x => x == Define.ProcessResultType.Success)
+                    ? Define.ProcessResultType.Success
+                    : Define.ProcessResultType.Unknown;
             }
-
-            return true;
+            else
+            {
+                return Define.ProcessResultType.NotEnoughItem;
+            }
         }
 
-        public UniTask<bool> ProcessRiverFishingAsync(int riverFishingId)
+        public UniTask<Define.ProcessResultType> ProcessRiverFishingAsync(int riverFishingId)
         {
             var fishingSpec = TinyServiceLocator.Resolve<MasterData>().RiverFishingSpecs.Get(riverFishingId);
             return AddItemAsync(fishingSpec.AcquireItemId, fishingSpec.AcquireItemAmount);
         }
 
-        public UniTask<bool> ProcessSeaFishingAsync(int seaFishingId)
+        public UniTask<Define.ProcessResultType> ProcessSeaFishingAsync(int seaFishingId)
         {
             var fishingSpec = TinyServiceLocator.Resolve<MasterData>().SeaFishingSpecs.Get(seaFishingId);
             return AddItemAsync(fishingSpec.AcquireItemId, fishingSpec.AcquireItemAmount);
         }
 
-        public async UniTask<bool> ProcessMeadowAsync(int meadowId)
+        public async UniTask<Define.ProcessResultType> ProcessMeadowAsync(int meadowId)
         {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
             var meadowSpec = TinyServiceLocator.Resolve<MasterData>().MeadowSpecs.Get(meadowId);
-            var results = await UniTask.WhenAll(
-                AddItemAsync(meadowSpec.NeedItemId, -meadowSpec.NeedItemAmount),
-                AddItemAsync(meadowSpec.AcquireItemId, meadowSpec.AcquireItemAmount)
-            );
+            if (meadowSpec.HasItems())
+            {
+                var results = await UniTask.WhenAll(
+                    AddItemAsync(meadowSpec.NeedItemId, -meadowSpec.NeedItemAmount),
+                    AddItemAsync(meadowSpec.AcquireItemId, meadowSpec.AcquireItemAmount)
+                );
 
-            return results.Item1 && results.Item2;
+                return (results.Item1 == Define.ProcessResultType.Success && results.Item2 == Define.ProcessResultType.Success)
+                    ? Define.ProcessResultType.Success
+                    : Define.ProcessResultType.Unknown;
+            }
+            else
+            {
+                return Define.ProcessResultType.NotEnoughItem;
+            }
         }
 
-        public async UniTask<bool> ProcessQuestAsync(int questSpecId)
+        public async UniTask<Define.ProcessResultType> ProcessQuestAsync(int questSpecId)
         {
             var questSpec = TinyServiceLocator.Resolve<MasterData>().QuestSpecs.Get(questSpecId);
             var conditions = questSpec.GetQuestConditions();
@@ -231,13 +246,15 @@ namespace ShooRhythm
                 var tasks = rewards
                     .Select(x => AddAvailableContentAsync(x.Name));
                 var result = await UniTask.WhenAll(tasks);
-                return result.All(x => x);
+                return result.All(x => x == Define.ProcessResultType.Success) ? Define.ProcessResultType.Success : Define.ProcessResultType.Unknown;
             }
-
-            return false;
+            else
+            {
+                return Define.ProcessResultType.NotEnoughItem;
+            }
         }
 
-        private UniTask<bool> AddItemAsync(int itemId, int amount)
+        private UniTask<Define.ProcessResultType> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
@@ -251,7 +268,7 @@ namespace ShooRhythm
                 reactiveProperty.Value += amount;
             }
 
-            return UniTask.FromResult(true);
+            return UniTask.FromResult(Define.ProcessResultType.Success);
         }
     }
 }

@@ -21,7 +21,8 @@ namespace ShooRhythm
             var gameController = TinyServiceLocator.Resolve<GameController>();
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var masterData = TinyServiceLocator.Resolve<MasterData>();
-            var enemyInstanceData = await gameController.ProcessBattleGetEnemyInstanceDataAsync(dungeonType);
+            await gameController.ProcessBattleGetEnemyInstanceDataAsync(dungeonType);
+            var enemyInstanceData = gameData.DungeonEnemyInstanceDatas[dungeonType];
             var enemySpec = masterData.EnemySpecs.Get(dungeonType)
                 .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
             Assert.IsNotNull(enemySpec, $"EnemySpec is null. dungeonType: {dungeonType}, enemyId: {enemyInstanceData.EnemyId}");
