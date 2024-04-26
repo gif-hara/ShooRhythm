@@ -14,13 +14,13 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameUtility
     {
-        public static async UniTask PlayAcquireItemEffectAsync(HKUIDocument document, RectTransform parent, UniTask<Sprite>? iconTask, CancellationToken cancellationToken)
+        public static async UniTask PlayAcquireItemEffectAsync(HKUIDocument document, RectTransform parent, UniTask<Sprite>? loadIconTask, CancellationToken cancellationToken)
         {
             var effectPrefab = document.Q<HKUIDocument>("AcquireItemEffect");
             var effect = Object.Instantiate(effectPrefab, parent);
-            if (iconTask != null)
+            if(loadIconTask != null)
             {
-                effect.Q<Image>("Icon").sprite = await iconTask.Value;
+                effect.Q<Image>("Icon").SetIconAsync(loadIconTask.Value).Forget();
             }
             var container = new Container();
             var sequences = effect.Q<SequencesHolder>("Effect").Sequences;
