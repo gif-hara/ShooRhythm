@@ -64,7 +64,7 @@ namespace ShooRhythm
                             {
                                 TinyServiceLocator.Resolve<GameMessage>().RequestNotification.OnNext((
                                     "アイテムが足りません",
-                                    null, 
+                                    null,
                                     Define.NotificationType.Negative
                                     ));
                             }
