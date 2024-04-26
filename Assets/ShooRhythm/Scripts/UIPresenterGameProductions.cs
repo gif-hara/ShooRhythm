@@ -101,7 +101,12 @@ namespace ShooRhythm
                         .Subscribe(_ =>
                         {
                             selectMachineId = machineIndex;
+                            if (selectSlotId != -1)
+                            {
+                                element.Q($"Slot.{selectSlotId}.SelectedObject").SetActiveIfNeed(false);
+                            }
                             selectSlotId = slotId;
+                            element.Q($"Slot.{slotId}.SelectedObject").SetActiveIfNeed(true);
                             ShowSelectItems();
                         })
                         .RegisterTo(element.destroyCancellationToken);
