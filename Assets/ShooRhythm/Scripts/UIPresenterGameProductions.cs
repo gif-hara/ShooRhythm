@@ -2,6 +2,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using R3.Triggers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,8 +48,8 @@ namespace ShooRhythm
             {
                 var productMachineData = gameData.ProductMachineData[machineIndex];
                 var element = Object.Instantiate(listElementPrefab, listElementParent);
-                var button = element.Q<Button>("Product.Button");
-                button.OnClickAsObservable()
+                var button = element.Q<ObservablePointerClickTrigger>("Product.Button");
+                button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
                         var itemId = productMachineData.productItemId.Value;
@@ -76,21 +77,27 @@ namespace ShooRhythm
                     .Subscribe(x =>
                     {
                         var text = element.Q<TMP_Text>("Product.Text.Name");
+                        var icon = element.Q<Image>("Product.Icon");
                         if (x == 0)
                         {
                             text.text = "Empty";
+                            icon.sprite = null;
+                            icon.enabled = false;
                         }
                         else
                         {
                             var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(x);
                             text.text = masterDataItem.Name;
+                            text.enabled = masterDataItem.Icon == null;
+                            icon.sprite = masterDataItem.Icon;
+                            icon.enabled = masterDataItem.Icon != null;
                         }
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 for (var j = 0; j < Define.MachineSlotCount; j++)
                 {
                     var slotId = j;
-                    element.Q<Button>($"Slot.{slotId}.Button").OnClickAsObservable()
+                    element.Q<ObservablePointerClickTrigger>($"Slot.{slotId}.Button").OnPointerClickAsObservable()
                         .Subscribe(_ =>
                         {
                             selectMachineId = machineIndex;
@@ -102,7 +109,21 @@ namespace ShooRhythm
                         .Subscribe(x =>
                         {
                             TinyServiceLocator.Resolve<MasterData>().Items.TryGetValue(x, out var masterDataItem);
-                            element.Q<TMP_Text>($"Slot.{slotId}.Text.Name").text = masterDataItem?.Name ?? "Empty";
+                            var nameText = element.Q<TMP_Text>($"Slot.{slotId}.Text.Name");
+                            var icon = element.Q<Image>($"Slot.{slotId}.Icon");
+                            if (masterDataItem == null)
+                            {
+                                nameText.text = "Empty";
+                                icon.sprite = null;
+                                icon.enabled = false;
+                            }
+                            else
+                            {
+                                nameText.text = masterDataItem.Name;
+                                nameText.enabled = masterDataItem.Icon == null;
+                                icon.sprite = masterDataItem.Icon;
+                                icon.enabled = masterDataItem.Icon != null;
+                            }
                         })
                         .RegisterTo(cancellationToken);
                 }
