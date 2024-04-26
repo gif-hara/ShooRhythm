@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
 using HK;
 using SCD;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ShooRhythm
 {
@@ -43,9 +42,25 @@ namespace ShooRhythm
         public StatsData.DictionaryList GrantStatsGameStart => grantStatsGameStart;
 
         [SerializeField]
-        private Contents questContents;
-        public Contents QuestContents => questContents;
-
+        private QuestSpec.DictionaryList questSpecs;
+        public QuestSpec.DictionaryList QuestSpecs => questSpecs;
+        
+        [SerializeField]
+        private AvailableContent.Group questRequires;
+        public AvailableContent.Group QuestRequires => questRequires;
+        
+        [SerializeField]
+        private AvailableContent.Group questIgnores;
+        public AvailableContent.Group QuestIgnores => questIgnores;
+        
+        [SerializeField]
+        private NeedItem.Group questConditions;
+        public NeedItem.Group QuestConditions => questConditions;
+        
+        [SerializeField]
+        private AvailableContent.Group questRewards;
+        public AvailableContent.Group QuestRewards => questRewards;
+        
         [SerializeField]
         private WeaponSpec.DictionaryList weaponSpecs;
         public WeaponSpec.DictionaryList WeaponSpecs => weaponSpecs;
@@ -93,16 +108,11 @@ namespace ShooRhythm
             );
             items.Set(JsonHelper.FromJson<Item>(database[0]));
             grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database[1]));
-            var questSpecs = new QuestSpec.DictionaryList();
             questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[2]));
-            var questRequired = new StatsData.Group();
-            questRequired.Set(JsonHelper.FromJson<StatsData>(database[3]));
-            var questConditions = new StatsData.Group();
-            questConditions.Set(JsonHelper.FromJson<StatsData>(database[4]));
-            var questIgnores = new StatsData.Group();
-            questIgnores.Set(JsonHelper.FromJson<StatsData>(database[5]));
-            var questRewards = new StatsData.Group();
-            questRewards.Set(JsonHelper.FromJson<StatsData>(database[6]));
+            questRequires.Set(JsonHelper.FromJson<AvailableContent>(database[3]));
+            questConditions.Set(JsonHelper.FromJson<NeedItem>(database[4]));
+            questIgnores.Set(JsonHelper.FromJson<AvailableContent>(database[5]));
+            questRewards.Set(JsonHelper.FromJson<AvailableContent>(database[6]));
             weaponSpecs.Set(JsonHelper.FromJson<WeaponSpec>(database[7]));
             seedSpecs.Set(JsonHelper.FromJson<SeedSpec>(database[8]));
             meadowSpecs.Set(JsonHelper.FromJson<MeadowSpec>(database[9]));
@@ -112,40 +122,6 @@ namespace ShooRhythm
             riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[13]));
             seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[14]));
             enemySpecs.Set(JsonHelper.FromJson<EnemySpec>(database[15]));
-
-            var questContentsRecords = new List<Contents.Record>();
-            foreach (var questSpec in questSpecs.List)
-            {
-                var required = new List<Stats.Record>();
-                if (questRequired.TryGetValue(questSpec.Id, out var r))
-                {
-                    required.AddRange(r.Select(x => new Stats.Record(x.Name, x.Amount)));
-                }
-                var conditions = new List<Stats.Record>();
-                if (questConditions.TryGetValue(questSpec.Id, out var c))
-                {
-                    conditions.AddRange(c.Select(x => new Stats.Record(x.Name, x.Amount)));
-                }
-                var ignores = new List<Stats.Record>();
-                if (questIgnores.TryGetValue(questSpec.Id, out var i))
-                {
-                    ignores.AddRange(i.Select(x => new Stats.Record(x.Name, x.Amount)));
-                }
-                var rewards = new List<Stats.Record>();
-                if (questRewards.TryGetValue(questSpec.Id, out var re))
-                {
-                    rewards.AddRange(re.Select(x => new Stats.Record(x.Name, x.Amount)));
-                }
-                var record = new Contents.Record(
-                    questSpec.Id.ToString(),
-                    required,
-                    ignores,
-                    conditions,
-                    rewards
-                );
-                questContentsRecords.Add(record);
-            }
-            questContents = new Contents(questContentsRecords);
 
             UnityEditor.EditorUtility.SetDirty(this);
             UnityEditor.AssetDatabase.SaveAssets();
@@ -191,6 +167,26 @@ namespace ShooRhythm
             int INeedItem.NeedItemId => NeedItemId;
 
             int INeedItem.NeedItemAmount => NeedItemAmount;
+        }
+
+        [Serializable]
+        public class AvailableContent
+        {
+            public int Id;
+
+            public string Name;
+            
+            [Serializable]
+            public class DictionaryList : DictionaryList<int, AvailableContent>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+            
+            [Serializable]
+            public class Group : Group<int, AvailableContent>
+            {
+                public Group() : base(x => x.Id) { }
+            }
         }
 
         [Serializable]
@@ -282,6 +278,7 @@ namespace ShooRhythm
         {
             public int Id;
 
+            [Serializable]
             public class DictionaryList : DictionaryList<int, QuestSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }

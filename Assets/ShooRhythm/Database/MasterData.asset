@@ -155,25 +155,38 @@ MonoBehaviour:
     - Id: 11
       Name: Available.Quest.10101
       Amount: 1
-  questContents:
-    records:
-    - <Name>k__BackingField: 10101
-      <Required>k__BackingField:
-      - <Name>k__BackingField: Available.Quest.10101
-        <Value>k__BackingField: 1
-      <Ignore>k__BackingField:
-      - <Name>k__BackingField: Cleared.Quest.10101
-        <Value>k__BackingField: 1
-      <Conditions>k__BackingField:
-      - <Name>k__BackingField: Item.10101
-        <Value>k__BackingField: 1
-      <Rewards>k__BackingField:
-      - <Name>k__BackingField: Cleared.Quest.10101
-        <Value>k__BackingField: 1
-      - <Name>k__BackingField: Item.10101
-        <Value>k__BackingField: -1
-      - <Name>k__BackingField: Item.10102
-        <Value>k__BackingField: 1
+  questSpecs:
+    list:
+    - Id: 10101
+  questRequires:
+    list:
+    - Key: 10101
+      Value:
+      - Id: 10101
+        Name: Available.Quest.10101
+  questIgnores:
+    list:
+    - Key: 10101
+      Value:
+      - Id: 10101
+        Name: Cleared.Quest.10101
+  questConditions:
+    list:
+    - Key: 10101
+      Value:
+      - Id: 10101
+        NeedItemId: 10101
+        NeedItemAmount: 1
+  questRewards:
+    list:
+    - Key: 10101
+      Value:
+      - Id: 10101
+        Name: Cleared.Quest.10101
+      - Id: 10101
+        Name: Item.10101
+      - Id: 10101
+        Name: Item.10102
   weaponSpecs:
     list:
     - Id: 10203

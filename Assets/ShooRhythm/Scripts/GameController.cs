@@ -226,6 +226,22 @@ namespace ShooRhythm
             return results.Item1 && results.Item2;
         }
 
+        public async UniTask<bool> ProcessQuestAsync(int questSpecId)
+        {
+            var questSpec = TinyServiceLocator.Resolve<MasterData>().QuestSpecs.Get(questSpecId);
+            var conditions = questSpec.GetQuestConditions();
+            if (conditions.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
+            {
+                var rewards = questSpec.GetQuestRewards();
+                var tasks = rewards
+                    .Select(x => AddAvailableContentAsync(x.Name));
+                var result = await UniTask.WhenAll(tasks);
+                return result.All(x => x);
+            }
+
+            return false;
+        }
+
         private UniTask<bool> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();

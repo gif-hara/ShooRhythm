@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
@@ -20,7 +21,10 @@ namespace ShooRhythm
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var listElementParent = document.Q<Transform>("ListElementParent");
             var listElementPrefab = document.Q<HKUIDocument>("ListElementPrefab");
-            var availableQuests = TinyServiceLocator.Resolve<MasterData>().QuestContents.GetAvailables(gameData.Stats);
+            var availableQuestIds = TinyServiceLocator.Resolve<MasterData>().QuestSpecs.List
+                .Where(x => !x.GetQuestIgnores().IsAvailableAny())
+                .Where(x => x.GetQuestRequires().IsAvailableAll())
+                .Select(x => x.Id);
             var gameController = TinyServiceLocator.Resolve<GameController>();
             var elements = new List<HKUIDocument>();
             CreateElements();
@@ -39,8 +43,10 @@ namespace ShooRhythm
                     Object.Destroy(element.gameObject);
                 }
                 elements.Clear();
-                foreach (var quest in availableQuests)
+                foreach (var id in availableQuestIds)
                 {
+                    var questSpec = TinyServiceLocator.Resolve<MasterData>().QuestSpecs.Get(id);
+                    var conditions = questSpec.GetQuestConditions();
                     var element = Object.Instantiate(listElementPrefab, listElementParent);
                     elements.Add(element);
                     var elementElementParent = element.Q<Transform>("ListElementParent");
@@ -48,9 +54,9 @@ namespace ShooRhythm
                     element.Q<Button>("Button").OnClickAsObservable()
                         .SubscribeAwait(async (_, ct) =>
                         {
-                            if (quest.IsCompleted(gameData.Stats))
+                            if (conditions.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
                             {
-                                await gameController.ApplyRewardAsync(quest);
+                                await gameController.ProcessQuestAsync(id);
                                 CreateElements();
                             }
                             else
@@ -63,14 +69,13 @@ namespace ShooRhythm
                             }
                         })
                         .RegisterTo(element.destroyCancellationToken);
-                    foreach (var condition in quest.Conditions)
+                    foreach (var condition in conditions)
                     {
                         var elementElement = Object.Instantiate(elementElementPrefab, elementElementParent);
-                        var itemId = condition.Name.Substring("Item.".Length);
-                        var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(int.Parse(itemId));
-                        var isSatisfied = gameData.Stats.Get(condition.Name) >= condition.Value;
+                        var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(condition.NeedItemId);
+                        var isSatisfied = condition.HasItems();
                         elementElement.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
-                        elementElement.Q<TMP_Text>("Text.Number").text = condition.Value.ToString();
+                        elementElement.Q<TMP_Text>("Text.Number").text = condition.NeedItemAmount.ToString();
                         elementElement.Q("Background.Enough").SetActiveIfNeed(isSatisfied);
                         elementElement.Q("Background.NotEnough").SetActiveIfNeed(!isSatisfied);
                     }

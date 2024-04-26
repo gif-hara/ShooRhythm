@@ -21,6 +21,7 @@ namespace ShooRhythm
 
         [SerializeField]
         private List<Element> list = new();
+        public List<Element> List => list;
 
         private Dictionary<TKey, Element> dictionary;
 
