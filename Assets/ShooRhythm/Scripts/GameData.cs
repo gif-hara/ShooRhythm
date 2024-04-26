@@ -12,7 +12,7 @@ namespace ShooRhythm
     {
         public Stats Stats { get; } = new();
         
-        public HashSet<string> ContentAvailabilities { get; } = new();
+        public HashSet<string> AvailableContents { get; } = new();
 
         public Dictionary<int, ReactiveProperty<int>> Items { get; } = new();
 

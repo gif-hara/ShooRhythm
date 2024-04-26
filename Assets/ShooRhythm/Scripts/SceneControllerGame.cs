@@ -78,7 +78,7 @@ namespace ShooRhythm
 
             await UniTask.WhenAll(
                 TinyServiceLocator.Resolve<MasterData>().GrantStatsGameStart.List
-                    .Select(x => gameController.AddContentAvailabilityAsync(x.Name))
+                    .Select(x => gameController.AddAvailableContentAsync(x.Name))
             );
 
             gameMessage.RequestChangeTab

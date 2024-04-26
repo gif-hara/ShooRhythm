@@ -50,11 +50,11 @@ namespace ShooRhythm
                         TinyServiceLocator.Resolve<GameMessage>().RequestChangeTab.OnNext(tabType);
                     })
                     .RegisterTo(element.destroyCancellationToken);
-                element.gameObject.SetActiveIfNeed(gameData.ContentAvailabilities.Contains(tabType.ToContentAvailabilityName()));
+                element.gameObject.SetActiveIfNeed(gameData.AvailableContents.Contains(tabType.ToContentAvailableName()));
                 TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability
                     .Subscribe(x =>
                     {
-                        element.gameObject.SetActiveIfNeed(gameData.ContentAvailabilities.Contains(tabType.ToContentAvailabilityName()));
+                        element.gameObject.SetActiveIfNeed(gameData.AvailableContents.Contains(tabType.ToContentAvailableName()));
                     })
                     .RegisterTo(element.destroyCancellationToken);
             }

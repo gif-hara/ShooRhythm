@@ -140,10 +140,10 @@ namespace ShooRhythm
             TinyServiceLocator.Resolve<GameMessage>().AddedFarmData.OnNext(Unit.Default);
         }
 
-        public UniTask<bool> AddContentAvailabilityAsync(string contentAvailability)
+        public UniTask<bool> AddAvailableContentAsync(string availableContent)
         {
-            TinyServiceLocator.Resolve<GameData>().ContentAvailabilities.Add(contentAvailability);
-            TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(contentAvailability);
+            TinyServiceLocator.Resolve<GameData>().AvailableContents.Add(availableContent);
+            TinyServiceLocator.Resolve<GameMessage>().AddedContentAvailability.OnNext(availableContent);
             return UniTask.FromResult(true);
         }
 

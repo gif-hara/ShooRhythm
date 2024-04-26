@@ -5,7 +5,7 @@ namespace ShooRhythm
     /// </summary>
     public static partial class Extensions
     {
-        public static string ToContentAvailabilityName(this Define.TabType self)
+        public static string ToContentAvailableName(this Define.TabType self)
         {
             return $"TabType.{self}";
         }
