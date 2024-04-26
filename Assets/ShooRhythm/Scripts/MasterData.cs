@@ -1,9 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using HK;
-using SCD;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ShooRhythm
 {
@@ -38,8 +36,8 @@ namespace ShooRhythm
         public FishingSpec.DictionaryList SeaFishingSpecs => seaFishingSpecs;
 
         [SerializeField]
-        private StatsData.DictionaryList grantStatsGameStart;
-        public StatsData.DictionaryList GrantStatsGameStart => grantStatsGameStart;
+        private AvailableContent.DictionaryList grantStatsGameStart;
+        public AvailableContent.DictionaryList GrantStatsGameStart => grantStatsGameStart;
 
         [SerializeField]
         private QuestSpec.DictionaryList questSpecs;
@@ -107,7 +105,7 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("EnemySpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database[0]));
-            grantStatsGameStart.Set(JsonHelper.FromJson<StatsData>(database[1]));
+            grantStatsGameStart.Set(JsonHelper.FromJson<AvailableContent>(database[1]));
             questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[2]));
             questRequires.Set(JsonHelper.FromJson<AvailableContent>(database[3]));
             questConditions.Set(JsonHelper.FromJson<NeedItem>(database[4]));
@@ -256,23 +254,7 @@ namespace ShooRhythm
                 public DictionaryList() : base(x => x.Id) { }
             }
         }
-
-        [Serializable]
-        public class GameStartStatsData
-        {
-            public int Id;
-
-            public string Name;
-
-            public int Amount;
-
-            [Serializable]
-            public sealed class DictionaryList : DictionaryList<int, GameStartStatsData>
-            {
-                public DictionaryList() : base(x => x.Id) { }
-            }
-        }
-
+        
         [Serializable]
         public class QuestSpec
         {
@@ -284,35 +266,7 @@ namespace ShooRhythm
                 public DictionaryList() : base(x => x.Id) { }
             }
         }
-
-        [Serializable]
-        public class StatsData
-        {
-            public int Id;
-
-            public string Name;
-
-            public int Amount;
-
-            public StatsData(string name, int amount)
-            {
-                Name = name;
-                Amount = amount;
-            }
-
-            [Serializable]
-            public class Group : Group<int, StatsData>
-            {
-                public Group() : base(x => x.Id) { }
-            }
-
-            [Serializable]
-            public sealed class DictionaryList : DictionaryList<int, StatsData>
-            {
-                public DictionaryList() : base(x => x.Id) { }
-            }
-        }
-
+        
         [Serializable]
         public class WeaponSpec
         {

@@ -124,37 +124,26 @@ MonoBehaviour:
     list:
     - Id: 1
       Name: TabType.Items
-      Amount: 1
     - Id: 2
       Name: TabType.Collections
-      Amount: 1
     - Id: 3
       Name: TabType.Productions
-      Amount: 1
     - Id: 4
       Name: TabType.Quests
-      Amount: 1
     - Id: 5
       Name: TabType.Equipment
-      Amount: 1
     - Id: 6
       Name: TabType.RiverFishing
-      Amount: 1
     - Id: 7
       Name: TabType.SeaFishing
-      Amount: 1
     - Id: 8
       Name: TabType.Farm
-      Amount: 1
     - Id: 9
       Name: TabType.Meadow
-      Amount: 1
     - Id: 10
       Name: TabType.Grassland
-      Amount: 1
     - Id: 11
       Name: Available.Quest.10101
-      Amount: 1
   questSpecs:
     list:
     - Id: 10101
@@ -183,10 +172,6 @@ MonoBehaviour:
       Value:
       - Id: 10101
         Name: Cleared.Quest.10101
-      - Id: 10101
-        Name: Item.10101
-      - Id: 10101
-        Name: Item.10102
   weaponSpecs:
     list:
     - Id: 10203
