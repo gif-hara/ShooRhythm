@@ -266,6 +266,7 @@ MonoBehaviour:
         - rid: 4357835763297550356
         - rid: 4357835763297550364
         - rid: 4357835763297550366
+        - rid: 4357835763297550394
     - rid: 4357835763297550356
       type: {class: BindToGraphicColor, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
@@ -374,6 +375,10 @@ MonoBehaviour:
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
+    - rid: 4357835763297550394
+      type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        audioClip: {fileID: 8300000, guid: 2df34fbf64d9a4c588333b9107c428b8, type: 3}
 --- !u!114 &6756989835934593117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +409,7 @@ MonoBehaviour:
         - rid: 4357835763297550376
         - rid: 4357835763297550384
         - rid: 4357835763297550386
+        - rid: 4357835763297550395
     - rid: 4357835763297550376
       type: {class: BindToGraphicColor, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
@@ -512,6 +518,10 @@ MonoBehaviour:
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
+    - rid: 4357835763297550395
+      type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
+      data:
+        audioClip: {fileID: 8300000, guid: 934045c98880b4f8c8d144271f1c0c7d, type: 3}
 --- !u!114 &1765090176997565053
 MonoBehaviour:
   m_ObjectHideFlags: 0
