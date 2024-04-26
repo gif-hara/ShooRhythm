@@ -76,14 +76,21 @@ namespace ShooRhythm
             }
         }
 
-        public UniTask<bool> AcquireFarmPlantAsync(int plantId)
+        public UniTask<bool> ProcessFarmAcquirePlantItemAsync(int plantId)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
             var seedSpec = gameData.FarmDatas[plantId].SeedSpec;
-            gameData.Stats.Add($"Item.{seedSpec.AcquireItemId}", 1);
-            gameData.FarmDatas[plantId].SeedItemId.Value = 0;
-            gameData.FarmDatas[plantId].PlantTicks.Value = 0;
-            return UniTask.FromResult(true);
+            if (gameData.FarmDatas[plantId].IsCompleted)
+            {
+                AddItemAsync(seedSpec.AcquireItemId, 1).Forget();
+                gameData.FarmDatas[plantId].SeedItemId.Value = 0;
+                gameData.FarmDatas[plantId].PlantTicks.Value = 0;
+                return UniTask.FromResult(true);
+            }
+            else
+            {
+                return UniTask.FromResult(false);
+            }
         }
 
         public async UniTask<EnemyInstanceData> ProcessBattleGetEnemyInstanceDataAsync(Define.DungeonType dungeonType)

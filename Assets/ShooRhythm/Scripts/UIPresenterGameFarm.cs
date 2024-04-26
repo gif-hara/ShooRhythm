@@ -113,7 +113,7 @@ namespace ShooRhythm
                     {
                         if (farmData.IsCompleted)
                         {
-                            await gameController.AcquireFarmPlantAsync(index);
+                            await gameController.ProcessFarmAcquirePlantItemAsync(index);
                             GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, ct).Forget();
                         }
                         else
