@@ -17,17 +17,6 @@ namespace ShooRhythm
         public GameController(int userId, CancellationToken cancellationToken)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
-            gameData.Stats.OnChangedAsObservable(cancellationToken)
-                .Subscribe(x =>
-                {
-                    var startString = "Item.";
-                    if (x.Name.StartsWith(startString, StringComparison.Ordinal))
-                    {
-                        var id = int.Parse(x.Name.Substring(startString.Length));
-                        gameData.SetItem(id, x.Value);
-                    }
-                })
-                .RegisterTo(cancellationToken);
             AddUserData(userId);
             Observable.EveryUpdate(cancellationToken)
                 .Subscribe(_ =>
@@ -43,14 +32,6 @@ namespace ShooRhythm
                     }
                 })
                 .RegisterTo(cancellationToken);
-        }
-
-        public UniTask<bool> ApplyRewardAsync(Contents.Record contentsRecord)
-        {
-            var gameData = TinyServiceLocator.Resolve<GameData>();
-            contentsRecord.ApplyRewards(gameData.Stats);
-            Debug.Log(gameData.Stats);
-            return UniTask.FromResult(true);
         }
 
         public UniTask<bool> SetUserEquipmentItemIdAsync(int userId, int x)

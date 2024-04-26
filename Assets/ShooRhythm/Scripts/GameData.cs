@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using HK;
 using R3;
-using SCD;
 
 namespace ShooRhythm
 {
@@ -10,8 +9,6 @@ namespace ShooRhythm
     /// </summary>
     public sealed class GameData
     {
-        public Stats Stats { get; } = new();
-        
         public HashSet<string> AvailableContents { get; } = new();
 
         public Dictionary<int, ReactiveProperty<int>> Items { get; } = new();
@@ -19,13 +16,13 @@ namespace ShooRhythm
         public List<FarmData> FarmDatas { get; } = new();
 
         public Dictionary<Define.DungeonType, EnemyInstanceData> DungeonEnemyInstanceDatas { get; } = new();
-        
+
         public Dictionary<int, UserData> UserData { get; } = new();
 
         public int CurrentUserId { get; set; } = 0;
-        
+
         public UserData CurrentUserData => UserData[CurrentUserId];
-        
+
         public List<ProductMachineData> ProductMachineData { get; } = new();
 
         public void SetItem(int id, int count)
