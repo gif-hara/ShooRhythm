@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using HK;
 using R3;
+using R3.Triggers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,14 +47,17 @@ namespace ShooRhythm
                 {
                     var element = UnityEngine.Object.Instantiate(elementPrefab, elementParent);
                     var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(i.Key);
-                    element.Q<TMP_Text>("Text.Name").text = masterDataItem.Name;
+                    var nameText = element.Q<TMP_Text>("Text.Name");
+                    nameText.text = masterDataItem.Name;
+                    element.Q<Image>("Icon").sprite = masterDataItem.Icon;
+                    nameText.enabled = masterDataItem.Icon == null;
                     i.Value
                         .Subscribe(itemNumber =>
                         {
                             element.Q<TMP_Text>("Text.Number").text = itemNumber.ToString();
                         })
                         .RegisterTo(element.destroyCancellationToken);
-                    element.Q<Button>("Button").OnClickAsObservable()
+                    element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
                         .Subscribe(_ =>
                         {
                             onSelectedItem.OnNext(i.Key);
