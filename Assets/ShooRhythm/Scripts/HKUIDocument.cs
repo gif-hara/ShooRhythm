@@ -47,7 +47,7 @@ namespace HK
                 return newComponent;
             }
 
-            Debug.LogError($"Component not found: {typeof(T)} on object {name}");
+            Debug.LogError($"Component not found: {typeof(T)} on object {this.name}.{name}");
             return null;
         }
         
@@ -87,7 +87,7 @@ namespace HK
             }
             else
             {
-                Debug.LogError($"Element not found: {name}");
+                Debug.LogError($"Element not found: {this.name}.{name}");
                 return null;
             }
         }
