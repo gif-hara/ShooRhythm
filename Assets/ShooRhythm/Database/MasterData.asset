@@ -19,16 +19,16 @@ MonoBehaviour:
       Icon: {fileID: 21300000, guid: 1601dc79019a0404a833a67f1f3265a4, type: 3}
     - Id: 10102
       Name: "\u77F3\u6750"
-      Icon: {fileID: 0}
+      Icon: {fileID: 21300000, guid: b8dcffbcfbcfde14cbc2fc827e690569, type: 3}
     - Id: 10103
       Name: "\u9244\u9271\u77F3"
-      Icon: {fileID: 0}
+      Icon: {fileID: 21300000, guid: 3788a3a3bc66847da9a7e150440328f5, type: 3}
     - Id: 10104
       Name: "\u9285\u9271\u77F3"
-      Icon: {fileID: 0}
+      Icon: {fileID: 21300000, guid: 76651a654155242d2b6cb44af06003c5, type: 3}
     - Id: 10105
       Name: "\u5E03"
-      Icon: {fileID: 0}
+      Icon: {fileID: 21300000, guid: ef83efa7f47d24c3b9a2a5748b9b9ccd, type: 3}
     - Id: 10106
       Name: "\u30B8\u30A7\u30EB"
       Icon: {fileID: 0}
