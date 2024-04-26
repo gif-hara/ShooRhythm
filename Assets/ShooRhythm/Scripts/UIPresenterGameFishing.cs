@@ -28,7 +28,6 @@ namespace ShooRhythm
             var rootStrikeButton = document.Q("Root.StrikeButton");
             var rootHitIcon = document.Q("Root.HitIcon");
             var currentFishingSpec = default(MasterData.FishingSpec);
-            var currentContentsRecord = default(Contents.Record);
             rootHitIcon.SetActive(false);
             stateMachine.Change(StateIdle);
 
