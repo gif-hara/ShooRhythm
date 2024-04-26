@@ -168,7 +168,7 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class NeedItem
+        public class NeedItem : INeedItem
         {
             public int Id;
 
@@ -187,6 +187,10 @@ namespace ShooRhythm
             {
                 public Group() : base(x => x.Id) { }
             }
+
+            int INeedItem.NeedItemId => NeedItemId;
+
+            int INeedItem.NeedItemAmount => NeedItemAmount;
         }
 
         [Serializable]
@@ -226,7 +230,7 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class FishingSpec : IRequireItem
+        public class FishingSpec : INeedItem
         {
             public int Id;
 
@@ -246,9 +250,9 @@ namespace ShooRhythm
 
             public float PostponementSeconds;
 
-            int IRequireItem.NeedItemId => NeedItemId;
+            int INeedItem.NeedItemId => NeedItemId;
 
-            int IRequireItem.NeedItemAmount => NeedItemAmount;
+            int INeedItem.NeedItemAmount => NeedItemAmount;
 
             [Serializable]
             public class DictionaryList : DictionaryList<int, FishingSpec>
@@ -347,7 +351,7 @@ namespace ShooRhythm
         }
 
         [Serializable]
-        public class MeadowSpec : IRequireItem
+        public class MeadowSpec : INeedItem
         {
             public int Id;
 
@@ -359,9 +363,9 @@ namespace ShooRhythm
 
             public int AcquireItemAmount;
 
-            int IRequireItem.NeedItemId => NeedItemId;
+            int INeedItem.NeedItemId => NeedItemId;
 
-            int IRequireItem.NeedItemAmount => NeedItemAmount;
+            int INeedItem.NeedItemAmount => NeedItemAmount;
 
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, MeadowSpec>

@@ -37,28 +37,7 @@ namespace ShooRhythm
                 }
             }
         }
-
-        public static void ShowRequireItemNotification(int itemId, int amount)
-        {
-            var masterDataItem = TinyServiceLocator.Resolve<MasterData>().Items.Get(itemId);
-            var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
-            gameMessage.RequestNotification.OnNext(
-                (
-                    $"{masterDataItem.Name}が{amount}個必要です",
-                    null,
-                    Define.NotificationType.Negative
-                )
-            );
-        }
-
-        public static void ShowRequireItemNotification(IEnumerable<(int itemId, int amount)> data)
-        {
-            foreach (var (itemId, amount) in data)
-            {
-                ShowRequireItemNotification(itemId, amount);
-            }
-        }
-
+        
         public static async UniTask PlayAcquireItemEffectAsync(HKUIDocument document, RectTransform parent, UniTask<Sprite>? iconTask, CancellationToken cancellationToken)
         {
             var effectPrefab = document.Q<HKUIDocument>("AcquireItemEffect");
