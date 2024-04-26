@@ -206,7 +206,7 @@ MonoBehaviour:
   sequences:
   - rid: 4357835539116720176
   - rid: 4357835539116720187
-  - rid: 4357835763297550336
+  - rid: 8290056592014704656
   - rid: 4357835539116720188
   references:
     version: 2
@@ -342,55 +342,55 @@ MonoBehaviour:
       type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
       data:
         audioClip: {fileID: 8300000, guid: 702e7cd04c8d6da4daead054f5e2db94, type: 3}
-    - rid: 4357835763297550336
-      type: {class: BindToGraphicColorA, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
+    - rid: 8290056592014704656
+      type: {class: BindToCanvasGroupAlpha, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
       data:
         targetResolver:
-          rid: 4357835763297550337
+          rid: 8290056592069754880
         parameters:
           fromResolver:
-            rid: 4357835763297550338
+            rid: 8290056592014704658
           toResolver:
-            rid: 4357835763297550339
+            rid: 8290056592014704659
           durationResolver:
-            rid: 4357835763297550340
+            rid: 8290056592014704660
           delayResolver:
-            rid: 4357835763297550341
+            rid: 8290056592014704661
           loopCountResolver:
-            rid: 4357835763297550342
+            rid: 8290056592014704662
           loopType: 0
           motionSchedulerResolver:
-            rid: 4357835763297550343
+            rid: 8290056592014704663
           ease: 0
-    - rid: 4357835763297550337
-      type: {class: GraphicResolver/Reference, ns: UnitySequencerSystem.Resolvers,
-        asm: UnitySequencerSystem}
-      data:
-        target: {fileID: 2989651649729842184}
-    - rid: 4357835763297550338
+    - rid: 8290056592014704658
       type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 1
-    - rid: 4357835763297550339
+    - rid: 8290056592014704659
       type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 0
-    - rid: 4357835763297550340
+    - rid: 8290056592014704660
       type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 0.2
-    - rid: 4357835763297550341
+    - rid: 8290056592014704661
       type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 0
-    - rid: 4357835763297550342
+    - rid: 8290056592014704662
       type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
       data:
         value: 1
-    - rid: 4357835763297550343
+    - rid: 8290056592014704663
       type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
         asm: UnitySequencerSystem}
       data: 
+    - rid: 8290056592069754880
+      type: {class: CanvasGroupResolver/Reference, ns: UnitySequencerSystem.Resolvers,
+        asm: UnitySequencerSystem}
+      data:
+        target: {fileID: 8381302383532878533}
 --- !u!1 &7697409023081842196
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7152138044375572466}
+  - component: {fileID: 8381302383532878533}
   m_Layer: 5
   m_Name: AnimationArea
   m_TagString: Untagged
@@ -427,6 +428,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &8381302383532878533
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7697409023081842196}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &9203658662653823208
 GameObject:
   m_ObjectHideFlags: 0
