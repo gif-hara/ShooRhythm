@@ -55,6 +55,13 @@ namespace ShooRhythm
             Sea = 2,
         }
 
+        public enum ProcessResultType
+        {
+            Unknown = 0,
+            Success = 1,
+            NotEnoughItem = 2,
+        }
+
         public const int MachineSlotCount = 3;
     }
 }
