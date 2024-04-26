@@ -118,7 +118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3401177527387144419}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -206,6 +206,7 @@ MonoBehaviour:
   sequences:
   - rid: 4357835539116720176
   - rid: 4357835539116720187
+  - rid: 4357835763297550336
   - rid: 4357835539116720188
   references:
     version: 2
@@ -274,7 +275,7 @@ MonoBehaviour:
     - rid: 4357835539116720187
       type: {class: Delay, ns: UnitySequencerSystem.StandardSequences, asm: UnitySequencerSystem}
       data:
-        seconds: 0.75
+        seconds: 0.5
     - rid: 4357835539116720188
       type: {class: GameObjectDestroy, ns: UnitySequencerSystem.StandardSequences,
         asm: UnitySequencerSystem}
@@ -341,6 +342,55 @@ MonoBehaviour:
       type: {class: PlaySE, ns: ShooRhythm, asm: Assembly-CSharp}
       data:
         audioClip: {fileID: 8300000, guid: 702e7cd04c8d6da4daead054f5e2db94, type: 3}
+    - rid: 4357835763297550336
+      type: {class: BindToGraphicColorA, ns: UnitySequencerSystem.LitMotion, asm: UnitySequencerSystem}
+      data:
+        targetResolver:
+          rid: 4357835763297550337
+        parameters:
+          fromResolver:
+            rid: 4357835763297550338
+          toResolver:
+            rid: 4357835763297550339
+          durationResolver:
+            rid: 4357835763297550340
+          delayResolver:
+            rid: 4357835763297550341
+          loopCountResolver:
+            rid: 4357835763297550342
+          loopType: 0
+          motionSchedulerResolver:
+            rid: 4357835763297550343
+          ease: 0
+    - rid: 4357835763297550337
+      type: {class: GraphicResolver/Reference, ns: UnitySequencerSystem.Resolvers,
+        asm: UnitySequencerSystem}
+      data:
+        target: {fileID: 2989651649729842184}
+    - rid: 4357835763297550338
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 1
+    - rid: 4357835763297550339
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0
+    - rid: 4357835763297550340
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0.2
+    - rid: 4357835763297550341
+      type: {class: FloatResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 0
+    - rid: 4357835763297550342
+      type: {class: IntResolver/Constant, ns: UnitySequencerSystem.Resolvers, asm: UnitySequencerSystem}
+      data:
+        value: 1
+    - rid: 4357835763297550343
+      type: {class: MotionSchedulerResolver/Update, ns: UnitySequencerSystem.Resolvers.LitMotion,
+        asm: UnitySequencerSystem}
+      data: 
 --- !u!1 &7697409023081842196
 GameObject:
   m_ObjectHideFlags: 0
