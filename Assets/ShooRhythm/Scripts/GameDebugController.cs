@@ -19,6 +19,7 @@ namespace ShooRhythm
             Observable.EveryUpdate(cancellationToken)
                 .Subscribe(_ =>
                 {
+                    var gameDebugData = TinyServiceLocator.Resolve<GameDebugData>();
                     if (Keyboard.current.f1Key.wasPressedThisFrame)
                     {
                         foreach (var item in masterData.Items.List)
@@ -27,15 +28,20 @@ namespace ShooRhythm
                         }
                         Debug.Log("[DEBUG] Add All Items");
                     }
-                    if(Keyboard.current.f2Key.wasPressedThisFrame)
+                    if (Keyboard.current.f2Key.wasPressedThisFrame)
                     {
                         gameController.AddProductMachine();
                         Debug.Log("[DEBUG] AddProductMachine");
                     }
-                    if(Keyboard.current.f3Key.wasPressedThisFrame)
+                    if (Keyboard.current.f3Key.wasPressedThisFrame)
                     {
                         gameController.AddFarmData();
                         Debug.Log("[DEBUG] AddFarmData");
+                    }
+                    if (Keyboard.current.f4Key.wasPressedThisFrame)
+                    {
+                        gameDebugData.IgnoreCoolDown = !gameDebugData.IgnoreCoolDown;
+                        Debug.Log($"[DEBUG] IgnoreCoolDown: {gameDebugData.IgnoreCoolDown}");
                     }
                 })
                 .RegisterTo(cancellationToken);

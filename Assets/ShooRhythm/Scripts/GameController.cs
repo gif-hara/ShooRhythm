@@ -24,6 +24,13 @@ namespace ShooRhythm
                     for (var i = 0; i < gameData.CurrentUserData.coolTimeData.Count; i++)
                     {
                         var coolTimeData = gameData.CurrentUserData.coolTimeData[i];
+#if DEBUG
+                        if (TinyServiceLocator.Resolve<GameDebugData>().IgnoreCoolDown)
+                        {
+                            coolTimeData.CoolTime.Value = 0;
+                        }
+#endif
+
                         coolTimeData.CoolTime.Value -= Time.deltaTime;
                         if (coolTimeData.CoolTime.Value < 0)
                         {
