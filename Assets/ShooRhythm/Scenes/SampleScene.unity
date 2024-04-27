@@ -585,6 +585,8 @@ MonoBehaviour:
     type: 3}
   gameBattleDocumentPrefab: {fileID: 8952608029526600457, guid: c98b13f051fbc614dadf3979cabf7701,
     type: 3}
+  gameMealDocumentPrefab: {fileID: 8952608029526600457, guid: 0f137a24bdbd50d4391d0e89d22490d5,
+    type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
