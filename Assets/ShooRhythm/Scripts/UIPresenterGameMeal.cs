@@ -18,6 +18,7 @@ namespace ShooRhythm
             var document = Object.Instantiate(documentPrefab);
             var gameController = TinyServiceLocator.Resolve<GameController>();
             var masterData = TinyServiceLocator.Resolve<MasterData>();
+            var gameData = TinyServiceLocator.Resolve<GameData>();
             var selectItemsDocument = document.Q<HKUIDocument>("SelectItems");
             var uiPresenterSelectItems = new UIPresenterGameSelectItems();
             uiPresenterSelectItems.BeginAsync(
@@ -28,9 +29,24 @@ namespace ShooRhythm
             uiPresenterSelectItems.OnSelectedItemAsObservable()
                 .SubscribeAwait(async (itemId, ct) =>
                 {
+                    var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                    if (availableCoolTimeIndex == -1)
+                    {
+                        GameUtility.ShowRequireCoolDownNotification();
+                        return;
+                    }
+
+                    var mealSpec = masterData.MealSpecs.Get(itemId);
+                    if (!mealSpec.HasItems())
+                    {
+                        mealSpec.ShowRequireItemNotification();
+                        return;
+                    }
+
                     var result = await gameController.ProcessMealAsync(itemId);
                     if (result == Define.ProcessResultType.Success)
                     {
+                        gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, mealSpec.CoolTimeSeconds);
                         var container = new Container();
                         var sequencer = new Sequencer(container, document.Q<SequencesHolder>("SuccessSequences").Sequences);
                         sequencer.PlayAsync(ct).Forget();
