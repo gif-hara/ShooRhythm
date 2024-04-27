@@ -1,7 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using HK;
-using UnityEditor;
 using UnityEngine;
 
 namespace ShooRhythm
@@ -76,6 +75,10 @@ namespace ShooRhythm
         private EnemySpec.Group enemySpecs;
         public EnemySpec.Group EnemySpecs => enemySpecs;
 
+        [SerializeField]
+        private MealSpec.DictionaryList mealSpecs;
+        public MealSpec.DictionaryList MealSpecs => mealSpecs;
+
         public UniTask BootAsync()
         {
             TinyServiceLocator.Register(this);
@@ -103,12 +106,13 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("ProductionCondition"),
                 GoogleSpreadSheetDownloader.DownloadAsync("RiverFishingSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("SeaFishingSpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("EnemySpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("EnemySpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("MealSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database[0]));
             foreach (var i in items.List)
             {
-                i.Icon = AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/ShooRhythm/Textures/Item.{i.Id}.png");
+                i.Icon = UnityEditor.AssetDatabase.LoadAssetAtPath<Sprite>($"Assets/ShooRhythm/Textures/Item.{i.Id}.png");
             }
             grantStatsGameStart.Set(JsonHelper.FromJson<AvailableContent>(database[1]));
             questSpecs.Set(JsonHelper.FromJson<QuestSpec>(database[2]));
@@ -125,6 +129,7 @@ namespace ShooRhythm
             riverFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[13]));
             seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[14]));
             enemySpecs.Set(JsonHelper.FromJson<EnemySpec>(database[15]));
+            mealSpecs.Set(JsonHelper.FromJson<MealSpec>(database[16]));
 
             UnityEditor.EditorUtility.SetDirty(this);
             UnityEditor.AssetDatabase.SaveAssets();
@@ -361,6 +366,28 @@ namespace ShooRhythm
             public sealed class Group : Group<Define.DungeonType, EnemySpec>
             {
                 public Group() : base(x => x.DungeonType) { }
+            }
+        }
+
+        [Serializable]
+        public class MealSpec : INeedItem
+        {
+            public int Id;
+
+            public int NeedItemId;
+
+            public int NeedItemAmount;
+
+            public int CoolTimeSeconds;
+
+            int INeedItem.NeedItemId => NeedItemId;
+
+            int INeedItem.NeedItemAmount => NeedItemAmount;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, MealSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
             }
         }
     }
