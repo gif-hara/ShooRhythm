@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using HK;
@@ -15,12 +16,18 @@ namespace ShooRhythm
         {
             var document = Object.Instantiate(documentPrefab);
             var gameController = TinyServiceLocator.Resolve<GameController>();
+            var masterData = TinyServiceLocator.Resolve<MasterData>();
             var selectItemsDocument = document.Q<HKUIDocument>("SelectItems");
             var uiPresenterSelectItems = new UIPresenterGameSelectItems();
-            uiPresenterSelectItems.BeginAsync(selectItemsDocument, x => x).Forget();
+            uiPresenterSelectItems.BeginAsync(
+                selectItemsDocument,
+                x => x.Where(y => masterData.MealSpecs.ContainsKey(y.Key))
+                )
+                .Forget();
             uiPresenterSelectItems.OnSelectedItemAsObservable()
                 .SubscribeAwait(async (itemId, ct) =>
                 {
+                    await gameController.ProcessMealAsync(itemId);
                 })
                 .RegisterTo(cancellationToken);
 

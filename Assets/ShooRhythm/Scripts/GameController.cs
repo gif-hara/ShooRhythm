@@ -261,6 +261,19 @@ namespace ShooRhythm
             }
         }
 
+        public UniTask<Define.ProcessResultType> ProcessMealAsync(int mealSpecId)
+        {
+            var mealSpec = TinyServiceLocator.Resolve<MasterData>().MealSpecs.Get(mealSpecId);
+            if (mealSpec.HasItems())
+            {
+                return AddItemAsync(mealSpec.NeedItemId, -mealSpec.NeedItemAmount);
+            }
+            else
+            {
+                return UniTask.FromResult(Define.ProcessResultType.NotEnoughItem);
+            }
+        }
+
         private UniTask<Define.ProcessResultType> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
