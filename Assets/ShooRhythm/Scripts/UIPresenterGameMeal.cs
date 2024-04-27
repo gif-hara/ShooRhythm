@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using HK;
 using R3;
 using UnityEngine;
+using UnitySequencerSystem;
 
 namespace ShooRhythm
 {
@@ -27,7 +28,13 @@ namespace ShooRhythm
             uiPresenterSelectItems.OnSelectedItemAsObservable()
                 .SubscribeAwait(async (itemId, ct) =>
                 {
-                    await gameController.ProcessMealAsync(itemId);
+                    var result = await gameController.ProcessMealAsync(itemId);
+                    if (result == Define.ProcessResultType.Success)
+                    {
+                        var container = new Container();
+                        var sequencer = new Sequencer(container, document.Q<SequencesHolder>("SuccessSequences").Sequences);
+                        sequencer.PlayAsync(ct).Forget();
+                    }
                 })
                 .RegisterTo(cancellationToken);
 
