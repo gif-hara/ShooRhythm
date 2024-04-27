@@ -28,6 +28,7 @@ namespace ShooRhythm
             Farm = 8,
             Meadow = 9,
             Grassland = 10,
+            Meal = 11,
         }
 
         public enum NotificationType
