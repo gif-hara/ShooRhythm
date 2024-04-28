@@ -418,12 +418,6 @@ namespace ShooRhythm
             int INeedItem.NeedItemAmount => NeedItemAmount;
 
             [Serializable]
-            public sealed class DictionaryList : DictionaryList<int, EnhanceSpec>
-            {
-                public DictionaryList() : base(x => x.Id) { }
-            }
-
-            [Serializable]
             public sealed class Group : Group<int, EnhanceSpec>
             {
                 public Group() : base(x => x.GroupId) { }
