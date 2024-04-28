@@ -247,3 +247,13 @@ MonoBehaviour:
       NeedItemId: 10116
       NeedItemAmount: 1
       CoolTimeSeconds: 1
+  enhanceSpecs:
+    list:
+    - Key: 10101
+      Value:
+      - Id: 1
+        NeedItemId: 10101
+        NeedItemAmount: 1
+        EnhanceType: 1
+        Level: 1
+        GroupId: 10101

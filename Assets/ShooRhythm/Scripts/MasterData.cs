@@ -79,6 +79,10 @@ namespace ShooRhythm
         private MealSpec.DictionaryList mealSpecs;
         public MealSpec.DictionaryList MealSpecs => mealSpecs;
 
+        [SerializeField]
+        private EnhanceSpec.Group enhanceSpecs;
+        public EnhanceSpec.Group EnhanceSpecs => enhanceSpecs;
+
         public UniTask BootAsync()
         {
             TinyServiceLocator.Register(this);
@@ -107,7 +111,8 @@ namespace ShooRhythm
                 GoogleSpreadSheetDownloader.DownloadAsync("RiverFishingSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("SeaFishingSpec"),
                 GoogleSpreadSheetDownloader.DownloadAsync("EnemySpec"),
-                GoogleSpreadSheetDownloader.DownloadAsync("MealSpec")
+                GoogleSpreadSheetDownloader.DownloadAsync("MealSpec"),
+                GoogleSpreadSheetDownloader.DownloadAsync("EnhanceSpec")
             );
             items.Set(JsonHelper.FromJson<Item>(database[0]));
             foreach (var i in items.List)
@@ -130,6 +135,7 @@ namespace ShooRhythm
             seaFishingSpecs.Set(JsonHelper.FromJson<FishingSpec>(database[14]));
             enemySpecs.Set(JsonHelper.FromJson<EnemySpec>(database[15]));
             mealSpecs.Set(JsonHelper.FromJson<MealSpec>(database[16]));
+            enhanceSpecs.Set(JsonHelper.FromJson<EnhanceSpec>(database[17]));
 
             UnityEditor.EditorUtility.SetDirty(this);
             UnityEditor.AssetDatabase.SaveAssets();
@@ -388,6 +394,39 @@ namespace ShooRhythm
             public sealed class DictionaryList : DictionaryList<int, MealSpec>
             {
                 public DictionaryList() : base(x => x.Id) { }
+            }
+        }
+
+
+        [Serializable]
+        public class EnhanceSpec : INeedItem
+        {
+            public int Id;
+
+            public int NeedItemId;
+
+            public int NeedItemAmount;
+
+            public Define.EnhanceType EnhanceType;
+
+            public int Level;
+
+            public int GroupId;
+
+            int INeedItem.NeedItemId => NeedItemId;
+
+            int INeedItem.NeedItemAmount => NeedItemAmount;
+
+            [Serializable]
+            public sealed class DictionaryList : DictionaryList<int, EnhanceSpec>
+            {
+                public DictionaryList() : base(x => x.Id) { }
+            }
+
+            [Serializable]
+            public sealed class Group : Group<int, EnhanceSpec>
+            {
+                public Group() : base(x => x.GroupId) { }
             }
         }
     }
