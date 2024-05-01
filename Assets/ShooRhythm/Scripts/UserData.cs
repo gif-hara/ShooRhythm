@@ -18,8 +18,6 @@ namespace ShooRhythm
 
         public readonly List<CoolTimeData> coolTimeData = new();
 
-        private readonly CancellationTokenSource cancellationTokenSource = new();
-
         public UserData(int initialCoolTimeNumber)
         {
             for (var i = 0; i < initialCoolTimeNumber; i++)
@@ -27,13 +25,7 @@ namespace ShooRhythm
                 coolTimeData.Add(new CoolTimeData());
             }
         }
-
-        ~UserData()
-        {
-            cancellationTokenSource.Cancel();
-            cancellationTokenSource.Dispose();
-        }
-
+        
         public void SetCoolTime(int index, float value)
         {
             coolTimeData[index].Set(value);
