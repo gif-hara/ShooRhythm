@@ -170,6 +170,8 @@ MonoBehaviour:
     - Id: 11
       Name: TabType.Meal
     - Id: 12
+      Name: TabType.Enhance
+    - Id: 13
       Name: Available.Quest.10101
   questSpecs:
     list:

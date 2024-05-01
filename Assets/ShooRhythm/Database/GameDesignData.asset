@@ -67,6 +67,10 @@ MonoBehaviour:
     tabType: 10
     activeStatsName: Available.Tab.Grassland
     icon: {fileID: 21300000, guid: ab9b866eabc3f41bd86381d311f2805b, type: 3}
+  - footerName: "\u5F37\u5316"
+    tabType: 12
+    activeStatsName: Available.Tab.Enhance
+    icon: {fileID: 21300000, guid: d0159205eeaa34fa0ad57fbf54004ebc, type: 3}
   defaultDamage: 5
   initialProductMachineNumber: 1
   initialFarmNumber: 1
