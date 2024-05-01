@@ -42,5 +42,14 @@ namespace ShooRhythm
         {
             return Items.TryGetValue(id, out var reactiveProperty) ? reactiveProperty.Value : 0;
         }
+        
+        public ReactiveProperty<int> GetItemNumberReactiveProperty(int id)
+        {
+            if (!Items.ContainsKey(id))
+            {
+                Items.Add(id, new ReactiveProperty<int>());
+            }
+            return Items[id];
+        }
     }
 }

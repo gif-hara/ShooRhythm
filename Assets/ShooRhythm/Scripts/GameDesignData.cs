@@ -44,6 +44,10 @@ namespace ShooRhythm
         [SerializeField]
         private int initialCoolTimeNumber;
         public int InitialCoolTimeNumber => initialCoolTimeNumber;
+        
+        [SerializeField]
+        private List<EnhanceName> enhanceNames;
+        public List<EnhanceName> EnhanceNames => enhanceNames;
 
         [Serializable]
         public class FishingDesignData
@@ -95,6 +99,18 @@ namespace ShooRhythm
             [SerializeField]
             private Sprite icon;
             public Sprite Icon => icon;
+        }
+
+        [Serializable]
+        public class EnhanceName
+        {
+            [SerializeField]
+            private Define.EnhanceType enhanceType;
+            public Define.EnhanceType EnhanceType => enhanceType;
+            
+            [SerializeField]
+            private string name;
+            public string Name => name;
         }
     }
 }

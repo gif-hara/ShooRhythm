@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HK;
 
 namespace ShooRhythm
@@ -19,10 +20,39 @@ namespace ShooRhythm
                 )
             );
         }
+        
+        public static void ShowRequireItemNotification(this IEnumerable<INeedItem> self)
+        {
+            foreach (var needItem in self)
+            {
+                if (needItem.HasItems())
+                {
+                    continue;
+                }
+                needItem.ShowRequireItemNotification();
+            }
+        }
 
         public static bool HasItems(this INeedItem self)
         {
             return TinyServiceLocator.Resolve<GameData>().GetItem(self.NeedItemId) >= self.NeedItemAmount;
+        }
+        
+        public static bool HasItems(this IEnumerable<INeedItem> self)
+        {
+            foreach (var needItem in self)
+            {
+                if (!needItem.HasItems())
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        public static MasterData.Item GetMasterDataItem(this INeedItem self)
+        {
+            return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.NeedItemId);
         }
     }
 }

@@ -50,5 +50,10 @@ namespace ShooRhythm
         {
             enhanceLevel[enhanceType] = level;
         }
+        
+        public int GetEnhanceLevel(Define.EnhanceType enhanceType)
+        {
+            return enhanceLevel.GetValueOrDefault(enhanceType, 0);
+        }
     }
 }

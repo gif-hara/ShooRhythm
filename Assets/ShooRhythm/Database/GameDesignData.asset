@@ -75,3 +75,10 @@ MonoBehaviour:
   initialProductMachineNumber: 1
   initialFarmNumber: 1
   initialCoolTimeNumber: 1
+  enhanceNames:
+  - enhanceType: 1
+    name: "\u30BF\u30B9\u30AF\u5B9F\u884C\u56DE\u6570"
+  - enhanceType: 2
+    name: "\u30AF\u30FC\u30EB\u30BF\u30A4\u30E0\u77ED\u7E2E"
+  - enhanceType: 3
+    name: "\u653B\u6483\u5A01\u529B\u4E0A\u6607"

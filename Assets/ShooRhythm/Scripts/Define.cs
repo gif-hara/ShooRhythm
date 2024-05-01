@@ -75,7 +75,6 @@ namespace ShooRhythm
 
         public enum EnhanceType
         {
-            None = 0,
             TaskNumber = 1,
             CoolTimeReduction = 2,
             AttackPowerUp = 3,
