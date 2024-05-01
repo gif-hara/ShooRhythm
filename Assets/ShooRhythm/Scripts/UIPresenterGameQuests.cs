@@ -62,11 +62,7 @@ namespace ShooRhythm
                             }
                             else
                             {
-                                TinyServiceLocator.Resolve<GameMessage>().RequestNotification.OnNext((
-                                    "アイテムが足りません",
-                                    null,
-                                    Define.NotificationType.Negative
-                                    ));
+                                conditions.ShowRequireItemNotification();
                             }
                         })
                         .RegisterTo(element.destroyCancellationToken);
