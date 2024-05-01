@@ -191,7 +191,7 @@ namespace ShooRhythm
         {
             var productionSpec = TinyServiceLocator.Resolve<MasterData>().ProductionSpecs.Get(itemId);
             var needItems = productionSpec.GetProductionNeedItems();
-            if (needItems.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
+            if (needItems.HasItems())
             {
                 var tasks = needItems
                     .Select(x => AddItemAsync(x.NeedItemId, -x.NeedItemAmount))
@@ -247,7 +247,7 @@ namespace ShooRhythm
         {
             var questSpec = TinyServiceLocator.Resolve<MasterData>().QuestSpecs.Get(questSpecId);
             var conditions = questSpec.GetQuestConditions();
-            if (conditions.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
+            if (conditions.HasItems())
             {
                 var rewards = questSpec.GetQuestRewards();
                 var tasks = rewards

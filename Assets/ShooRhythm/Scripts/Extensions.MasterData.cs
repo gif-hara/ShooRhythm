@@ -26,19 +26,7 @@ namespace ShooRhythm
         {
             return TinyServiceLocator.Resolve<MasterData>().Items.Get(self.AcquireItemId);
         }
-
-        public static bool IsAllPossession(this IEnumerable<MasterData.NeedItem> self, GameData gameData)
-        {
-            return self.All(x =>
-            {
-                if (gameData.Items.TryGetValue(x.NeedItemId, out var amount))
-                {
-                    return amount.Value >= x.NeedItemAmount;
-                }
-                return false;
-            });
-        }
-
+        
         public static bool IsAvailable(this MasterData.AvailableContent self)
         {
             return TinyServiceLocator.Resolve<GameData>().AvailableContents.Contains(self.Name);

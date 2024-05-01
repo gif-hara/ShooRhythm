@@ -64,7 +64,7 @@ namespace ShooRhythm
                             return;
                         }
                         var conditions = productionSpec.GetProductionNeedItems();
-                        if (!conditions.IsAllPossession(gameData))
+                        if (!conditions.HasItems())
                         {
                             Debug.Log("TODO Not Completed Collection");
                             return;

@@ -55,7 +55,7 @@ namespace ShooRhythm
                     element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
                         .SubscribeAwait(async (_, ct) =>
                         {
-                            if (conditions.IsAllPossession(TinyServiceLocator.Resolve<GameData>()))
+                            if (conditions.HasItems())
                             {
                                 await gameController.ProcessQuestAsync(id);
                                 CreateElements();
