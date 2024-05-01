@@ -17,6 +17,8 @@ namespace ShooRhythm
         public readonly ReactiveProperty<int> equipmentItemId = new();
 
         public readonly List<CoolTimeData> coolTimeData = new();
+        
+        public readonly Dictionary<Define.EnhanceType, int> enhanceLevel = new();
 
         public UserData(int initialCoolTimeNumber)
         {
@@ -42,6 +44,11 @@ namespace ShooRhythm
             }
 
             return -1;
+        }
+        
+        public void SetEnhanceLevel(Define.EnhanceType enhanceType, int level)
+        {
+            enhanceLevel[enhanceType] = level;
         }
     }
 }
