@@ -52,6 +52,12 @@ namespace ShooRhythm
                 button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
+                        var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                        if (availableCoolTimeIndex == -1)
+                        {
+                            GameUtility.ShowRequireCoolDownNotification();
+                            return;
+                        }
                         var itemId = productMachineData.productItemId.Value;
                         if (itemId == 0)
                         {
@@ -71,6 +77,7 @@ namespace ShooRhythm
                         }
                         await gameController.ProcessProductionAcquireProductAsync(itemId);
                         GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, ct).Forget();
+                        gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, productionSpec.CoolTimeSeconds);
                     })
                     .RegisterTo(element.destroyCancellationToken);
                 productMachineData.productItemId
