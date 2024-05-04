@@ -248,6 +248,7 @@ MonoBehaviour:
         HitPoint: 30
         RewardItemId: 10105
         RewardItemAmount: 1
+        CoolTimeSeconds: 1
   mealSpecs:
     list:
     - Id: 10116

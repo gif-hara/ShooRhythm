@@ -366,6 +366,8 @@ namespace ShooRhythm
 
             public int RewardItemAmount;
 
+            public float CoolTimeSeconds;
+
             [Serializable]
             public sealed class DictionaryList : DictionaryList<int, EnemySpec>
             {
