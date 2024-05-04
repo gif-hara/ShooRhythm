@@ -23,6 +23,7 @@ namespace ShooRhythm
             var masterData = TinyServiceLocator.Resolve<MasterData>();
             await gameController.ProcessBattleGetEnemyInstanceDataAsync(dungeonType);
             var enemyInstanceData = gameData.DungeonEnemyInstanceDatas[dungeonType];
+            // 敵を倒した場合を考慮してないかもしれない
             var enemySpec = masterData.EnemySpecs.Get(dungeonType)
                 .FirstOrDefault(x => x.Id == enemyInstanceData.EnemyId);
             Assert.IsNotNull(enemySpec, $"EnemySpec is null. dungeonType: {dungeonType}, enemyId: {enemyInstanceData.EnemyId}");
@@ -32,7 +33,14 @@ namespace ShooRhythm
             document.Q<ObservablePointerClickTrigger>("Button.Attack").OnPointerClickAsObservable()
                 .SubscribeAwait(async (_, ct) =>
                 {
+                    var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                    if (availableCoolTimeIndex == -1)
+                    {
+                        GameUtility.ShowRequireCoolDownNotification();
+                        return;
+                    }
                     var equipmentItemId = gameData.CurrentUserData.equipmentItemId.Value;
+                    var coolTimeSeconds = enemySpec.CoolTimeSeconds;
                     var damage = equipmentItemId == 0
                         ? TinyServiceLocator.Resolve<GameDesignData>().DefaultDamage
                         : masterData.WeaponSpecs.Get(equipmentItemId).Strength;
@@ -41,6 +49,7 @@ namespace ShooRhythm
                     {
                         GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), null, cancellationToken).Forget();
                     }
+                    gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, coolTimeSeconds);
                 })
                 .AddTo(document);
 
