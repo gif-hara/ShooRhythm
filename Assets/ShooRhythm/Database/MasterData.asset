@@ -212,10 +212,12 @@ MonoBehaviour:
       SeedItemId: 10109
       AcquireItemId: 10110
       GrowSeconds: 3
+      CoolTimeSeconds: 0.1
     - Id: 10114
       SeedItemId: 10114
       AcquireItemId: 10115
       GrowSeconds: 4
+      CoolTimeSeconds: 0.1
   meadowSpecs:
     list:
     - Id: 1
@@ -259,3 +261,11 @@ MonoBehaviour:
         EnhanceType: 1
         Level: 1
         GroupId: 10101
+    - Key: 10102
+      Value:
+      - Id: 2
+        NeedItemId: 10101
+        NeedItemAmount: 1
+        EnhanceType: 1
+        Level: 2
+        GroupId: 10102

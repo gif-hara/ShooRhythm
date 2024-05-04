@@ -312,6 +312,8 @@ namespace ShooRhythm
 
             public float GrowSeconds;
 
+            public float CoolTimeSeconds;
+
             public int NeedItemId => SeedItemId;
 
             public int NeedItemAmount => 1;
