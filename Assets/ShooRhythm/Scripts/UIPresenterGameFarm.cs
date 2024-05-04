@@ -113,8 +113,11 @@ namespace ShooRhythm
                     {
                         if (farmData.IsCompleted)
                         {
+                            var coolTimeSeconds = farmData.SeedSpec.CoolTimeSeconds;
                             await gameController.ProcessFarmAcquirePlantItemAsync(index);
                             GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, ct).Forget();
+                            var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                            gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, coolTimeSeconds);
                         }
                         else
                         {
@@ -144,6 +147,12 @@ namespace ShooRhythm
                 uiPresenterSelectItems.OnSelectedItemAsObservable()
                     .SubscribeAwait(async (itemId, ct) =>
                     {
+                        var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                        if (availableCoolTimeIndex == -1)
+                        {
+                            GameUtility.ShowRequireCoolDownNotification();
+                            return;
+                        }
                         await gameController.ProcessFarmSetPlantItemIdAsync(selectedPlantId, itemId);
                     })
                     .RegisterTo(cancellationToken);
