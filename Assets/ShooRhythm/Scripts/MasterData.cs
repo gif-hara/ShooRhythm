@@ -338,6 +338,8 @@ namespace ShooRhythm
 
             public int AcquireItemAmount;
 
+            public float CoolTimeSeconds;
+
             int INeedItem.NeedItemId => NeedItemId;
 
             int INeedItem.NeedItemAmount => NeedItemAmount;

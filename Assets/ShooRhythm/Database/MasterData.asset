@@ -225,16 +225,19 @@ MonoBehaviour:
       NeedItemAmount: 1
       AcquireItemId: 10111
       AcquireItemAmount: 1
+      CoolTimeSeconds: 1
     - Id: 2
       NeedItemId: 10115
       NeedItemAmount: 1
       AcquireItemId: 10112
       AcquireItemAmount: 1
+      CoolTimeSeconds: 1
     - Id: 3
       NeedItemId: 10115
       NeedItemAmount: 1
       AcquireItemId: 10113
       AcquireItemAmount: 1
+      CoolTimeSeconds: 1
   enemySpecs:
     list:
     - Key: 1
