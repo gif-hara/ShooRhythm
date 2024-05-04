@@ -27,6 +27,7 @@ namespace ShooRhythm
             var masterData = TinyServiceLocator.Resolve<MasterData>();
             var gameDegisnData = TinyServiceLocator.Resolve<GameDesignData>();
             var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
+            var gameController = TinyServiceLocator.Resolve<GameController>();
             var elements = new List<HKUIDocument>();
             CreateElements();
 
@@ -75,11 +76,11 @@ namespace ShooRhythm
                             elementElement.Q<Image>("Icon").sprite = masterDataItem.Icon;
                         }
                         element.Q<ObservablePointerClickTrigger>("Button").OnPointerClickAsObservable()
-                            .Subscribe(_ =>
+                            .SubscribeAwait(async (_, ct) =>
                             {
                                 if (enhanceSpecs.HasItems())
                                 {
-                                    Debug.Log("Enhance");
+                                    await gameController.ProcessEnhanceAsync(type);
                                 }
                                 else
                                 {
