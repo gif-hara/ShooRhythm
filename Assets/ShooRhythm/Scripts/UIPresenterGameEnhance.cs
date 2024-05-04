@@ -89,7 +89,6 @@ namespace ShooRhythm
                             })
                             .RegisterTo(element.destroyCancellationToken);
                     }
-                    Debug.Log(groupId);
                 }
             }
         }
