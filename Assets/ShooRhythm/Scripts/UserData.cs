@@ -17,8 +17,8 @@ namespace ShooRhythm
         public readonly ReactiveProperty<int> equipmentItemId = new();
 
         public readonly List<CoolTimeData> coolTimeData = new();
-        
-        public readonly Dictionary<Define.EnhanceType, int> enhanceLevel = new();
+
+        public readonly Dictionary<Define.EnhanceType, ReactiveProperty<int>> enhanceLevel = new();
 
         public UserData(int initialCoolTimeNumber)
         {
@@ -27,7 +27,7 @@ namespace ShooRhythm
                 coolTimeData.Add(new CoolTimeData());
             }
         }
-        
+
         public void SetCoolTime(int index, float value)
         {
             coolTimeData[index].Set(value);
@@ -45,15 +45,20 @@ namespace ShooRhythm
 
             return -1;
         }
-        
+
         public void SetEnhanceLevel(Define.EnhanceType enhanceType, int level)
         {
-            enhanceLevel[enhanceType] = level;
+            enhanceLevel[enhanceType].Value = level;
         }
-        
+
         public int GetEnhanceLevel(Define.EnhanceType enhanceType)
         {
-            return enhanceLevel.GetValueOrDefault(enhanceType, 0);
+            if (!enhanceLevel.ContainsKey(enhanceType))
+            {
+                enhanceLevel[enhanceType] = new ReactiveProperty<int>();
+            }
+
+            return enhanceLevel[enhanceType].Value;
         }
     }
 }

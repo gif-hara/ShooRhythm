@@ -274,6 +274,41 @@ namespace ShooRhythm
             }
         }
 
+        public async UniTask<Define.ProcessResultType> ProcessEnhanceAsync(Define.EnhanceType enhanceType)
+        {
+            var gameData = TinyServiceLocator.Resolve<GameData>();
+            var userData = gameData.CurrentUserData;
+            var masterData = TinyServiceLocator.Resolve<MasterData>();
+            var gameDegisnData = TinyServiceLocator.Resolve<GameDesignData>();
+            var gameMessage = TinyServiceLocator.Resolve<GameMessage>();
+            var currentLevel = userData.GetEnhanceLevel(enhanceType);
+            var groupId = enhanceType.GetEnhanceGroupId(currentLevel + 1);
+            if (masterData.EnhanceSpecs.TryGetValue(groupId, out var enhanceSpecs))
+            {
+                if (enhanceSpecs.HasItems())
+                {
+                    var tasks = enhanceSpecs
+                        .Select(x => AddItemAsync(x.NeedItemId, -x.NeedItemAmount))
+                        .Concat(new[]
+                        {
+                            SetEnhanceLevelAsync(enhanceType, currentLevel + 1)
+                        });
+                    var result = await UniTask.WhenAll(tasks);
+                    return result.All(x => x == Define.ProcessResultType.Success)
+                        ? Define.ProcessResultType.Success
+                        : Define.ProcessResultType.Unknown;
+                }
+                else
+                {
+                    return Define.ProcessResultType.NotEnoughItem;
+                }
+            }
+            else
+            {
+                return Define.ProcessResultType.NotFoundMasterData;
+            }
+        }
+
         private UniTask<Define.ProcessResultType> AddItemAsync(int itemId, int amount)
         {
             var gameData = TinyServiceLocator.Resolve<GameData>();
@@ -288,6 +323,13 @@ namespace ShooRhythm
                 reactiveProperty.Value += amount;
             }
 
+            return UniTask.FromResult(Define.ProcessResultType.Success);
+        }
+
+        private UniTask<Define.ProcessResultType> SetEnhanceLevelAsync(Define.EnhanceType enhanceType, int level)
+        {
+            var userData = TinyServiceLocator.Resolve<GameData>().CurrentUserData;
+            userData.SetEnhanceLevel(enhanceType, level);
             return UniTask.FromResult(Define.ProcessResultType.Success);
         }
     }
