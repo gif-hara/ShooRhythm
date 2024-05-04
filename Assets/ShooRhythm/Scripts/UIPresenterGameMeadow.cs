@@ -32,14 +32,22 @@ namespace ShooRhythm
                 var rootElement = document.Q<HKUIDocument>(rootName);
                 var masterDataMeadowSpec = TinyServiceLocator.Resolve<MasterData>().MeadowSpecs.Get(meadowSpecId);
                 var gameController = TinyServiceLocator.Resolve<GameController>();
+                var gameData = TinyServiceLocator.Resolve<GameData>();
                 var button = rootElement.Q<ObservablePointerClickTrigger>("Button");
                 button.OnPointerClickAsObservable()
                     .SubscribeAwait(async (_, ct) =>
                     {
+                        var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                        if (availableCoolTimeIndex == -1)
+                        {
+                            GameUtility.ShowRequireCoolDownNotification();
+                            return;
+                        }
                         if (masterDataMeadowSpec.HasItems())
                         {
                             await gameController.ProcessMeadowAsync(meadowSpecId);
                             GameUtility.PlayAcquireItemEffectAsync(document, (RectTransform)button.transform, null, cancellationToken).Forget();
+                            gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, masterDataMeadowSpec.CoolTimeSeconds);
                         }
                         else
                         {
