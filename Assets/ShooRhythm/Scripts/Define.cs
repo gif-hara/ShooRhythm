@@ -71,6 +71,11 @@ namespace ShooRhythm
             /// 農場のタイマーが進行中
             /// </summary>
             FarmTimerInProgress = 3,
+
+            /// <summary>
+            /// マスターデータが存在しない
+            /// </summary>
+            NotFoundMasterData = 4,
         }
 
         public enum EnhanceType
