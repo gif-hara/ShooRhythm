@@ -17,6 +17,7 @@ namespace ShooRhythm
         {
             var document = Object.Instantiate(documentPrefab);
             var masterData = TinyServiceLocator.Resolve<MasterData>();
+            var gameData = TinyServiceLocator.Resolve<GameData>();
             var fishingSpecs = fishingType switch
             {
                 Define.FishingType.River => masterData.RiverFishingSpecs,
@@ -47,6 +48,11 @@ namespace ShooRhythm
                 document.Q<ObservablePointerClickTrigger>("Button.Cast").OnPointerClickAsObservable()
                     .Subscribe(_ =>
                     {
+                        if (gameData.CurrentUserData.GetAvailableCoolTimeIndex() == -1)
+                        {
+                            GameUtility.ShowRequireCoolDownNotification();
+                            return;
+                        }
                         currentFishingSpec = fishingSpecs.List[Random.Range(0, fishingSpecs.List.Count)];
                         if (currentFishingSpec.HasItems())
                         {
@@ -117,6 +123,8 @@ namespace ShooRhythm
                             gameController.ProcessSeaFishingAsync(currentFishingSpec.Id).Forget();
                         }
                         GameUtility.PlayAcquireItemEffectAsync(document, document.Q<RectTransform>("AcquireItemEffectParent"), null, cancellationToken).Forget();
+                        var availableCoolTimeIndex = gameData.CurrentUserData.GetAvailableCoolTimeIndex();
+                        gameData.CurrentUserData.SetCoolTime(availableCoolTimeIndex, currentFishingSpec.CoolTimeSeconds);
                         stateMachine.Change(StateIdle);
                     })
                     .RegisterTo(scope);
