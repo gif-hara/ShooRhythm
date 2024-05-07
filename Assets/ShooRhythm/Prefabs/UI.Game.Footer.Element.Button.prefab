@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1464601480259440621}
   - component: {fileID: 7234830602721032322}
   - component: {fileID: 3283139958918917438}
+  - component: {fileID: 2195773890169235009}
   m_Layer: 5
   m_Name: UI.Game.Footer.Element.Button
   m_TagString: Untagged
@@ -96,6 +97,26 @@ MonoBehaviour:
     overrideName: Text
   - document: {fileID: 1218178632952529737}
     overrideName: Icon
+--- !u!114 &2195773890169235009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3267075635500516753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 120
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1001 &1451708030040690996
 PrefabInstance:
   m_ObjectHideFlags: 0
